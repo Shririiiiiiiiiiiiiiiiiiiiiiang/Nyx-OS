@@ -13,7 +13,25 @@ input {
     padding: 10px;
 
 }
+#chatBox {
+    width: 400px;
+    margin: 20px;
+}
 
+.message{
+    padding: 12px;
+    margin: 10px;
+    border-radius: 15px;
+    text-align: left;
+}
+.userMessage{
+    background-color: blue;
+    margin-right: 80px;
+}
+.nyxMessage {
+    background-color: #2d1b69;
+    margin-left: 80px;
+}
 button {
     padding: 10px;
 
