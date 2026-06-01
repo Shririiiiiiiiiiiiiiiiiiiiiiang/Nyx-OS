@@ -24,14 +24,56 @@ button.addEventListener("click", function () {
     if(message.toLowerCase() === "creator") {
         reply = "Secret Buddy (AKA. Shrirang)";
     }
+    if(message.toLowerCase() === "version") {
+    reply = "Nyx Version 0.6";
+    }
+    if(message.toLowerCase() === "ping") {
+    reply = "pong";
+    }
+    if(message.toLowerCase() === "time") {
 
+        const now = new Date();
+
+        reply = now.toLocaleTimeString();
+    }
+
+    if(message.toLowerCase() ===  "date") {
+
+        const now = new Date();
+
+        reply = now.toDateString();
+    }
     const nyxBubble = document.createElement("div");
     nyxBubble.className = "message nyxMessage";
     chatBox.appendChild(nyxBubble);
+    chatBox.scrollTop = chatBox.scrollHeight;
+    nyxBubble.innerHTML = "Nyx is typing.";
+    
+    let dots = 1;
 
-    let i = 0;
+    const dotsAnimation = setInterval(function () {
 
-    const typingEffect = setInterval(function () {
+        dots++;
+
+        if (dots > 3){
+            dots = 1;
+        }
+
+        nyxBubble.innerHTML = 
+            "Nyx is typing" + ".".repeat(dots);
+
+    }, 500);
+
+    setTimeout(function () {
+
+        clearInterval(dotsAnimation);
+
+        let i = 0;
+
+        const typingEffect = setInterval(function (){
+    
+
+    
 
         nyxBubble.innerHTML = 
             "Nyx: " + reply.substring(0,i);
@@ -44,6 +86,7 @@ button.addEventListener("click", function () {
 
         }
     }, 50);
+    }, 3000);
     input.value = "";
 
 });
