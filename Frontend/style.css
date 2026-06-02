@@ -1,5 +1,5 @@
 body{
-    background-color: black;
+    background: radial-gradient(circle at top, #1a0033, black);
     color: white;
     font-family: Arial;
     padding: 20px;
@@ -14,8 +14,13 @@ input {
 
 }
 #chatBox {
-    width: 400px;
-    margin: 20px;
+    width: 600px;
+    min-height: 300px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #0f0f1f;
+    border: 1px solid #3b2a78;
+    border-radius: 20px;
 }
 
 .message{
@@ -31,6 +36,7 @@ input {
 .userMessage{
     background-color: blue;
     margin-right: 80px;
+    max-width: 70%;
 }
 .nyxMessage {
     background-color: #2d1b69;

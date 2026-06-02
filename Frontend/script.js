@@ -1,6 +1,8 @@
 const input = document.getElementById("userInput");
 const button = document.getElementById("sendBtn");
 const chatBox = document.getElementById("chatBox");
+let userName = "";
+
 
 button.addEventListener("click", function () {
 
@@ -30,7 +32,25 @@ button.addEventListener("click", function () {
     if(message.toLowerCase() === "ping") {
     reply = "pong";
     }
-    if(message.toLowerCase() === "time") {
+
+    if(message.toLowerCase().startsWith("my name is")) {
+        userName = message.substring(11);
+        reply = "Nice to meet you, " + userName;
+    }
+
+    if(message.toLowerCase() === "what is my name") {
+
+        if(userName === ""){
+
+            reply = "I don't know your name yet"
+        }
+        else{
+
+            reply = "Your name is "  +  userName
+        }
+    }
+    
+        if(message.toLowerCase() === "time") {
 
         const now = new Date();
 
