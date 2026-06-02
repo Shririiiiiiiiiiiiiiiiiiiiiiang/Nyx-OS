@@ -8,6 +8,8 @@ button.addEventListener("click", function () {
 
     const message = input.value;
 
+    
+
     chatBox.innerHTML += '<div class="message userMessage">You: ' + message + '</div>';
 
     let reply = "i am still learning.";
@@ -63,6 +65,14 @@ button.addEventListener("click", function () {
 
         reply = now.toDateString();
     }
+    if(message.toLowerCase() === "day?") {
+        
+        const now = new Date();
+
+        reply = now.toLocaleDateString('en-US',{
+            weekday: 'long'
+        });
+    } 
     const nyxBubble = document.createElement("div");
     nyxBubble.className = "message nyxMessage";
     chatBox.appendChild(nyxBubble);
