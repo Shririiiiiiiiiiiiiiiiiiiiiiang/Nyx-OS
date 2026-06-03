@@ -1,12 +1,32 @@
-body{
-    background: radial-gradient(circle at top, #1a0033, black);
-    color: white;
-    font-family: Arial;
-    padding: 20px;
-    text-align: center;
-    border-radius: 10px;
-    font-size: bigger;
+* {
+    box-sizing: border-box;
+}
 
+
+
+body{
+    min-height: 100vh;
+    margin: 0;
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 35px;
+
+    background: linear-gradient(135deg, #020012, #16002e, #23004d, #050014);
+    background-size: 400% 400%;
+    animation: nyxBackground 12s ease infinite;
+
+}
+@keyframes nyxBackground{
+    0%{
+        background-position: 0% 50%;
+    }
+    50%{
+        background-position: 100% 50%;
+    }
+    100%{
+        background-position: 0% 50%;
+    }
 }
 
 input {
@@ -53,7 +73,26 @@ button {
     border-radius: 20px;
     display: inline_block;
     background-color: rgba(20, 20, 40, 0.7);
-    box-shadow: 0 0 15px #2b1b69;
+    box-shadow: 0 0 15px var(--glow);
     font-size: 16px;
 }
 
+.normalMood {
+    --glow: #7a00ff;
+
+}
+
+.memoryMood{
+
+    --glow: #ff00cc;
+}
+
+.helperMood{
+
+    --glow: #00cfff;
+}
+
+.friendlyMood{
+
+    --glow: #0066ff;
+}

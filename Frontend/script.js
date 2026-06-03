@@ -13,7 +13,29 @@ button.addEventListener("click", function () {
 
     chatBox.innerHTML += '<div class="message userMessage">You: ' + message + '</div>';
 
-    let reply = "i am still learning.";
+    const nyxReplies = [
+
+        "I am still learning",
+
+        " intresting....",
+
+        "Let me thing about that",
+
+        "I am still evolving",
+
+        "circuits are still wiring up",
+
+        "processing...failed sucessfullyyyyyy",
+
+        "Nyx doesnt know the answer yet",
+    ];
+
+    let reply = 
+    nyxReplies[
+        Math.floor(
+            Math.random() * nyxReplies.length
+        )
+    ];
     let mood = "normal";
    
     if(message.toLowerCase() === "hi"){
@@ -25,8 +47,26 @@ button.addEventListener("click", function () {
 
     }
     if(message.toLowerCase() === "help") {
-        reply = "I can help you with files,coding ,sorting & projects.";
-        mood = "helper"
+        reply = 
+    `Available commands
+
+    date
+    time
+    day
+
+    my name is...
+
+    what is my name
+
+    remember ...
+
+    show memories ...
+
+    search memory ... (currently encountring a bug will be fixed)
+    
+    help`;       
+    
+    mood = "helper"
     }
     if(message.toLowerCase() === "hello") {
         reply = "Hello There.";
@@ -88,6 +128,16 @@ button.addEventListener("click", function () {
 
         mood = "system";
     }
+    document.body.classList.remove(
+        "normalMood",
+        "memoryMood",
+        "helperMood",
+        "friendlyMood"
+
+    );
+    document.body.classList.add(
+        mood + "Mood"
+    );
     console.log("Nyx mood:", mood);
     statusBar.innerHTML =
     "🌙 Online | 🧠 Memory Active | ✨ Mood: " + mood;
