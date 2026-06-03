@@ -1,7 +1,8 @@
 const input = document.getElementById("userInput");
 const button = document.getElementById("sendBtn");
 const chatBox = document.getElementById("chatBox");
-let userName = "";
+const statusBar = document.getElementById("statusBar");
+let userName = localStorage.getItem("userName") || "";
 
 
 button.addEventListener("click", function () {
@@ -13,17 +14,23 @@ button.addEventListener("click", function () {
     chatBox.innerHTML += '<div class="message userMessage">You: ' + message + '</div>';
 
     let reply = "i am still learning.";
+    let mood = "normal";
+   
     if(message.toLowerCase() === "hi"){
         reply = "Hello, I am Nyx";
+        mood = "friendly";
     }  
     if(message.toLowerCase() === "who are you") {
         reply = "I am your AI Assistant.";
+
     }
     if(message.toLowerCase() === "help") {
         reply = "I can help you with files,coding ,sorting & projects.";
+        mood = "helper"
     }
     if(message.toLowerCase() === "hello") {
         reply = "Hello There.";
+         mood = "friendly";
     }
     if(message.toLowerCase() === "creator") {
         reply = "Secret Buddy (AKA. Shrirang)";
@@ -33,10 +40,12 @@ button.addEventListener("click", function () {
     }
     if(message.toLowerCase() === "ping") {
     reply = "pong";
+     mood = "friendly";
     }
 
     if(message.toLowerCase().startsWith("my name is")) {
         userName = message.substring(11);
+        localStorage.setItem("userName", userName)
         reply = "Nice to meet you, " + userName;
     }
 
@@ -57,6 +66,8 @@ button.addEventListener("click", function () {
         const now = new Date();
 
         reply = now.toLocaleTimeString();
+
+        mood = "system";
     }
 
     if(message.toLowerCase() ===  "date") {
@@ -64,6 +75,8 @@ button.addEventListener("click", function () {
         const now = new Date();
 
         reply = now.toDateString();
+
+        mood = "system";
     }
     if(message.toLowerCase() === "day?") {
         
@@ -72,7 +85,67 @@ button.addEventListener("click", function () {
         reply = now.toLocaleDateString('en-US',{
             weekday: 'long'
         });
-    } 
+
+        mood = "system";
+    }
+    console.log("Nyx mood:", mood);
+    statusBar.innerHTML =
+    "🌙 Online | 🧠 Memory Active | ✨ Mood: " + mood;
+    if(message.toLowerCase().includes("remember")) {
+        let memories =
+            JSON.parse(localStorage.getItem("memories")) || [];
+
+            memories.push(message);
+
+            localStorage.setItem(
+                "memories",
+                JSON.stringify(memories)
+            );
+
+            reply = "Okay, I will remember that.";
+
+            mood = "memory";
+
+    }
+
+    if(message.toLowerCase().includes("show memories")) {
+
+        let memories =
+            JSON.parse(localStorage.getItem("memories")) || [];
+
+            if(memories.length === 0) {
+                reply = "i dont remember anything yet";
+            }
+            else {
+                reply = memories.join(" | ");
+            }
+
+            mood = "memory";
+    }
+    if(message.toLowerCase().startsWith("search memory")) {
+        const keyword = message.substring(14).toLowerCase();
+
+        let memories = 
+        JSON.parse(localStorage.getItem("memories")) || [];
+
+        const results = memories.filter(function(memory){
+
+            return memory.toLowerCase().includes(keyword);
+
+        });
+
+        if(results.length == 0){
+            reply = "no memories found";
+
+        }
+        else{
+
+            reply = results.join("|");
+
+        }
+
+        mood = "memory";
+    }
     const nyxBubble = document.createElement("div");
     nyxBubble.className = "message nyxMessage";
     chatBox.appendChild(nyxBubble);

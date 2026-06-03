@@ -46,4 +46,14 @@ button {
     padding: 10px;
 
 }
+#statusBar{
+    margin: 15px;
+    padding: 10px 15px;
+    border: 1px solid #4b2a9c;
+    border-radius: 20px;
+    display: inline_block;
+    background-color: rgba(20, 20, 40, 0.7);
+    box-shadow: 0 0 15px #2b1b69;
+    font-size: 16px;
+}
 
