@@ -5,6 +5,7 @@
 
 
 body{
+    --glow: #7a00ff;
     min-height: 100vh;
     margin: 0;
     color: white;
@@ -39,8 +40,10 @@ input {
     margin: 20px auto;
     padding: 20px;
     background-color: #0f0f1f;
-    border: 1px solid #3b2a78;
+    border: 1px solid var(--glow);
     border-radius: 20px;
+    
+    box-shadow: 0 0 20px var(--glow);
 }
 
 .message{
@@ -48,10 +51,9 @@ input {
     margin: 10px;
     border-radius: 15px;
     text-align: left;
-    .message {
     display: block;
     width: fit-content;
-}
+
 }
 .userMessage{
     background-color: blue;
@@ -61,6 +63,8 @@ input {
 .nyxMessage {
     background-color: #2d1b69;
     margin-left: 80px;
+
+    white-space: pre-line;
 }
 button {
     padding: 10px;
@@ -69,9 +73,9 @@ button {
 #statusBar{
     margin: 15px;
     padding: 10px 15px;
-    border: 1px solid #4b2a9c;
+    border: 1px solid var(--glow);
     border-radius: 20px;
-    display: inline_block;
+    display: inline-block;
     background-color: rgba(20, 20, 40, 0.7);
     box-shadow: 0 0 15px var(--glow);
     font-size: 16px;
@@ -79,6 +83,7 @@ button {
 
 .normalMood {
     --glow: #7a00ff;
+    
 
 }
 
@@ -89,10 +94,47 @@ button {
 
 .helperMood{
 
-    --glow: #00cfff;
+    --glow: #00ff88;
 }
 
 .friendlyMood{
 
-    --glow: #0066ff;
+    --glow: #ffcc00;
+    
+}
+
+.systemMood{
+
+    --glow: #00aaff;
+}
+
+body.systemMood{
+    background: linear-gradient(135deg, #000814, #001d3d, #003566, #000814);
+    background-size: 400% 400%;
+    animation: nyxBackground 12s ease infinite;
+}
+body.normalMood{
+    background: linear-gradient(135deg, #020012, #16002e, #23004d, #050014);
+    background-size: 400% 400%;
+    animation: nyxBackground 12s ease infinite;
+
+
+}
+
+body.friendlyMood{
+    background: linear-gradient(135deg, #080500, #1a1100, #2b1b00, #050200);
+    background-size: 400% 400%;
+    animation: nyxBackground 12s ease infinite;
+}
+
+body.helperMood{
+     background: linear-gradient(135deg, #001008, #002417, #003322, #00120b);
+     background-size: 400% 400%;
+     animation: nyxBackground 12s ease infinite;
+}
+
+body.memoryMood {
+ background: linear-gradient(135deg, #14000f, #241018, #40002b, #12000c);
+ background-size: 400% 400%;
+     animation: nyxBackground 12s ease infinite;
 }

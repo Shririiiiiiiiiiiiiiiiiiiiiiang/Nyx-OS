@@ -62,7 +62,7 @@ button.addEventListener("click", function () {
 
     show memories ...
 
-    search memory ... (currently encountring a bug will be fixed)
+    search memory ... 
     
     help`;       
     
@@ -118,7 +118,7 @@ button.addEventListener("click", function () {
 
         mood = "system";
     }
-    if(message.toLowerCase() === "day?") {
+    if(message.toLowerCase() === "day") {
         
         const now = new Date();
 
@@ -128,19 +128,7 @@ button.addEventListener("click", function () {
 
         mood = "system";
     }
-    document.body.classList.remove(
-        "normalMood",
-        "memoryMood",
-        "helperMood",
-        "friendlyMood"
-
-    );
-    document.body.classList.add(
-        mood + "Mood"
-    );
-    console.log("Nyx mood:", mood);
-    statusBar.innerHTML =
-    "🌙 Online | 🧠 Memory Active | ✨ Mood: " + mood;
+   
     if(message.toLowerCase().includes("remember")) {
         let memories =
             JSON.parse(localStorage.getItem("memories")) || [];
@@ -173,7 +161,7 @@ button.addEventListener("click", function () {
             mood = "memory";
     }
     if(message.toLowerCase().startsWith("search memory")) {
-        const keyword = message.substring(14).toLowerCase();
+        const keyword = message.substring(14).toLowerCase().trim();
 
         let memories = 
         JSON.parse(localStorage.getItem("memories")) || [];
@@ -196,6 +184,30 @@ button.addEventListener("click", function () {
 
         mood = "memory";
     }
+
+    if(message.toLowerCase() === "clear all memories") {
+        localStorage.removeItem("memories");
+        reply = "All memories cleared.";
+        mood = "memory";
+    }
+
+     document.body.classList.remove(
+        "normalMood",
+        "memoryMood",
+        "helperMood",
+        "friendlyMood",
+        "systemMood"
+
+    );
+    document.body.classList.add(
+        mood + "Mood"
+    );
+    console.log(document.body.className);
+    console.log("Nyx mood:", mood);
+    statusBar.innerHTML =
+    "🌙 Online | 🧠 Memory Active | ✨ Mood: " + mood;
+
+
     const nyxBubble = document.createElement("div");
     nyxBubble.className = "message nyxMessage";
     chatBox.appendChild(nyxBubble);
