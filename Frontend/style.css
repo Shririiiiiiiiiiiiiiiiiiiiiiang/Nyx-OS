@@ -16,6 +16,9 @@ body{
     background: linear-gradient(135deg, #020012, #16002e, #23004d, #050014);
     background-size: 400% 400%;
     animation: nyxBackground 12s ease infinite;
+    transition:
+        background 5s ease,
+        color 5s ease;
 
 }
 @keyframes nyxBackground{
@@ -36,14 +39,17 @@ input {
 }
 #chatBox {
     width: 600px;
-    min-height: 300px;
+    height: 500px;
+    overflow-y: auto;
     margin: 20px auto;
     padding: 20px;
     background-color: #0f0f1f;
     border: 1px solid var(--glow);
     border-radius: 20px;
-    
     box-shadow: 0 0 20px var(--glow);
+     transition:
+        border-color 5s ease,
+        box-shadow 5s ease;
 }
 
 .message{
@@ -79,6 +85,9 @@ button {
     background-color: rgba(20, 20, 40, 0.7);
     box-shadow: 0 0 15px var(--glow);
     font-size: 16px;
+    transition:
+        border-color 5s ease,
+        box-shadow 5s ease;
 }
 
 .normalMood {
