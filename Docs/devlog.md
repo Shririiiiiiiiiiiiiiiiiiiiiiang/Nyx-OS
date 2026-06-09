@@ -73,3 +73,9 @@ fixed some bugs
 - commands.md
 - devlog.md
 - project_vision.md
+
+## 9th june, 2026
+# Project documentation
+- Added known_bugs.md
+- did some changes in README.md
+
