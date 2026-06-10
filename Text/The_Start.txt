@@ -1,1 +1,4 @@
-Nyx OS is a PC assistant,ai chatbot that helps the userwith everything it wants from opening any file, editing it, saving it to searching of google and also helpin by integrating with other software and hardware projects
+Nyx OS is a PC assistant,ai chatbot that helps the user with everything it wants from opening any file, editing it, saving.
+ searching of google and also helpin by integrating with other software and hardware projects
+
+ All is just write up things and changes are yet to be made...

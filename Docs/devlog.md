@@ -79,3 +79,6 @@ fixed some bugs
 - Added known_bugs.md
 - did some changes in README.md
 
+## 10th june , 2026
+- Added screenshots showing the working of Nyx
+- Added a video showing the working of Nyx
