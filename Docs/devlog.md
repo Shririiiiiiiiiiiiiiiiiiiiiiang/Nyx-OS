@@ -82,3 +82,13 @@ fixed some bugs
 ## 10th june , 2026
 - Added screenshots showing the working of Nyx
 - Added a video showing the working of Nyx
+
+## 12th june, 2026
+- removed the big video
+- added 4 small videos showcasing different features of Nyx
+- made the project publiic
+- Deployed on Github pages
+
+## 13 june, 2026
+- Removed old nyx design Background and design and planning on adding a whole different type of interface
+- Plan in Nyx_theme.md
