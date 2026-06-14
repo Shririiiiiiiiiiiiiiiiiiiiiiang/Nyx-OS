@@ -40,7 +40,7 @@
 
 # System mood
 - Eclipse moon
-- Dark atmosphere
+- Slightly dimmer stars
 
 ## Moon system
 - Moon always visible behind title
@@ -123,3 +123,9 @@
 - Able to integrate with projects and show data
 - Better memory intelligence
 - Productivity reminders
+
+## Nyx
+- Nyx is the Greek Goddess of Night
+- The interface represents the ancient night sky 
+- The moon is the heart of nyx
+every memory is a star in the sky
