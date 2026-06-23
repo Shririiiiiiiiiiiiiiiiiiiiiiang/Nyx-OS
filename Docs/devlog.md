@@ -92,3 +92,11 @@ fixed some bugs
 ## 13 june, 2026
 - Removed old nyx design Background and design and planning on adding a whole different type of interface
 - Plan in Nyx_theme.md
+
+## 18th june to 24th june
+- Missed some days + trying to perfect the moon lgog
+
+## 19th june, 2026
+- Memory upgrade 
+- No same memory stored twice
+- can show how many memoreis and also can delete induvidually

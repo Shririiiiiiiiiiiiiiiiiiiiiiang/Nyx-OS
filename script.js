@@ -63,6 +63,8 @@ button.addEventListener("click", function () {
     show memories ...
 
     search memory ... 
+
+    memory count
     
     help`;       
     
@@ -130,10 +132,20 @@ button.addEventListener("click", function () {
     }
    
     if(message.toLowerCase().includes("remember")) {
+        let memoryText = message.substring(8).trim();
+
         let memories =
             JSON.parse(localStorage.getItem("memories")) || [];
 
-            memories.push(message);
+            if (memoryText === "") {
+                reply = "Tell me what to remember";
+            }
+            else if (memories.includes(memoryText)){
+                reply = "I aldready know that";                
+            }
+            else {
+                memories.push(memory.Text)
+            }
 
             localStorage.setItem(
                 "memories",
@@ -146,6 +158,13 @@ button.addEventListener("click", function () {
 
     }
 
+    if (message.toLowerCase() === "memory count") {
+        let memories = 
+        JSON.parse(localStorage.getItem("memories")) || [];
+
+        reply = "I currently remember" + memories.length + "things" 
+    }
+
     if(message.toLowerCase().includes("show memories")) {
 
         let memories =
@@ -155,10 +174,38 @@ button.addEventListener("click", function () {
                 reply = "i dont remember anything yet";
             }
             else {
-                reply = memories.join(" | ");
-            }
-
+                reply = memories
+                    .map(function(memory, index){
+                        return(index + 1) + " " + memory;
+                    })
+                    .join("/n")
+                } 
+            
             mood = "memory";
+    }
+
+    if(message.toLowerCase().startsWith("delete memory")) {
+
+        const memoryNumber = 
+        parseInt(message.substring(14));
+
+        if(isNaN(memoryNumber)) {
+            reply = "Tell me which memory to delete";
+        }
+        else if (memoryNumber < 1 || memoryNumber > memory.length) {
+                reply = "That memory number doesnt exist";
+        }
+        else{
+            const deleteMemory = 
+            memories.splice(memoryNumber - 1, 1);
+
+            localStorage.setItem(
+                "memories",
+                JSON.stringify(memories)
+            );
+
+            reply = "deleted memory" + memoryNumber + " : " + deletedMemory[0];
+        }
     }
     if(message.toLowerCase().startsWith("search memory")) {
         const keyword = message.substring(14).toLowerCase().trim();
@@ -233,6 +280,8 @@ button.addEventListener("click", function () {
 
         clearInterval(dotsAnimation);
 
+        console.log(reply);
+        console.log(typeof reply);
         let i = 0;
 
         const typingEffect = setInterval(function (){
