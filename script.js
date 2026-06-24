@@ -131,7 +131,7 @@ button.addEventListener("click", function () {
         mood = "system";
     }
    
-    if(message.toLowerCase().includes("remember")) {
+    if(message.toLowerCase().startsWith("remember")) {
         let memoryText = message.substring(8).trim();
 
         let memories =
@@ -144,8 +144,8 @@ button.addEventListener("click", function () {
                 reply = "I aldready know that";                
             }
             else {
-                memories.push(memory.Text)
-            }
+                memories.push(memoryText);
+            
 
             localStorage.setItem(
                 "memories",
@@ -153,6 +153,7 @@ button.addEventListener("click", function () {
             );
 
             reply = "Okay, I will remember that.";
+        }
 
             mood = "memory";
 
@@ -162,7 +163,8 @@ button.addEventListener("click", function () {
         let memories = 
         JSON.parse(localStorage.getItem("memories")) || [];
 
-        reply = "I currently remember" + memories.length + "things" 
+        reply = "I currently remember " + memories.length + "things. " ;
+        mood = "memory";
     }
 
     if(message.toLowerCase().includes("show memories")) {
@@ -176,9 +178,9 @@ button.addEventListener("click", function () {
             else {
                 reply = memories
                     .map(function(memory, index){
-                        return(index + 1) + " " + memory;
+                        return(index + 1) + ". " + memory;
                     })
-                    .join("/n")
+                    .join("\n")
                 } 
             
             mood = "memory";
@@ -189,14 +191,17 @@ button.addEventListener("click", function () {
         const memoryNumber = 
         parseInt(message.substring(14));
 
+        let memories = 
+        JSON.parse(localStorage.getItem("memories")) || [];
+
         if(isNaN(memoryNumber)) {
             reply = "Tell me which memory to delete";
         }
-        else if (memoryNumber < 1 || memoryNumber > memory.length) {
+        else if (memoryNumber < 1 || memoryNumber > memories.length) {
                 reply = "That memory number doesnt exist";
         }
         else{
-            const deleteMemory = 
+            const deletedMemory = 
             memories.splice(memoryNumber - 1, 1);
 
             localStorage.setItem(
@@ -204,7 +209,7 @@ button.addEventListener("click", function () {
                 JSON.stringify(memories)
             );
 
-            reply = "deleted memory" + memoryNumber + " : " + deletedMemory[0];
+            reply = "Deleted memory " + memoryNumber + " : " + deletedMemory[0];
         }
     }
     if(message.toLowerCase().startsWith("search memory")) {
@@ -259,29 +264,26 @@ button.addEventListener("click", function () {
     nyxBubble.className = "message nyxMessage";
     chatBox.appendChild(nyxBubble);
     chatBox.scrollTop = chatBox.scrollHeight;
-    nyxBubble.innerHTML = "Nyx is typing.";
-    
-    let dots = 1;
+    const moonPhases = ["🌑", "🌒", "🌓", "🌔", "🌕", "🌔", "🌓", "🌒"];
 
-    const dotsAnimation = setInterval(function () {
+    let moonIndex = 0;
+    nyxBubble.innerHTML = "Nyx: " + moonPhases[moonIndex];
 
-        dots++;
+    const moonAnimation = setInterval(function() {
+        moonIndex++;
 
-        if (dots > 3){
-            dots = 1;
+        if(moonIndex >= moonPhases.length) {
+            moonIndex = 0;
         }
 
-        nyxBubble.innerHTML = 
-            "Nyx is typing" + ".".repeat(dots);
-
-    }, 500);
+        nyxBubble.innerHTML = "Nyx: " + moonPhases[moonIndex]; 
+    }, 300);
+        
 
     setTimeout(function () {
 
-        clearInterval(dotsAnimation);
+        clearInterval(moonAnimation);
 
-        console.log(reply);
-        console.log(typeof reply);
         let i = 0;
 
         const typingEffect = setInterval(function (){
@@ -290,7 +292,7 @@ button.addEventListener("click", function () {
     
 
         nyxBubble.innerHTML = 
-            "Nyx: " + reply.substring(0,i);
+            "Nyx: " + reply.substring(0, i);
 
         i++;
         
