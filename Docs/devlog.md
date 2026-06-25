@@ -93,10 +93,21 @@ fixed some bugs
 - Removed old nyx design Background and design and planning on adding a whole different type of interface
 - Plan in Nyx_theme.md
 
-## 18th june to 24th june
+## 18th june to 22th june
 - Missed some days + trying to perfect the moon lgog
 
-## 19th june, 2026
+## 23th june, 2026
 - Memory upgrade 
 - No same memory stored twice
+
+##  24th june, 2026
+-fixed bug 
+- added mon thinking animations
+- upgraded memory
 - can show how many memoreis and also can delete induvidually
+- - git add dates are off in from 18th to 24th june**
+
+## 25 june, 2026
+- added mountains,stars and fog in the bg
+- mountains dont look good removed
+- planning on making mountains with SVG
