@@ -1,3 +1,7 @@
+### IMPORTANT NOTICE
+Project is on hold for 7 to 8 months due tomy exams will be started again as soon as i finish my examss
+
+
 ## Nyx-OS
 
 
