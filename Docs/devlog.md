@@ -111,3 +111,6 @@ fixed some bugs
 - added mountains,stars and fog in the bg
 - mountains dont look good removed
 - planning on making mountains with SVG
+
+## 13 july, 2026
+- made minor changes and upgrades

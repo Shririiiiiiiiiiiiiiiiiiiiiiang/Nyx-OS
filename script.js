@@ -7,7 +7,10 @@ let userName = localStorage.getItem("userName") || "";
 
 button.addEventListener("click", function () {
 
-    const message = input.value;
+    const message = input.value.trim();
+    if(message === ""){
+        return;
+    }
 
     
 
@@ -17,19 +20,20 @@ button.addEventListener("click", function () {
 
         "I am still learning",
 
-        " intresting....",
+        "interesting....",
 
-        "Let me thing about that",
+        "Let me think about that",
 
         "I am still evolving",
 
         "circuits are still wiring up",
 
-        "processing...failed sucessfullyyyyyy",
+        "processing...failed successfullyyyyyy",
 
         "Nyx doesnt know the answer yet",
     ];
 
+    
     let reply = 
     nyxReplies[
         Math.floor(
@@ -44,6 +48,7 @@ button.addEventListener("click", function () {
     }  
     if(message.toLowerCase() === "who are you") {
         reply = "I am your AI Assistant.";
+        mood = "friendly";
 
     }
     if(message.toLowerCase() === "help") {
@@ -86,7 +91,7 @@ button.addEventListener("click", function () {
     }
 
     if(message.toLowerCase().startsWith("my name is")) {
-        userName = message.substring(11);
+        userName = message.substring(10).trim();
         localStorage.setItem("userName", userName)
         reply = "Nice to meet you, " + userName;
     }
@@ -141,7 +146,7 @@ button.addEventListener("click", function () {
                 reply = "Tell me what to remember";
             }
             else if (memories.includes(memoryText)){
-                reply = "I aldready know that";                
+                reply = "I already know that";                
             }
             else {
                 memories.push(memoryText);
@@ -163,7 +168,7 @@ button.addEventListener("click", function () {
         let memories = 
         JSON.parse(localStorage.getItem("memories")) || [];
 
-        reply = "I currently remember " + memories.length + "things. " ;
+        reply = "I currently remember " + memories.length + " things. " ;
         mood = "memory";
     }
 
@@ -210,6 +215,7 @@ button.addEventListener("click", function () {
             );
 
             reply = "Deleted memory " + memoryNumber + " : " + deletedMemory[0];
+            mood = "memory";
         }
     }
     if(message.toLowerCase().startsWith("search memory")) {
@@ -230,7 +236,7 @@ button.addEventListener("click", function () {
         }
         else{
 
-            reply = results.join("|");
+            reply = results.join("\n");
 
         }
 
@@ -292,17 +298,16 @@ button.addEventListener("click", function () {
     
 
         nyxBubble.innerHTML = 
-            "Nyx: " + reply.substring(0, i);
+            "Nyx: " + reply.substring(0, i).replace(/\n/g,"<br>");
 
         i++;
         
-        if(i > reply.length){
-
-            clearInterval(typingEffect);
-
-        }
+        if(i > reply.length) {
+    clearInterval(typingEffect);
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
     }, 50);
-    }, 3000);
+    }, 1500);
     input.value = "";
 
 });
@@ -318,3 +323,4 @@ input.addEventListener("keydown", function (event) {
     }
 
 });
+
