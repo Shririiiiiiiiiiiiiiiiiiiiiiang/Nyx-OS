@@ -128,4 +128,4 @@
 - Nyx is the Greek Goddess of Night
 - The interface represents the ancient night sky 
 - The moon is the heart of nyx
-every memory is a star in the sky
+- every memory is a star in the sky

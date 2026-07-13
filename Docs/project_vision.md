@@ -13,4 +13,6 @@ And also make a cool project
 # What do i want it to become
 Over the time when i will come to the final stages of Nyx i want it to be a super useful assistant but with some humour and not a corprate look, the name "Nyx" is a name of a ancient Greek goddess, so in the final stages i will make nyx UI lok smth matching to the description of the goddes, Nyx will be able to answer questions by itself using locally hosted ai and also can be used with external AI APIs
 
+# better bg
+I am making the background with three.js and SVG along with javascript to make it look more nice
 

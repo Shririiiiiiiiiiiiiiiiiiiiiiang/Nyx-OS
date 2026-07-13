@@ -110,7 +110,8 @@ fixed some bugs
 ## 25 june, 2026
 - added mountains,stars and fog in the bg
 - mountains dont look good removed
-- planning on making mountains with SVG
+- planning on making mountains with SVG and three.js
 
 ## 13 july, 2026
 - made minor changes and upgrades
+- installed three.js and vite
