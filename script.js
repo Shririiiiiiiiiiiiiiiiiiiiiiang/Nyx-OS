@@ -262,7 +262,9 @@ button.addEventListener("click", function () {
     );
     console.log(document.body.className);
     console.log("Nyx mood:", mood);
+    console.log("Status line test: 🌙 🧠 ✨");
     statusBar.innerHTML =
+    
     "🌙 Online | 🧠 Memory Active | ✨ Mood: " + mood;
 
 

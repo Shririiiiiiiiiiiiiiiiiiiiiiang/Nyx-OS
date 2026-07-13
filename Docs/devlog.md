@@ -115,3 +115,4 @@ fixed some bugs
 ## 13 july, 2026
 - made minor changes and upgrades
 - installed three.js and vite
+- started with Background
