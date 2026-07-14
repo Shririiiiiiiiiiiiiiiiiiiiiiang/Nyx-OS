@@ -1,5 +1,15 @@
 import * as THREE from 'three';
 
+const starCanvas = document.createElement("canvas");
+starCanvas.width = 64
+starCanvas.height = 64
+const starCtx = starCanvas.getContext("2d");
+starCtx.beginPath();
+starCtx.arc(32, 32, 30, 0, Math.PI * 2);
+starCtx.fillStyle = "white";
+starCtx.fill();
+const starTexture = new THREE.CanvasTexture(starCanvas);
+
 const moonCanvas = document.createElement("canvas");
 moonCanvas.width = 512;
 moonCanvas.height = 512;
@@ -17,23 +27,16 @@ moonGradient.addColorStop(0, "#f0f0f0");
 moonGradient.addColorStop(1, "#b8b8b8");
 ctx.fillStyle = moonGradient;
 ctx.fill();
-
-for(let i = 0; i < 20; i++) {  //moon craterss
-    const angle = Math.random() * Math.PI * 2;
-    const distance = Math.random() * 110;
-    const x = 256 + Math.cos(angle) * distance
-    const y = 256 + Math.sin(angle) * distance
-    
-    const r =  
-    8 + Math.random() * 20;
-
-    ctx.beginPath();
-    ctx.arc(
-        x, y, r, 0, Math.PI * 2
-    );
-    ctx.fillStyle = "rgba(90, 90, 90, 0.4)";
-    ctx.fill();
-}
+ctx.fillStyle = "rgba(100, 100, 100, 0.25)";
+ctx.beginPath();
+ctx.ellipse(210, 220, 55, 35, 0.3, 0, Math.PI *2);
+ctx.fill();
+ctx.beginPath();
+ctx.ellipse(290, 280, 45, 25, -0.4, 0, Math.PI * 2);
+ctx.fill();
+ctx.beginPath();
+ctx.ellipse(250, 350, 30, 18, 0.2, 0, Math.PI * 2);
+ctx.fill();
 
 const moonTexture = new THREE.CanvasTexture(
     moonCanvas
@@ -121,6 +124,8 @@ starGeometry.setAttribute(
     )
 );
 const starMaterial = new THREE.PointsMaterial({
+    map: starTexture,
+    transparent: true,
     color: 0xffffff,
     size: 0.3
 
@@ -169,6 +174,7 @@ brightGeometry.setAttribute(
 );
 
 const brightMaterial = new THREE.PointsMaterial({
+    map:starTexture,
     color: 0xffffff,
     size: 1,
     transparent: true,
@@ -226,9 +232,10 @@ mediumGeometry.setAttribute(
 );
 
 const mediumMaterial = new THREE.PointsMaterial({
+    map: starTexture,
     color: 0xffffff,
     size: 0.6,
-    transparent: true,
+    transparent: true
     
 });
 
@@ -267,6 +274,10 @@ function animate() {
 starMaterial.transparent = true;
 starMaterial.opacity = 0.9+Math.sin(Date.now() * 0.001) * 0.05;
     renderer.render(scene, camera);
+
+stars.rotation.y += 0.00002;
+mediumStars.rotation.y += 0.00005;
+brightStars.rotation.y += 0.00009;
 }
 
 console.log(scene);

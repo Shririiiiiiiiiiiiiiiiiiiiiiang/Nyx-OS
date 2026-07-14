@@ -1,0 +1,11 @@
+{
+  "name": "spacescene",
+  "private": true,
+  "dependencies": {
+    "three": "^0.185.1",
+    "vite": "^8.1.4"
+  },
+  "scripts": {
+    "dev": "vite"
+  }
+}
