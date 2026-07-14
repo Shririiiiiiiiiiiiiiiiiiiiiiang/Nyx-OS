@@ -116,3 +116,8 @@ fixed some bugs
 - made minor changes and upgrades
 - installed three.js and vite
 - started with Background
+
+## 14th july, 2026
+- Made 3 diff sized stars and made them move
+- largest stars twinkle
+- Tried making the PERFECT moon many times but faileddd still working on moon
