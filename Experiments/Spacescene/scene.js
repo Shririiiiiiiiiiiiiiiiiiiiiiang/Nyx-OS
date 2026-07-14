@@ -197,7 +197,7 @@ scene.background = new THREE.Color(0x071224);
 function animate() {
     requestAnimationFrame(animate);
 
-  brightMaterial.opacity = 0.65+Math.sin(Date.now() * 0.005 + mediumOffset) * 0.35;
+  brightMaterial.opacity = 0.65+Math.sin(Date.now() * 0.005 + brightOffset) * 0.35;
   mediumMaterial.opacity = 0.75 + Math.sin(Date.now() * 0.002 + mediumOffset)* 0.15;
   
 starMaterial.transparent = true;
