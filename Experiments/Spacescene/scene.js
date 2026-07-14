@@ -27,6 +27,18 @@ renderer.setSize(
 
 document.body.appendChild(renderer.domElement);
 
+window.addEventListener(
+    "resize",
+    () => {
+        camera.aspect = window.innerWidth/window.innerHeight;
+        camera.updateMatrix.ProjectionMatrix();
+        renderer.setSize(
+            window.innerWidth,
+            window.innerHeight
+        );
+    }
+);
+
 
 camera.position.z = 5;
 
@@ -34,7 +46,7 @@ const starCount = 1000;
 const positions = [];
 
 for(let i = 0; i < starCount; i++) {
-    const radius = 80;
+    const radius = 70;
 
     const theta = Math.random() * Math.PI*2;
     const phi = Math.acos(
@@ -84,7 +96,7 @@ scene.add(stars);
 const brightPositions = [];
 
 for (let i = 0; i < 100; i++) {
-    const radius = 80;
+    const radius = 70;
     const theta = Math.random()*Math.PI*2;
     const phi = Math.acos((Math.random() * 2) - 1);
 
@@ -138,7 +150,7 @@ const mediumPositions = [];
 
 for(let i = 0; i < 250; i++){
 
-    const radius = 80;
+    const radius = 70;
 
     const theta = Math.random() * Math.PI * 2;
     const phi = Math.acos(
@@ -189,6 +201,34 @@ const mediumStars =
 
     scene.add(mediumStars);
 
+
+const moonGeometry = new THREE.SphereGeometry(
+        5,
+        64,
+        64
+    );
+const moonMaterial = new THREE.MeshPhongMaterial({
+    color: 0xe0e0e0
+});
+const moon  = new THREE.Mesh(
+    moonGeometry,
+    moonMaterial
+);
+
+moon.position.set(
+    25, 15, -40
+);
+
+
+
+scene.add(moon);
+const moonLight= new THREE.DirectionalLight(
+    0xffffff, 2
+);
+
+moonLight.position.set( 20, 20, 20
+);
+scene.add(moonLight);
 
 
     
