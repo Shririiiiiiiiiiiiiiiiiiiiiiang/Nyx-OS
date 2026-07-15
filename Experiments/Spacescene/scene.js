@@ -136,58 +136,30 @@ const stars = new THREE.Points(
     starMaterial
 );
 scene.add(stars);
-
-const brightPositions = [];
+const brightStars = [];
 
 for (let i = 0; i < 100; i++) {
     const radius = 70;
     const theta = Math.random()*Math.PI*2;
-    const phi = Math.acos((Math.random() * 2) - 1);
-
-     const x=
-    radius*
-    Math.sin(phi)*
-    Math.cos(theta);
-    const y=
-    radius*
-    Math.sin(phi)*
-    Math.sin(theta);
-    const z=
-    radius*
-    Math.cos(phi);
-
-    brightPositions.push(
-        x, 
-        y,
-        z
-    );
-
+    const phi = Math.acos((Math.random() * 2)- 1);
+    const x = radius * Math.sin(phi) * Math.cos(theta);
+    const y = radius * Math.sin(phi) * Math.sin(theta);
+    const z = radius * Math.cos(phi);
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute("position", new THREE.Float32BufferAttribute([x, y, z], 3));
+    const material = new THREE.PointsMaterial({
+        map: starTexture, color: 0xffffff, size: 0.8 + Math.random() * 0.7, transparent: true
+    });
+    const star = new THREE.Points(geometry, material);
+    star.userData.twinkleSpeed = 0.0003 + Math.random() * 0.0015;
+    star.userData.twinkleoffset = Math.random() * 100;
+    brightStars.push(star);
+    scene.add(star)  
 }
-const brightGeometry = new THREE.BufferGeometry();
 
-brightGeometry.setAttribute(
-    "position",
-    new THREE.Float32BufferAttribute(
-        brightPositions,
-        3
-    )
-);
 
-const brightMaterial = new THREE.PointsMaterial({
-    map:starTexture,
-    color: 0xffffff,
-    size: 1,
-    transparent: true,
-    alphaTest: 0.5
-});
 
-const brightStars = 
-    new THREE.Points(
-        brightGeometry,
-        brightMaterial
-    );
 
-    scene.add(brightStars);
 
 
 
@@ -268,16 +240,27 @@ scene.background = new THREE.Color(0x071224);
 function animate() {
     requestAnimationFrame(animate);
 
-  brightMaterial.opacity = 0.65+Math.sin(Date.now() * 0.005 + brightOffset) * 0.35;
+ 
   mediumMaterial.opacity = 0.75 + Math.sin(Date.now() * 0.002 + mediumOffset)* 0.15;
   
 starMaterial.transparent = true;
-starMaterial.opacity = 0.9+Math.sin(Date.now() * 0.001) * 0.05;
+starMaterial.opacity = 0.9+Math.sin(Date.now() * 0.01) * 0.05;
+
+for(const star of brightStars) {
+    star.material.opacity = 
+    0.85 +
+    Math.sin(
+        Date.now() * star.userData.twinkleSpeed + star.userData.twinkleOffset
+    ) * 0.08;
+}
+
     renderer.render(scene, camera);
 
-stars.rotation.y += 0.00002;
-mediumStars.rotation.y += 0.00005;
-brightStars.rotation.y += 0.00009;
+stars.rotation.y += 0.0002;
+mediumStars.rotation.y += 0.0005;
+
+
+
 }
 
 console.log(scene);
