@@ -151,8 +151,8 @@ for (let i = 0; i < 100; i++) {
         map: starTexture, color: 0xffffff, size: 0.8 + Math.random() * 0.7, transparent: true
     });
     const star = new THREE.Points(geometry, material);
-    star.userData.twinkleSpeed = 0.0003 + Math.random() * 0.0015;
-    star.userData.twinkleoffset = Math.random() * 100;
+    star.userData.twinkleSpeed = 0.002 + Math.random() * 0.005;
+    star.userData.twinkleOffset = Math.random() * 100;
     brightStars.push(star);
     scene.add(star)  
 }
@@ -248,10 +248,10 @@ starMaterial.opacity = 0.9+Math.sin(Date.now() * 0.01) * 0.05;
 
 for(const star of brightStars) {
     star.material.opacity = 
-    0.85 +
+    0.6 +
     Math.sin(
         Date.now() * star.userData.twinkleSpeed + star.userData.twinkleOffset
-    ) * 0.08;
+    ) * 0.4;
 }
 
     renderer.render(scene, camera);
