@@ -267,6 +267,24 @@ button.addEventListener("click", function () {
     
     "🌙 Online | 🧠 Memory Active | ✨ Mood: " + mood;
 
+    const Connect = document.getElementById("Connect");
+    const PCStatus = document.getElementById("PC-Status");
+    let connected = false;
+
+    Connect.addEventListener("click",
+        () => { connected = !connected;
+            if(connected) {
+                PCStatus.textContent = "Status: Connected!!!!!"
+                Connect.textContent = "Disconnected";
+
+            }
+            else {
+                PCStatus.textContent = "Status: not connected";
+                Connect.textContent = "connect"
+            }
+
+    })
+
 
     const nyxBubble = document.createElement("div");
     nyxBubble.className = "message nyxMessage";
