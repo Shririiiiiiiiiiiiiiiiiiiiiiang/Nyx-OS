@@ -9,6 +9,22 @@ const notesList = document.getElementById("noteslist");
 const notesButton = document.getElementById("notes");
 const notesPage = document.getElementById("notespage");
 const closeNotes = document.getElementById("closenotes");
+function renderNotes(){
+    notesList.innerHTML = "";
+    notes.forEach(function(note){
+        const noteCard = document.createElement("div");
+        noteCard.className = "noteCard";
+        noteCard.textContent = note.title;
+        
+        noteCard.addEventListener("click", function() {
+            noteTitle.value = note.title;
+            noteInput.value = note.content;       
+        
+        });
+        notesList.appendChild(noteCard);
+
+    });
+}
 notesButton.addEventListener(
     "click", () => {notesPage.style.display = "block";}
     );
@@ -16,6 +32,8 @@ notesButton.addEventListener(
         "click", () => {notesPage.style.display = "none";}
     );
 let userName = localStorage.getItem("userName") || "";
+
+let notes = JSON.parse(localStorage.getItem("notes")) || [];
 
 
 button.addEventListener("click", function () {
@@ -364,12 +382,31 @@ saveButton.addEventListener("click", function(){
     if(title === "" || content === "") {
         return;
     }
-    const noteCard = document.createElement("div");
-    noteCard.className = "noteCard";
-    noteCard.textContent = title;
-    notesList.appendChild(noteCard);
+    const existingNote = notes.find(
+        note => note.title === title
+    );
+    if(existingNote){
+        existingNote.content = content;
+
+    }
+    else{
+        notes.push({
+            title: title,
+            content: content
+        });
+    }
+    localStorage.setItem(
+        "notes", JSON.stringify(notes)
+    );
+    renderNotes();
+    noteCard.addEventListener("click", function(){
+        noteTitle.value = noteCard.dataset.title;
+        noteInput.value = noteCard.dataset.content;
+    });
     noteTitle.value = "";
     noteInput.value = "";
 }
 );
+
+renderNotes();
 
