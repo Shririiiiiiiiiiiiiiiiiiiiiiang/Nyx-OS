@@ -2,6 +2,16 @@ const input = document.getElementById("userInput");
 const button = document.getElementById("sendBtn");
 const chatBox = document.getElementById("chatBox");
 const statusBar = document.getElementById("statusBar");
+
+const notesButton = document.getElementById("notes");
+const notesPage = document.getElementById("notespage");
+const closeNotes = document.getElementById("closenotes");
+notesButton.addEventListener(
+    "click", () => {notesPage.style.display = "block";}
+    );
+    closeNotes.addEventListener(
+        "click", () => {notesPage.style.display = "none";}
+    );
 let userName = localStorage.getItem("userName") || "";
 
 
@@ -9,7 +19,7 @@ button.addEventListener("click", function () {
 
     const message = input.value.trim();
     if(message === ""){
-        return;
+        return
     }
 
     
@@ -284,6 +294,8 @@ button.addEventListener("click", function () {
             }
 
     })
+
+
 
 
     const nyxBubble = document.createElement("div");
