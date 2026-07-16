@@ -113,6 +113,26 @@ body{
 #noteslist{
     margin-top: 20px;
 }
+#noteTitle{
+    width:100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background: #111827;
+    color: white;
+    border: 1px solid #445577;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+.noteCard{
+    background:#1b2333;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: white;
+    
+}
 
 #fog{
     position: absolute;

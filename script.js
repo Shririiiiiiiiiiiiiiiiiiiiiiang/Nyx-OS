@@ -2,7 +2,10 @@ const input = document.getElementById("userInput");
 const button = document.getElementById("sendBtn");
 const chatBox = document.getElementById("chatBox");
 const statusBar = document.getElementById("statusBar");
-
+const saveButton = document.getElementById("savethem");
+const noteInput = document.getElementById("noteInput")
+const noteTitle = document.getElementById("noteTitle");
+const notesList = document.getElementById("noteslist");
 const notesButton = document.getElementById("notes");
 const notesPage = document.getElementById("notespage");
 const closeNotes = document.getElementById("closenotes");
@@ -355,4 +358,18 @@ input.addEventListener("keydown", function (event) {
     }
 
 });
+saveButton.addEventListener("click", function(){
+    const title = noteTitle.value.trim();
+    const content = noteInput.value.trim();
+    if(title === "" || content === "") {
+        return;
+    }
+    const noteCard = document.createElement("div");
+    noteCard.className = "noteCard";
+    noteCard.textContent = title;
+    notesList.appendChild(noteCard);
+    noteTitle.value = "";
+    noteInput.value = "";
+}
+);
 
