@@ -9,22 +9,48 @@ const notesList = document.getElementById("noteslist");
 const notesButton = document.getElementById("notes");
 const notesPage = document.getElementById("notespage");
 const closeNotes = document.getElementById("closenotes");
+const searchnotes = document.getElementById("searchnotes");
+const notehead = document.getElementById("notehead");
 function renderNotes(){
+    
     notesList.innerHTML = "";
-    notes.forEach(function(note){
+    notehead.textContent = "Notes (" + notes.length + ")";
+    const searchTerm = searchnotes.value.toLowerCase();
+    
+    notes.forEach(function(note, index){
+        if(!note.title.toLowerCase().includes(searchTerm)
+        ){return;
+    }
         const noteCard = document.createElement("div");
         noteCard.className = "noteCard";
         noteCard.textContent = note.title;
+        
+        const deletebutton = document.createElement("button");
+        deletebutton.textContent = "❌";
+        deletebutton.className = "deleteNote";
         
         noteCard.addEventListener("click", function() {
             noteTitle.value = note.title;
             noteInput.value = note.content;       
         
         });
+
+        deletebutton.addEventListener("click", function(event){
+            event.stopPropagation();
+            notes.splice(index, 1)
+            localStorage.setItem(
+                "notes", JSON.stringify(notes)
+            );
+            renderNotes();
+        });
+        noteCard.appendChild(deletebutton);
         notesList.appendChild(noteCard);
 
     });
 }
+searchnotes.addEventListener("input", function() {
+    renderNotes();
+});
 notesButton.addEventListener(
     "click", () => {notesPage.style.display = "block";}
     );
@@ -399,10 +425,7 @@ saveButton.addEventListener("click", function(){
         "notes", JSON.stringify(notes)
     );
     renderNotes();
-    noteCard.addEventListener("click", function(){
-        noteTitle.value = noteCard.dataset.title;
-        noteInput.value = noteCard.dataset.content;
-    });
+    
     noteTitle.value = "";
     noteInput.value = "";
 }
