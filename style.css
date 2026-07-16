@@ -29,7 +29,50 @@ body{
 
 }
     
+.hidden{display: none;}
 
+.panelhide{display: none
+};
+
+#alltools{
+    display: flex;
+    justify-content: center;
+    gap:15px;
+    margin-top: 15px;
+}
+#alltools Button{
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background: #1b2333;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+#alltolls button:hover{
+    background:#2a3650;
+}
+#notespage{
+    position:fixed;
+    top: 50%;
+    left: 50%;
+    transform:translate(-50%, -50%);
+    width:650px;
+    max-width:90%;
+    background: rgba(10, 15, 25, 0.30);
+    border:1px solid #445577;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 0 25px rgba(100, 150, 255, 0.25);
+    z-index: 1000;
+}
+
+.panelheader{
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
 
 #fog{
     position: absolute;
