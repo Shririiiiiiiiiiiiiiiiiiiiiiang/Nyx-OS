@@ -121,3 +121,11 @@ fixed some bugs
 - Made 3 diff sized stars and made them move
 - largest stars twinkle
 - Tried making the PERFECT moon many times but faileddd still working on moon
+
+## 15th to 19th july, 2026
+- Lost devlog of dates so making a compiled one
+- Lost it due to me having to erase a commit i mae due to the code being too much wrong due to me doing a mistake
+- went one commit back
+- from now will try to use standard names coz because of not using it i myself got confused
+- currently i have stopped making the bg and am wrking on features
+- i have made a notes feature and am currently doing tasks/missions feature and this is the update which caused the code problem due to which i had to switch to last commit now remaking the feature 

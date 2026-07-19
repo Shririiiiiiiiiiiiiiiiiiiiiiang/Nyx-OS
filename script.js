@@ -11,6 +11,12 @@ const notesPage = document.getElementById("notespage");
 const closeNotes = document.getElementById("closenotes");
 const searchnotes = document.getElementById("searchnotes");
 const notehead = document.getElementById("notehead");
+const tasksButton = document.getElementById("tasks");
+const missionsPage = document.getElementById("missionpage");
+const closeMission = document.getElementById("closemission");
+const saveTask = document.getElementById("savetask");
+const missionInput = document.getElementById("missioninput");
+const missionList = document.getElementById("missionlist");
 function renderNotes(){
     
     notesList.innerHTML = "";
@@ -48,19 +54,49 @@ function renderNotes(){
 
     });
 }
+
+function renderMissions() {
+    missionList.innerHTML = "";
+    document.getElementById("missionhead").textContent = "Missions (" + missions.length + ")";
+    missions.forEach(function(mission,index){
+        const card = document.createElement("div");
+        card.className = "noteCard";
+        card.textContent = mission;
+        const deletebutton = document.createElement("button");
+        deletebutton.textContent = "❌"
+        deletebutton.className = "deleteNote";
+        deletebutton.addEventListener("click",function(event) {
+            event.stopPropagation();
+            missions.splice(index, 1);
+            localStorage.setItem(
+                "missions", JSON.stringify(missions)
+            );
+            renderMissions();   
+            });
+            card.appendChild(deletebutton);
+            missionList.appendChild(card);
+    });
+}
+
 searchnotes.addEventListener("input", function() {
     renderNotes();
 });
 notesButton.addEventListener(
     "click", () => {notesPage.style.display = "block";}
     );
-    closeNotes.addEventListener(
+closeNotes.addEventListener(
         "click", () => {notesPage.style.display = "none";}
     );
+tasksButton.addEventListener(
+    "click", () => {missionsPage.style.display = "block";}
+);
+closeMission.addEventListener(
+    "click", () => {missionsPage.style.display = "none";}
+);    
 let userName = localStorage.getItem("userName") || "";
 
 let notes = JSON.parse(localStorage.getItem("notes")) || [];
-
+let missions = JSON.parse(localStorage.getItem("missions")) || [];
 
 button.addEventListener("click", function () {
 
@@ -402,6 +438,20 @@ input.addEventListener("keydown", function (event) {
     }
 
 });
+
+saveTask.addEventListener("click", function(){
+    const task = missionInput.value.trim();
+    if(task == "") {
+        return;
+    }
+    missions.push(task);
+    localStorage.setItem(
+        "missions", JSON.stringify(missions)
+    );
+    renderMissions();
+    missionInput.value = "";
+})
+
 saveButton.addEventListener("click", function(){
     const title = noteTitle.value.trim();
     const content = noteInput.value.trim();
@@ -424,6 +474,9 @@ saveButton.addEventListener("click", function(){
     localStorage.setItem(
         "notes", JSON.stringify(notes)
     );
+
+
+
     renderNotes();
     
     noteTitle.value = "";
@@ -432,4 +485,5 @@ saveButton.addEventListener("click", function(){
 );
 
 renderNotes();
+renderMissions();
 
