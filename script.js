@@ -55,13 +55,38 @@ function renderNotes(){
     });
 }
 
+
 function renderMissions() {
     missionList.innerHTML = "";
+    const completedCount = missions.filter(
+        mission => mission.completed
+    ).length;
+    document.getElementById("missionProgress").textContent = "Completed: " + completedCount + "/" + missions.length;
+    
+    
+    
+    const percent = missions.length === 0 ? 0 : (completedCount / missions.length) * 100;
+    document.getElementById("progressFill").style.width = percent + "%";
     document.getElementById("missionhead").textContent = "Missions (" + missions.length + ")";
     missions.forEach(function(mission,index){
         const card = document.createElement("div");
         card.className = "noteCard";
-        card.textContent = mission;
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = mission.completed;
+        checkbox.addEventListener("change", function(){
+            mission.completed = checkbox.checked;
+            localStorage.setItem("missions", JSON.stringify(missions));
+            renderMissions();
+        });
+        card.appendChild(checkbox);
+        const missionText = document.createElement("span");
+        missionText.textContent = mission.text;
+        if(mission.completed) {
+            missionText.style.textDecoration = "line-through";
+            missionText.style.opacity = "0.6";
+        }
+        card.appendChild(missionText);
         const deletebutton = document.createElement("button");
         deletebutton.textContent = "❌"
         deletebutton.className = "deleteNote";
@@ -76,6 +101,9 @@ function renderMissions() {
             card.appendChild(deletebutton);
             missionList.appendChild(card);
     });
+    console.log("complete", completedCount);
+    console.log("total ", missions.length);
+    console.log("percent ", percent);
 }
 
 searchnotes.addEventListener("input", function() {
@@ -444,7 +472,10 @@ saveTask.addEventListener("click", function(){
     if(task == "") {
         return;
     }
-    missions.push(task);
+    missions.push({
+        text: task,
+        completed: false
+    });
     localStorage.setItem(
         "missions", JSON.stringify(missions)
     );

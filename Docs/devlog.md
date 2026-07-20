@@ -129,3 +129,8 @@ fixed some bugs
 - from now will try to use standard names coz because of not using it i myself got confused
 - currently i have stopped making the bg and am wrking on features
 - i have made a notes feature and am currently doing tasks/missions feature and this is the update which caused the code problem due to which i had to switch to last commit now remaking the feature 
+
+## 20th july, 2026
+- Completing mission/task tab
+- having problems loading the progress bar
+- currently now the project is being made with plain bgs afterwards ill add theme to everything
