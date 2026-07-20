@@ -17,6 +17,9 @@ const closeMission = document.getElementById("closemission");
 const saveTask = document.getElementById("savetask");
 const missionInput = document.getElementById("missioninput");
 const missionList = document.getElementById("missionlist");
+const missionCata = document.getElementById("missionCata")
+const missionDue = document.getElementById("missionDue")
+const missionPriority = document.getElementById("missionPriority")
 function renderNotes(){
     
     notesList.innerHTML = "";
@@ -474,6 +477,9 @@ saveTask.addEventListener("click", function(){
     }
     missions.push({
         text: task,
+        category: missionCata.value,
+        dueDate: missionDue.value,
+        priority: missionPriority.value,
         completed: false
     });
     localStorage.setItem(
@@ -481,6 +487,9 @@ saveTask.addEventListener("click", function(){
     );
     renderMissions();
     missionInput.value = "";
+    missionCata.value = "";
+    missionDue.value = "";
+    missionPriority.value = "Low";
 })
 
 saveButton.addEventListener("click", function(){
