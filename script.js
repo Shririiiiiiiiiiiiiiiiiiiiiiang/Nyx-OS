@@ -71,9 +71,20 @@ function renderMissions() {
     const percent = missions.length === 0 ? 0 : (completedCount / missions.length) * 100;
     document.getElementById("progressFill").style.width = percent + "%";
     document.getElementById("missionhead").textContent = "Missions (" + missions.length + ")";
+   
+   const priorityOrder = {
+    critical: 1, high: 2, medium: 3, low: 4
+   };
+   
+   missions.sort((a,b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
+   
+   
     missions.forEach(function(mission,index){
         const card = document.createElement("div");
         card.className = "noteCard";
+        card.classList.add(
+            mission.priority.toLowerCase() + "Mission"
+        );
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
         checkbox.checked = mission.completed;
@@ -84,7 +95,20 @@ function renderMissions() {
         });
         card.appendChild(checkbox);
         const missionText = document.createElement("span");
-        missionText.textContent = mission.text;
+
+        let dueStatus = "";
+        if(mission.dueDate) {
+            const today = new Date().toISOString().split("T")[0];
+            if(mission.dueDate < today) {
+                dueStatus = "OVERDUE!!!!!!!";
+            }
+        }
+
+        missionText.innerHTML = mission.text +
+        "<br>Catagory: " + mission.category +
+        "<br>Due date: " + mission.dueDate + 
+        "<br>Priority: " + mission.priority +
+        "<br>" + dueStatus;
         if(mission.completed) {
             missionText.style.textDecoration = "line-through";
             missionText.style.opacity = "0.6";

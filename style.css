@@ -297,6 +297,24 @@ button {
         box-shadow 5s ease;
 }
 
+.lowMission{
+    border-left: 5px solid #888;
+
+}
+.mediumMission{
+    border-left: 5px solid #3399ff;
+    
+}
+.highMission{
+    border-left: 5px solid #ffa500;
+    
+}
+.criticalMission{
+    border-left: 5px solid #ff0000;
+    
+}
+
+
 .normalMood {
     --glow: #7a00ff;
     
