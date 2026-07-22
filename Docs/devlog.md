@@ -134,3 +134,7 @@ fixed some bugs
 - Completing mission/task tab
 - having problems loading the progress bar
 - currently now the project is being made with plain bgs afterwards ill add theme to everything
+
+## 21th july, 2026
+- completed progress bar and missions/tasks
+- one thing left to add was direct chat to add missions which i will do later 

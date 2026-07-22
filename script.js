@@ -79,6 +79,7 @@ function renderMissions() {
    missions.sort((a,b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
    
    
+   
     missions.forEach(function(mission,index){
         const card = document.createElement("div");
         card.className = "noteCard";
@@ -396,6 +397,8 @@ button.addEventListener("click", function () {
         reply = "All memories cleared.";
         mood = "memory";
     }
+
+   
 
      document.body.classList.remove(
         "normalMood",
