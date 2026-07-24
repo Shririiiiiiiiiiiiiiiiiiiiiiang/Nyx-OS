@@ -16,26 +16,34 @@ moonCanvas.height = 512;
 const ctx = moonCanvas.getContext("2d");
 
 
+const glowRadiant = ctx.createRadialGradient(256, 256, 150, 256, 256, 240);
+glowRadiant.addColorStop(0, "rgba(230, 255, 210, 0.35)");
+glowRadiant.addColorStop(1, "rgba(230, 225, 210, 0)");
+ctx.fillStyle = glowRadiant;
 ctx.beginPath();
-ctx.arc(
-    256, 256, 180, 0, Math.PI * 2
-);
-const moonGradient = ctx.createRadialGradient(
-    220, 200, 20, 256, 256, 180
-);
-moonGradient.addColorStop(0, "#f0f0f0");
-moonGradient.addColorStop(1, "#b8b8b8");
+ctx.arc(256, 256, 240, 0, Math.PI * 2);
+ctx.fill();
+const moonGradient = ctx.createRadialGradient(210, 190, 10,256, 256, 180);
+moonGradient.addColorStop(0, "#fffdfa");
+moonGradient.addColorStop(0.6, "#e0dacb");
+moonGradient.addColorStop(1, "#9c9485");
+
 ctx.fillStyle = moonGradient;
-ctx.fill();
-ctx.fillStyle = "rgba(100, 100, 100, 0.25)";
 ctx.beginPath();
-ctx.ellipse(210, 220, 55, 35, 0.3, 0, Math.PI *2);
-ctx.fill();
+ctx.arc(256, 256, 180, 0, Math.PI * 2);
+ctx.fill()
+
+ctx.fillStyle = "rgba(110, 100, 90, 0.15)";
 ctx.beginPath();
-ctx.ellipse(290, 280, 45, 25, -0.4, 0, Math.PI * 2);
+ctx.ellipse(210, 210, 65, 45, 0.2, 0, Math.PI * 2);
 ctx.fill();
+
 ctx.beginPath();
-ctx.ellipse(250, 350, 30, 18, 0.2, 0, Math.PI * 2);
+ctx.ellipse(280, 280, 55, 35, -0.3, 0, Math.PI * 2);
+ctx.fill();
+
+ctx.beginPath();
+ctx.ellipse(230, 230, 40, 25, 0.1, 0, Math.PI * 2);
 ctx.fill();
 
 const moonTexture = new THREE.CanvasTexture(

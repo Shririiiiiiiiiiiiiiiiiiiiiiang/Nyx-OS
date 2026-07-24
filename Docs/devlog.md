@@ -135,6 +135,10 @@ fixed some bugs
 - having problems loading the progress bar
 - currently now the project is being made with plain bgs afterwards ill add theme to everything
 
-## 21th july, 2026
+## 21th to 22nd july, 2026
 - completed progress bar and missions/tasks
 - one thing left to add was direct chat to add missions which i will do later 
+- again going to make the bg
+
+## 25th july, 2026
+- did some editing on moon
