@@ -13,9 +13,7 @@ body{
     text-align: center;
     padding: 35px;
 
-    background:
-        
-        linear-gradient(180deg, #02020f, #050016, #08001f, #000000)
+   
 
 
 }
@@ -182,37 +180,9 @@ background:radial-gradient(ellipse at 25% 50%, rgba(200, 200, 255, 0.25), transp
 }
 
 
-#moon{
-    position: absolute;
-    width: 95px;
-    height: 95px;
-    border-radius: 50%;
 
-    background: #d8d8e8;
 
-    top: -65px;
-    left: 50%;
-    transform: translateX(-50%);
 
-    box-shadow:
-        0 0 25px rgba(220, 220, 255, 0.45),
-        0 0 70px rgba(160, 140, 255, 0.2);
-
-    z-index: 0;
-}
-
-#moon::after{
-    content: "";
-    position: absolute;
-    width: 95px;
-    height: 95px;
-    border-radius: 50%;
-
-    background: #02020f;
-
-    top: 0;
-    left: 28px;
-}
 
 input {
     padding: 10px;
