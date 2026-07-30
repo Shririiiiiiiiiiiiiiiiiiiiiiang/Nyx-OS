@@ -32,7 +32,7 @@ const camera = new THREE.PerspectiveCamera(
     0.1,
     100
 );
-camera.position.z = 12;
+
 
 const renderer = new THREE.WebGLRenderer({antialias: true});
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -74,25 +74,27 @@ function createScroll() {
         roughness: 1
     });
 
-    const capleft = new THREE.Mesh(capGeo, capMaterial);
-    capleft.position.x = -scrollLength / 2;
-    capleft.rotation.y = -Math.PI / 2;
-    const capright = new THREE.Mesh(capGeo, capMaterial);
-    capright.position.x = scrollLength / 2;
-    capright.rotation.y = Math.PI / 2;
+    const capLeft = new THREE.Mesh(capGeo, capMaterial);
+    capLeft.position.x = -scrollLength / 2;
+    capLeft.rotation.y = -Math.PI / 2;
+    const capRight = new THREE.Mesh(capGeo, capMaterial);
+    capRight.position.x = scrollLength / 2;
+    capRight.rotation.y = Math.PI / 2;
 
     const scrollGroup = new THREE.Group();
     scrollGroup.add(body);
-    scrollGroup.add(capleft);
-    scrollGroup.add(capright);
+    scrollGroup.add(capLeft);
+    scrollGroup.add(capRight);
 
-    return scrollGroup
+    return scrollGroup;
 }
 
 const cols = 4;
 const rows = 3;
 const spacingX = 4;
 const spacingY = 3;
+const allScrolls = [];
+let scrollNumber = 1;
 
 for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
@@ -102,13 +104,53 @@ for (let row = 0; row < rows; row++) {
         const yPos = (row - (rows - 1) / 2) * spacingY;
         scroll.position.x = xPos;
         scroll.position.y = yPos;
+        scroll.rotation.z += (Math.random() - 0.5) * 0.15;
+        scroll.rotation.y += (Math.random() - 0.5) * 0.2;
+        scroll.position.z += (Math.random() - 0.5) * 0.3;
+        scroll.userData.title = "Test Scroll " + scrollNumber;
+        scrollNumber = scrollNumber + 1;
+        allScrolls.push(scroll);
 
         scene.add(scroll);
     }
 }
 
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+const scrollLabel = document.getElementById("scrollLabel");
+
+function handleMouseMove(event) {
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+    scrollLabel.style.left = (event.clientX + 15) + "px";
+    scrollLabel.style.top = (event.clientY + 15) + "px";
+
+}
+
+window.addEventListener("mousemove", handleMouseMove);
+function checkHover() {
+    raycaster.setFromCamera(mouse, camera);
+    let foundHit = false;
+    for(let i = 0; i < allScrolls.length; i++) {
+        const scroll = allScrolls[i];
+        const hits = raycaster.intersectObject(scroll, true);
+
+        if(hits.length > 0) {
+            scrollLabel.textContent = scroll.userData.title;
+            scrollLabel.style.display = "block";
+            foundHit = true;
+            break;
+        }
+    }
+    if(foundHit == false) {
+        scrollLabel.style.display = "none";
+    }
+}
+
 function animate() {
     requestAnimationFrame(animate);
+    checkHover();
     renderer.render(scene, camera);
 
 }
