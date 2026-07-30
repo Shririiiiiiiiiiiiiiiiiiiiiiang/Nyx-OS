@@ -516,7 +516,7 @@ saveTask.addEventListener("click", function(){
     missionInput.value = "";
     missionCata.value = "";
     missionDue.value = "";
-    missionPriority.value = "Low";
+    missionPriority.value = "low";
 })
 
 saveButton.addEventListener("click", function(){

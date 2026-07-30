@@ -154,8 +154,8 @@ body{
     right: -20%;
     bottom: 40px;
     height: 220px;
-background:radial-gradient(ellipse at 25% 50%, rgba(200, 200, 255, 0.25), transperent 45%),
-           radial-gradient(ellipse at 70% 60%, rgba(200, 200, 255, 0.20), transperent 45%);
+background:radial-gradient(ellipse at 25% 50%, rgba(200, 200, 255, 0.25), transparent 45%),
+           radial-gradient(ellipse at 70% 60%, rgba(200, 200, 255, 0.20), transparent 45%);
 
         filter: blur(20px);
         opacity: 1;
