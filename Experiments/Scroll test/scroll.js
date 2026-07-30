@@ -32,7 +32,8 @@ const camera = new THREE.PerspectiveCamera(
     0.1,
     100
 );
-
+camera.position.set(0, 4, 11);
+camera.rotation.x = -0.3;
 
 const renderer = new THREE.WebGLRenderer({antialias: true});
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -48,6 +49,16 @@ window.addEventListener("resize", handleResize);
 
 const ambient = new THREE.AmbientLight(0xffe9c4, 0.6);
 scene.add(ambient);
+
+const spotLight = new THREE.AmbientLight(0xffaa44, 0.2);
+spotLight.position.set(0, 10, 5);
+spotLight.angle = Math.PI / 3;
+spotLight.penumbra = 0.8;
+scene.add(spotLight);
+
+const sideLight = new THREE.PointLight(0xff9922, 1.5, 20);
+sideLight.position.set(-8, 3, 2)
+scene.add(sideLight);
 
 const keyLight = new THREE.DirectionalLight(0xffe9c4, 0.8);
 keyLight.position.set(5, 6, 10);
