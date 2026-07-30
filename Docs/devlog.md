@@ -146,3 +146,6 @@ fixed some bugs
 
 ## 27th july, 2026
 - Put the background back to main nyx
+
+## 30th july, 2026
+- started with scroll animation (Used youtube and ai at start)
