@@ -89,7 +89,7 @@ const dustCount = 300;
 const dustGeo = new THREE.BufferGeometry();
 const dustPos = new Float32Array(dustCount * 3);
 
-for(let i = 0; i< dustCount; i += 3) {
+for(let i = 0; i< dustCount * 3; i += 3) {
     dustPos[i] = (Math.random() - 0.5) * 12;
     dustPos[i + 1] = (Math.random() - 0.5) * 12;
     dustPos[i + 2] = (Math.random() - 0.5) * 10 + 2;
@@ -232,6 +232,14 @@ function checkHover() {
 function animate() {
     requestAnimationFrame(animate);
     spotLight.intensity = 2.2 + Math.sin(Date.now() * 0.005) * 0.15 + (Math.random() - 0.5) * 0.1;
+    const positions = dustFeild.geometry.attributes.position.array;
+    for(let i = 1; i < positions.length; i += 3) {
+        positions[i] += 0.003;
+        if(positions[i] > 6) {
+            positions[i] = -6;
+        }
+    }
+    dustFeild.geometry.attributes.position.needsUpdate = true;
     checkHover();
     renderer.render(scene, camera);
 
