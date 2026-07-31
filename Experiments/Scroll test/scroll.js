@@ -50,7 +50,7 @@ window.addEventListener("resize", handleResize);
 const ambient = new THREE.AmbientLight(0xffe9c4, 0.6);
 scene.add(ambient);
 
-const spotLight = new THREE.AmbientLight(0xffaa44, 0.2);
+const spotLight = new THREE.AmbientLight(0xffb055, 3.5);
 spotLight.position.set(0, 10, 5);
 spotLight.angle = Math.PI / 3;
 spotLight.penumbra = 0.8;
@@ -67,6 +67,8 @@ scene.add(keyLight);
 const scrollRadius = 0.6;
 const scrollLength = 3;
 
+const handleGeo = new THREE.CylinderGeometry(scrollRadius * 0.35, scrollRadius * 0.35, scrollLength + 0.8, 16);
+const handleMaterial = new THREE.MeshStandardMaterial({color: 0x3d2314, roughness: 0.6});
 function createScroll() {
     const bodyGeo = new THREE.CylinderGeometry(
         scrollRadius, scrollRadius, scrollLength, 24, 1, true
@@ -78,6 +80,9 @@ function createScroll() {
     });
     const body = new THREE.Mesh(bodyGeo, bodyMaterial);
     body.rotation.z = Math.PI / 2;
+
+    const innerSpindle = new THREE.Mesh(handleGeo, handleMaterial);
+    innerSpindle.rotation.z = Math.PI / 2;
 
     const capGeo = new THREE.CircleGeometry(scrollRadius, 24);
     const capMaterial = new THREE.MeshStandardMaterial({
@@ -93,6 +98,7 @@ function createScroll() {
     capRight.rotation.y = Math.PI / 2;
 
     const scrollGroup = new THREE.Group();
+    scrollGroup.add(innerSpindle)
     scrollGroup.add(body);
     scrollGroup.add(capLeft);
     scrollGroup.add(capRight);
@@ -106,6 +112,16 @@ const spacingX = 4;
 const spacingY = 3;
 const allScrolls = [];
 let scrollNumber = 1;
+
+const shelfGeo = new THREE.BoxGeometry(18, 0.25, 3.5);
+const shelfMaterial = new THREE.MeshStandardMaterial({color: 0x1f120a, roughness: 0.8});
+
+for(let r = 0; r < rows; r++) {
+    const shelf = new THREE.Mesh(shelfGeo, shelfMaterial);
+    const yPos = (r - (rows - 1) / 2) * spacingY - 0.7;
+    shelf.position.set(0, yPos, 0);
+    scene.add(shelf);
+}
 
 for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
