@@ -31,6 +31,16 @@ for(let i = 0; i < 10; i++) {
     sCtx.fill();
 }
 const scrollTexture = new THREE.CanvasTexture(scrollCanvas);
+const dustCanvas = document.createElement("canvas");
+dustCanvas.width = 32;
+dustCanvas.height = 32;
+const dCtx = dustCanvas.getContext("2d");
+const dustGrad = dCtx.createRadialGradient(16, 16, 0, 16, 16, 16);
+dustGrad.addColorStop(0, "rgba(255, 255, 255, 1");
+dustGrad.addColorStop(1, "rgba(255, 255, 255, 0");
+dCtx.fillStyle = dustGrad;
+dCtx.fillRect(0, 0, 32, 32);
+const dustSprite = new THREE.CanvasTexture(dustCanvas);
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x05040a);
@@ -96,12 +106,21 @@ for(let i = 0; i< dustCount * 3; i += 3) {
 }
 dustGeo.setAttribute("position", new THREE.BufferAttribute(dustPos, 3));
 
+const dustSpeed = new Float32Array(dustCount * 3);
+for(let i = 0; i < dustCount * 3; i += 3) {
+dustSpeed[i] = (Math.random() - 0.5) * 0.006;
+dustSpeed[i + 1] = (Math.random() - 0.35) * 0.006;
+dustSpeed[i + 2] = (Math.random() - 0.5) * 0.006;
+}
+
 const dustMaterial = new THREE.PointsMaterial({
     color: 0xffcc88,
-    size: 0.03,
+    size: 0.12,
+    map: dustSprite,
     transparent: true,
-    opacity: 0.5,
-    depthWrite: false
+    opacity: 0.6,
+    depthWrite: false,
+    alphaTest: 0.01
 });
 const dustFeild = new THREE.Points(dustGeo, dustMaterial);
 scene.add(dustFeild);
@@ -144,12 +163,29 @@ function createScroll() {
     body.castShadow = true;
     capLeft.castShadow = true;
     capRight.castShadow = true;
+
+    const openscrollGeo = new THREE.PlaneGeometry(scrollLength, scrollRadius * 3);
+    const openscrollMaterial = new THREE.MeshStandardMaterial({
+        map: scrollTexture, 
+        roughness: 0.9,
+        side: THREE.DoubleSide
+    });
+    const openScroll = new THREE.Mesh(openscrollGeo, openscrollMaterial);
+    openScroll.scale.y = 0;
     
     const scrollGroup = new THREE.Group();
     scrollGroup.add(innerSpindle)
     scrollGroup.add(body);
     scrollGroup.add(capLeft);
     scrollGroup.add(capRight);
+    scrollGroup.add(openScroll);
+    scrollGroup.userData.body = body;
+    scrollGroup.userData.capLeft = capLeft;
+    scrollGroup.userData.capRight = capRight;
+    scrollGroup.userData.innerSpindle = innerSpindle;
+    scrollGroup.userData.openScroll = openScroll;
+    scrollGroup.userData.isOpen = false;
+    scrollGroup.userData.openprogress = 0;
 
     return scrollGroup;
 }
@@ -228,19 +264,54 @@ function checkHover() {
         scrollLabel.style.display = "none";
     }
 }
+function handleClick() {
+    raycaster.setFromCamera(mouse, camera);
+    for(let i = 0; i < allScrolls.length; i++) {
+        const scroll = allScrolls[i];
+        const clicks = raycaster.intersectObject(scroll, true);
+        if(clicks.length > 0) {
+            scroll.userData.isOpen = true;
+            break;
+        }
+    }
+}
+window.addEventListener("click", handleClick);
+
+const openSpeed = 0.04;
+
+function updateScrolls() {
+    for(let i = 0; i < allScrolls.length; i++) {
+        const scroll = allScrolls[i];
+        if(scroll.userData.isOpen === true && scroll.userData.openprogress < 1) {
+            scroll.userData.openprogress += openSpeed;
+            if(scroll.userData.openprogress > 1) {
+                scroll.userData.openprogress = 1;
+            }
+            const eased = scroll.userData.openprogress * scroll.userData.openprogress * (3 - 2 * scroll.userData.openprogress);
+            scroll.userData.body.scale.y = 1 - eased;
+            scroll.userData.capLeft.scale.y = 1 - eased;
+            scroll.userData.capRight.scale.y = 1 - eased;
+            scroll.userData.innerSpindle.scale.y = 1 - eased;
+            scroll.userData.openScroll.scale.y = eased;   
+        }
+    }
+}
 
 function animate() {
     requestAnimationFrame(animate);
     spotLight.intensity = 2.2 + Math.sin(Date.now() * 0.005) * 0.15 + (Math.random() - 0.5) * 0.1;
     const positions = dustFeild.geometry.attributes.position.array;
-    for(let i = 1; i < positions.length; i += 3) {
-        positions[i] += 0.003;
-        if(positions[i] > 6) {
-            positions[i] = -6;
+    for(let i = 0; i < positions.length; i += 3) {
+        positions[i] += dustSpeed[i];
+        positions[i + 1] += dustSpeed[i + 1];
+        positions[i + 2] += dustSpeed[i + 2];
+        if(positions[i + 1] > 6) {
+            positions[i + 1] = -6
         }
     }
     dustFeild.geometry.attributes.position.needsUpdate = true;
     checkHover();
+    updateScrolls();
     renderer.render(scene, camera);
 
 }
