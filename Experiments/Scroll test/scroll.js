@@ -127,9 +127,12 @@ scene.add(dustFeild);
 
 const scrollRadius = 0.6;
 const scrollLength = 3;
+const scrollWidth = scrollLength * 1.6;
 
 const handleGeo = new THREE.CylinderGeometry(scrollRadius * 0.35, scrollRadius * 0.35, scrollLength + 0.8, 16);
 const handleMaterial = new THREE.MeshStandardMaterial({color: 0x3d2314, roughness: 0.6});
+const openhandleGeo = new THREE.SphereGeometry(scrollRadius * 0.5, 16, 16);
+const openhandleMaterial = new THREE.MeshStandardMaterial({color: 0x6b4423, roughness:0.4, metalness: 0.1});
 
 const bodyGeo = new THREE.CylinderGeometry(
     scrollRadius, scrollRadius, scrollLength, 24, 1, true
@@ -153,6 +156,10 @@ function createScroll() {
 
     const innerSpindle = new THREE.Mesh(handleGeo, handleMaterial);
     innerSpindle.rotation.z = Math.PI / 2;
+    const openhandleLeft = new THREE.Mesh(openhandleGeo, openhandleMaterial);
+    openhandleLeft.position.x = -(scrollLength + 0.8) / 2;
+    const openhandleRight = new THREE.Mesh(openhandleGeo, openhandleMaterial);
+    openhandleRight.position.x = (scrollLength + 0.8) / 2;
     const capLeft = new THREE.Mesh(capGeo, capMaterial);
     capLeft.position.x = -scrollLength / 2;
     capLeft.rotation.y = -Math.PI / 2;
@@ -164,14 +171,16 @@ function createScroll() {
     capLeft.castShadow = true;
     capRight.castShadow = true;
 
-    const openscrollGeo = new THREE.PlaneGeometry(scrollLength, scrollRadius * 3);
+    const openscrollGeo = new THREE.PlaneGeometry(scrollWidth, scrollRadius * 5);
+    openscrollGeo.translate(scrollWidth / 2, 0, 0);
     const openscrollMaterial = new THREE.MeshStandardMaterial({
         map: scrollTexture, 
         roughness: 0.9,
         side: THREE.DoubleSide
     });
     const openScroll = new THREE.Mesh(openscrollGeo, openscrollMaterial);
-    openScroll.scale.y = 0;
+    openScroll.position.x = -scrollLength / 2;
+    openScroll.scale.x = 0;
     
     const scrollGroup = new THREE.Group();
     scrollGroup.add(innerSpindle)
@@ -179,11 +188,15 @@ function createScroll() {
     scrollGroup.add(capLeft);
     scrollGroup.add(capRight);
     scrollGroup.add(openScroll);
+    scrollGroup.add(openhandleLeft);
+    scrollGroup.add(openhandleRight);
     scrollGroup.userData.body = body;
     scrollGroup.userData.capLeft = capLeft;
     scrollGroup.userData.capRight = capRight;
     scrollGroup.userData.innerSpindle = innerSpindle;
     scrollGroup.userData.openScroll = openScroll;
+    scrollGroup.userData.openhandleLeft = openhandleLeft;
+    scrollGroup.userData.openhandleRight = openhandleRight;
     scrollGroup.userData.isOpen = false;
     scrollGroup.userData.openprogress = 0;
 
@@ -271,6 +284,13 @@ function handleClick() {
         const clicks = raycaster.intersectObject(scroll, true);
         if(clicks.length > 0) {
             scroll.userData.isOpen = true;
+            scroll.userData.startPos = scroll.position.clone();
+            scroll.userData.startRotY = scroll.rotation.y;
+            scroll.userData.startRotZ = scroll.rotation.z;
+
+            const camDir = new THREE.Vector3();
+            camera.getWorldDirection(camDir);
+            scroll.userData.targetPos = camera.position.clone().add(camDir.multiplyScalar(9));
             break;
         }
     }
@@ -288,11 +308,20 @@ function updateScrolls() {
                 scroll.userData.openprogress = 1;
             }
             const eased = scroll.userData.openprogress * scroll.userData.openprogress * (3 - 2 * scroll.userData.openprogress);
+            scroll.position.lerpVectors(scroll.userData.startPos, scroll.userData.targetPos, eased);
+            scroll.rotation.y = scroll.userData.startRotY * (1 - eased);
+            scroll.rotation.z = scroll.userData.startRotZ * (1 - eased);
+          
             scroll.userData.body.scale.y = 1 - eased;
-            scroll.userData.capLeft.scale.y = 1 - eased;
-            scroll.userData.capRight.scale.y = 1 - eased;
+            scroll.userData.openScroll.scale.x = eased;
+
+            
+            scroll.userData.capLeft.position.x = -scrollLength / 2;
+            scroll.userData.capRight.position.x = -scrollLength / 2 + (-scrollLength / 2 + scrollWidth - scrollLength / 2) * eased;
             scroll.userData.innerSpindle.scale.y = 1 - eased;
-            scroll.userData.openScroll.scale.y = eased;   
+            scroll.userData.openhandleLeft.position.x = -scrollLength / 2 - 0.3;
+            scroll.userData.openhandleRight.position.x = -scrollLength / 2 + scrollWidth * eased + 0.3;
+              
         }
     }
 }
