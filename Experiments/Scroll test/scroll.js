@@ -218,6 +218,10 @@ function createScroll() {
     scrollGroup.userData.openrodright = openrodright;
     scrollGroup.userData.isOpen = false;
     scrollGroup.userData.openprogress = 0;
+    scrollGroup.userData.startPos = new THREE.Vector3();
+    scrollGroup.userData.targetPos = new THREE.Vector3();
+    scrollGroup.userData.startRotY = 0;
+    scrollGroup.userData.startRotZ = 0;
 
     return scrollGroup;
 }
@@ -258,6 +262,8 @@ for (let row = 0; row < rows; row++) {
         scroll.position.z += (Math.random() - 0.5) * 0.3;
         scroll.userData.title = "Test Scroll " + scrollNumber;
         scrollNumber = scrollNumber + 1;
+        scroll.userData.startPos = scroll.position.clone();
+        scroll.userData.targetPos = scroll.position.clone();
         allScrolls.push(scroll);
 
         scene.add(scroll);
@@ -298,6 +304,13 @@ function checkHover() {
 }
 function handleClick() {
     raycaster.setFromCamera(mouse, camera);
+
+    if(activeScroll !== null) {
+        activeScroll.userData.isOpen = false;
+        activeScroll.userData.shelfpos = activeScroll.userData.startPos.clone();
+        activeScroll = null;
+        return;
+    }
     for(let i = 0; i < allScrolls.length; i++) {
         const scroll = allScrolls[i];
         const clicks = raycaster.intersectObject(scroll, true);
@@ -310,6 +323,7 @@ function handleClick() {
             const camDir = new THREE.Vector3();
             camera.getWorldDirection(camDir);
             scroll.userData.targetPos = camera.position.clone().add(camDir.multiplyScalar(9));
+            activeScroll = scroll;    
             break;
         }
     }
@@ -317,15 +331,25 @@ function handleClick() {
 window.addEventListener("click", handleClick);
 
 const openSpeed = 0.04;
+let activeScroll = null;
 
 function updateScrolls() {
     for(let i = 0; i < allScrolls.length; i++) {
         const scroll = allScrolls[i];
+        
         if(scroll.userData.isOpen === true && scroll.userData.openprogress < 1) {
             scroll.userData.openprogress += openSpeed;
             if(scroll.userData.openprogress > 1) {
                 scroll.userData.openprogress = 1;
             }
+        }
+        else if(scroll.userData.isOpen === false && scroll.userData.openprogress > 0) {
+                scroll.userData.openprogress -= openSpeed;
+                if(scroll.userData.openprogress < 0) {
+                scroll.userData.openprogress = 0;
+            }
+        }
+        {    
             const eased = scroll.userData.openprogress * scroll.userData.openprogress * (3 - 2 * scroll.userData.openprogress);
             scroll.position.lerpVectors(scroll.userData.startPos, scroll.userData.targetPos, eased);
             scroll.rotation.y = scroll.userData.startRotY * (1 - eased);
@@ -338,8 +362,9 @@ function updateScrolls() {
             scroll.userData.capLeft.position.x = -scrollLength / 2 + (-scrollHalf + scrollLength / 2) * eased;
             scroll.userData.capRight.position.x = scrollLength / 2 + (scrollHalf - scrollLength / 2) * eased;
             scroll.userData.innerSpindle.scale.y = 1 - eased;
-            scroll.userData.openhandleLeft.position.x = scroll.userData.capLeft.position.x;
-            scroll.userData.openhandleRight.position.x = scroll.userData.capRight.position.x;
+            const handleOffset = 0.4 * (1 - eased);
+            scroll.userData.openhandleLeft.position.x = scroll.userData.capLeft.position.x - handleOffset;
+            scroll.userData.openhandleRight.position.x = scroll.userData.capRight.position.x + handleOffset;
             scroll.userData.openrodLeft.position.x = scroll.userData.capLeft.position.x;
             scroll.userData.openrodright.position.x = scroll.userData.capRight.position.x;
             scroll.userData.openrodLeft.scale.y = eased;
@@ -347,10 +372,12 @@ function updateScrolls() {
             const handleHeight = (scrollRadius * 5.4) / 2;
             scroll.userData.openhandleLeft.position.y = handleHeight * eased;
             scroll.userData.openhandleRight.position.y = handleHeight * eased;
-            scroll.userData.openhandleleftBottom.position.x = scroll.userData.capLeft.position.x;
+            scroll.userData.openhandleleftBottom.position.x = scroll.userData.capLeft.position.x - handleOffset;
             scroll.userData.openhandleleftBottom.position.y = -handleHeight * eased;
-            scroll.userData.openhandlerightBottom.position.x = scroll.userData.capRight.position.x;
+            scroll.userData.openhandleleftBottom.scale.set(eased, eased, eased);
+            scroll.userData.openhandlerightBottom.position.x = scroll.userData.capRight.position.x + handleOffset;
             scroll.userData.openhandlerightBottom.position.y = -handleHeight * eased;
+            scroll.userData.openhandlerightBottom.scale.set(eased, eased, eased);
         }
     }
 }
