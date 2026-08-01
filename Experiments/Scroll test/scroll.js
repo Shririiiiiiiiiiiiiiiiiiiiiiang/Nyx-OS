@@ -133,7 +133,8 @@ const handleGeo = new THREE.CylinderGeometry(scrollRadius * 0.35, scrollRadius *
 const handleMaterial = new THREE.MeshStandardMaterial({color: 0x3d2314, roughness: 0.6});
 const openhandleGeo = new THREE.SphereGeometry(scrollRadius * 0.5, 16, 16);
 const openhandleMaterial = new THREE.MeshStandardMaterial({color: 0x6b4423, roughness:0.4, metalness: 0.1});
-
+const openrodGeo = new THREE.CylinderGeometry(scrollRadius * 0.3, scrollRadius * 0.3, scrollRadius * 5.4, 16);
+const openrodMaterial = new THREE.MeshStandardMaterial({color: 0x3d2314, roughness: 0.6});
 
 const bodyGeo = new THREE.CylinderGeometry(
     scrollRadius, scrollRadius, scrollLength, 24, 1, true
@@ -161,6 +162,16 @@ function createScroll() {
     openhandleLeft.position.x = -(scrollLength + 0.8) / 2;
     const openhandleRight = new THREE.Mesh(openhandleGeo, openhandleMaterial);
     openhandleRight.position.x = (scrollLength + 0.8) / 2;
+    const openhandleleftBottom = new THREE.Mesh(openhandleGeo, openhandleMaterial);
+    openhandleleftBottom.position.x = -(scrollLength + 0.8) / 2;
+    const openhandlerightBottom = new THREE.Mesh(openhandleGeo, openhandleMaterial);
+    openhandlerightBottom.position.x = (scrollLength + 0.8) / 2;
+    const openrodLeft = new THREE.Mesh(openrodGeo, openrodMaterial);
+    openrodLeft.position.x = -scrollLength / 2;
+    openrodLeft.scale.y = 0;
+    const openrodright = new THREE.Mesh(openrodGeo, openrodMaterial);
+    openrodright.position.x = scrollLength / 2;
+    openrodright.scale.y = 0;
     const capLeft = new THREE.Mesh(capGeo, capMaterial);
     capLeft.position.x = -scrollLength / 2;
     capLeft.rotation.y = -Math.PI / 2;
@@ -190,6 +201,10 @@ function createScroll() {
     scrollGroup.add(openScroll);
     scrollGroup.add(openhandleLeft);
     scrollGroup.add(openhandleRight);
+    scrollGroup.add(openhandleleftBottom);
+    scrollGroup.add(openhandlerightBottom);
+    scrollGroup.add(openrodLeft);
+    scrollGroup.add(openrodright);
     scrollGroup.userData.body = body;
     scrollGroup.userData.capLeft = capLeft;
     scrollGroup.userData.capRight = capRight;
@@ -197,6 +212,10 @@ function createScroll() {
     scrollGroup.userData.openScroll = openScroll;
     scrollGroup.userData.openhandleLeft = openhandleLeft;
     scrollGroup.userData.openhandleRight = openhandleRight;
+    scrollGroup.userData.openhandleleftBottom = openhandleleftBottom;
+     scrollGroup.userData.openhandlerightBottom = openhandlerightBottom;
+    scrollGroup.userData.openrodLeft = openrodLeft;
+    scrollGroup.userData.openrodright = openrodright;
     scrollGroup.userData.isOpen = false;
     scrollGroup.userData.openprogress = 0;
 
@@ -319,9 +338,19 @@ function updateScrolls() {
             scroll.userData.capLeft.position.x = -scrollLength / 2 + (-scrollHalf + scrollLength / 2) * eased;
             scroll.userData.capRight.position.x = scrollLength / 2 + (scrollHalf - scrollLength / 2) * eased;
             scroll.userData.innerSpindle.scale.y = 1 - eased;
-            scroll.userData.openhandleLeft.position.x = scroll.userData.capLeft.position.x - 0.3;
-            scroll.userData.openhandleRight.position.x = scroll.userData.capRight.position.x + 0.3;
-              
+            scroll.userData.openhandleLeft.position.x = scroll.userData.capLeft.position.x;
+            scroll.userData.openhandleRight.position.x = scroll.userData.capRight.position.x;
+            scroll.userData.openrodLeft.position.x = scroll.userData.capLeft.position.x;
+            scroll.userData.openrodright.position.x = scroll.userData.capRight.position.x;
+            scroll.userData.openrodLeft.scale.y = eased;
+            scroll.userData.openrodright.scale.y= eased;  
+            const handleHeight = (scrollRadius * 5.4) / 2;
+            scroll.userData.openhandleLeft.position.y = handleHeight * eased;
+            scroll.userData.openhandleRight.position.y = handleHeight * eased;
+            scroll.userData.openhandleleftBottom.position.x = scroll.userData.capLeft.position.x;
+            scroll.userData.openhandleleftBottom.position.y = -handleHeight * eased;
+            scroll.userData.openhandlerightBottom.position.x = scroll.userData.capRight.position.x;
+            scroll.userData.openhandlerightBottom.position.y = -handleHeight * eased;
         }
     }
 }
