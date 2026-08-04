@@ -33,11 +33,16 @@ body{
 }
 
 #alltools{
+    position: fixed;
+    top: 50%;
+    right: 20px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     gap:15px;
-    margin-top: 15px;
+    margin-top: 0px;
+    z-index: 500;
 }
+
 #alltools Button{
     padding: 10px 20px;
     border: none;
@@ -73,7 +78,12 @@ body{
     overflow: hidden;
     margin-bottom: 15px;
 }
-
+#scrollLib {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    background: black;
+}
 #progressFill{
     width: 0%;
     height: 100%;

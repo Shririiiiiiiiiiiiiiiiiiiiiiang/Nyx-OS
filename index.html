@@ -23,7 +23,7 @@
     <div id="statusBar">
         🌙 Online | 🧠 Memory Active | ✨ Mood: Normal
     </div>
-    <div id = "alltools"> <button id = "notes" >Notes</button> <button id = "tasks">Tasks</button> <button id = "tools">Tools</button></div>
+    <div id = "alltools"> <button id = "notes" title="Library">📜</button> <button id = "tasks">Tasks</button> <button id = "tools">Tools</button></div>
     <div id = "notespage" class="panelhide"> <div class = "panelheader"><h1 id="notehead"> Whispers (0) </h1> <button id = "closenotes"> Close </button> </div>
     <input id="noteTitle" type="text" placeholder="Title">
     <textarea id = "noteInput" placeholder="Write your thoughts..."></textarea>
@@ -75,7 +75,10 @@
     <div id="chatBox"></div>
     <input id="userInput" type="text" placeholder="talk to Nyx">
     <button id="sendBtn">Send</button>
+    <div id="scrollLabel"></div>
+    <div id="scrollLib" style="display: none;"></div>
     <script type="module" src="scene.js"></script>
+    <script type="module" src="scroll.js"></script>
     <script src="script.js"></script>
 
 

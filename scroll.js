@@ -36,8 +36,8 @@ dustCanvas.width = 32;
 dustCanvas.height = 32;
 const dCtx = dustCanvas.getContext("2d");
 const dustGrad = dCtx.createRadialGradient(16, 16, 0, 16, 16, 16);
-dustGrad.addColorStop(0, "rgba(255, 255, 255, 1");
-dustGrad.addColorStop(1, "rgba(255, 255, 255, 0");
+dustGrad.addColorStop(0, "rgba(255, 255, 255, 1)");
+dustGrad.addColorStop(1, "rgba(255, 255, 255, 0)");
 dCtx.fillStyle = dustGrad;
 dCtx.fillRect(0, 0, 32, 32);
 const dustSprite = new THREE.CanvasTexture(dustCanvas);
@@ -65,7 +65,7 @@ camera.rotation.x = -0.2;
 const renderer = new THREE.WebGLRenderer({antialias: true});
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true;
-document.body.appendChild(renderer.domElement);
+document.getElementById("scrollLib").appendChild(renderer.domElement);
 
 function handleResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
