@@ -77,7 +77,13 @@
     <button id="sendBtn">Send</button>
     <div id="scrollLabel"></div>
     <div id="scrollLib" style="display: none;">
-        <button id="closeLib" style="position: fixed; top: 20px; right: 20px; z-index: 2001; padding: 10px 16px; background: #a22; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 18px;">X</buton>
+        <button id="closeLib" style="position: fixed; top: 20px; right: 20px; z-index: 2001; padding: 10px 16px; background: #a22; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 18px;">X</button>
+        <div id="scrollContent">
+            <input id="scrollTitleInput" type="text" placeholder="Title">
+            <div id="scrollDivide"></div>
+            <textarea id="scrollWriting" placeholder="Write here..."></textarea>
+            <button id="scrollSave">Save</button>
+        </div>
         </div>
             <script type="module" src="scene.js"></script>
     <script type="module" src="scroll.js"></script>

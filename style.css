@@ -84,6 +84,69 @@ body{
     z-index: 2000;
     background: black;
 }
+#scrollContent {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 320px;
+    max-height: 60vh;
+    background: rgba(216, 195, 154, 0.97);
+    color: #2b1d10;
+    padding: 24px;
+    border-radius: 6px;
+    font-family: Georgia, serif;
+    z-index: 2002;
+    flex-direction: column;
+}
+#scrollContent.visible {
+    display: flex;
+}
+#scrollTitleInput {
+    background: none;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    color: #2b1d10;
+    font-family: Georgia, serif;
+    line-height: 1.5;
+    outline: none;
+}
+#scrollWriting {
+    flex: 1;
+    min-height: 200px;
+    background: none;
+    border: none;
+    resize: none;
+    color: #2b1d10;
+    font-family: Georgia, serif;
+    font-size: 15px;
+    line-height: 1.5;
+    outline: none;
+}
+#scrollSave {
+    margin-top: 14px;
+    align-self: flex-end;
+    padding: 8px 18px;
+    background: #5a3d22;
+    color: #f0e6d2;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+#scrollLabel {
+    position: fixed;
+    z-index : 2001;
+    pointer-events: none;
+    background: rgba(20, 15, 10, 0.85);
+    color: #f0e6d2;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    display: none;
+}
 #progressFill{
     width: 0%;
     height: 100%;

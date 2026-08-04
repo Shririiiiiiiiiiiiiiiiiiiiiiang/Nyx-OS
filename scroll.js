@@ -1,5 +1,6 @@
 import * as THREE from "three";
 
+
 const scrollCanvas = document.createElement("canvas");
 scrollCanvas.width = 256;
 scrollCanvas.height = 256;
@@ -231,7 +232,7 @@ const rows = 3;
 const spacingX = 4;
 const spacingY = 3;
 const allScrolls = [];
-let scrollNumber = 1;
+let notesData = JSON.parse(localStorage.getItem("notes")) || [];
 
 const shelfGeo = new THREE.BoxGeometry(18, 0.25, 3.5);
 const shelfMaterial = new THREE.MeshStandardMaterial({color: 0x1f120a, roughness: 0.8});
@@ -259,9 +260,18 @@ for (let row = 0; row < rows; row++) {
         scroll.position.z = zCurve;
         scroll.rotation.y = -colOffSet * 0.1;
         scroll.rotation.z += (Math.random() - 0.5) * 0.15;
-        scroll.position.z += (Math.random() - 0.5) * 0.3;
-        scroll.userData.title = "Test Scroll " + scrollNumber;
-        scrollNumber = scrollNumber + 1;
+        scroll.position.z += (Math.random() - 0.5) * 0.3;        
+        const slotNumber = allScrolls.length;
+        if(slotNumber < notesData.length) {
+            scroll.userData.title = notesData[slotNumber].title;
+            scroll.userData.noteContent = notesData[slotNumber].content;
+        }
+        else {
+            scroll.userData.title = "Empty"
+            scroll.userData.noteContent = "";
+            scroll.userData.isEmpty = true;
+        }
+
         scroll.userData.startPos = scroll.position.clone();
         scroll.userData.targetPos = scroll.position.clone();
         allScrolls.push(scroll);
@@ -392,8 +402,29 @@ function updateScrolls() {
             scroll.userData.openhandlerightBottom.position.x = scroll.userData.capRight.position.x + handleOffset;
             scroll.userData.openhandlerightBottom.position.y = -handleHeight * eased;
             scroll.userData.openhandlerightBottom.scale.set(eased, eased, eased);
+            if(scroll.userData.openprogress === 1 && scroll === activeScroll) {
+                showScrollContent(scroll);
+            }
+            else {
+                hideScrollContent();
+            }
         }
     }
+}
+const scrollContentDiv = document.getElementById("scrollContent");
+const scrollTitleInput = document.getElementById("scrollTitleInput");
+const scrollWriting = document.getElementById("scrollWriting");
+
+function showScrollContent(scroll) {
+    if (scrollContentDiv.classList.contains("visible")) {
+        return;
+    }
+    scrollTitleInput.value = scroll.userData.isEmpty ? "" : scroll.userData.title;
+    scrollWriting.value = scroll.userData.isEmpty ? "" : scroll.userData.noteContent;
+    scrollContentDiv.classList.add("visible")
+}
+function hideScrollContent() {
+    scrollContentDiv.classList.remove("visible");
 }
 
 function animate() {
