@@ -352,6 +352,7 @@ function handleClick() {
         }
     }
 }
+
 window.addEventListener("click", handleClick);
 
 const openSpeed = 0.04;
@@ -402,18 +403,23 @@ function updateScrolls() {
             scroll.userData.openhandlerightBottom.position.x = scroll.userData.capRight.position.x + handleOffset;
             scroll.userData.openhandlerightBottom.position.y = -handleHeight * eased;
             scroll.userData.openhandlerightBottom.scale.set(eased, eased, eased);
-            if(scroll.userData.openprogress === 1 && scroll === activeScroll) {
-                showScrollContent(scroll);
+          
+        }
+    }
+    console.log("activeScroll: ", activeScroll, "progress: ", activeScroll ? activeScroll.userData.openprogress: "na")
+      if(activeScroll !== null && activeScroll.userData.openprogress === 1) {
+                showScrollContent(activeScroll);
             }
             else {
                 hideScrollContent();
             }
-        }
-    }
 }
 const scrollContentDiv = document.getElementById("scrollContent");
 const scrollTitleInput = document.getElementById("scrollTitleInput");
 const scrollWriting = document.getElementById("scrollWriting");
+scrollContentDiv.addEventListener("click", function(event) {
+    event.stopPropagation();
+});
 
 function showScrollContent(scroll) {
     if (scrollContentDiv.classList.contains("visible")) {
