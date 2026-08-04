@@ -269,7 +269,18 @@ for (let row = 0; row < rows; row++) {
         scene.add(scroll);
     }
 }
-
+const notesButton = getElementById("notes");
+const closeLibButton = document.getElementById("closeLib");
+const scrollLibPage = document.getElementById("scrollLib");
+let libOpen = false;
+notesButton.addEventListener("click", function() {
+    scrollLibDiv.style.display = "block";
+    libOpen = true;
+});
+closeLibButton.addEventListener("click", function() {
+    scrollLibPage.style.display = "none";
+    libOpen = false;
+});
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 const scrollLabel = document.getElementById("scrollLabel");
@@ -285,6 +296,9 @@ function handleMouseMove(event) {
 
 window.addEventListener("mousemove", handleMouseMove);
 function checkHover() {
+    if(libOpen === false) {
+        return;
+    }
     raycaster.setFromCamera(mouse, camera);
     let foundHit = false;
     for(let i = 0; i < allScrolls.length; i++) {
