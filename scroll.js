@@ -239,7 +239,7 @@ const shelfMaterial = new THREE.MeshStandardMaterial({color: 0x1f120a, roughness
 
 for(let r = 0; r < rows; r++) {
     const shelf = new THREE.Mesh(shelfGeo, shelfMaterial);
-    const yPos = (r - (rows - 1) / 2) * spacingY - 0.7;
+    const yPos = ((rows - 1) / 2 - r) * spacingY - 0.7;
     shelf.position.set(0, yPos, 0);
     shelf.receiveShadow = true;
     scene.add(shelf);
@@ -253,7 +253,7 @@ for (let row = 0; row < rows; row++) {
 
         const colOffSet = col - (cols - 1) / 2;
         const xPos = colOffSet * spacingX;
-        const yPos = (row - (rows - 1) / 2) * spacingY;
+        const yPos = ((rows - 1) / 2 - row) * spacingY;
         const zCurve = colOffSet * colOffSet * curveAmt;
         scroll.position.x = xPos;
         scroll.position.y = yPos;
@@ -306,7 +306,7 @@ function handleMouseMove(event) {
 
 window.addEventListener("mousemove", handleMouseMove);
 function checkHover() {
-    if(libOpen === false) {
+    if(libOpen === false || activeScroll !== null) {
         return;
     }
     raycaster.setFromCamera(mouse, camera);
