@@ -381,6 +381,51 @@ button {
     font-family: Georgia, serif;
     color: #d8dcf0
 }
+#libToolbar {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 2001;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(15, 12, 20, 0.75);
+    border: 1px solid rgba(180, 190, 220, 0.25);
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-family: Georgia, serif;
+    
+}
+#scrollSearch {
+    padding: 6px 10px;
+    background: #14111c;
+    color: #d8dcf0;
+    border: 1px solid rgba(180, 190, 220, 0.25);
+    border-radius: 6px;
+    font-family: Georgia, serif;
+    outline: none;
+}
+#scrollCount {
+    color: #b8bcd8;
+    font-size: 14px;
+    white-space: nowrap;
+}
+#prevPage, #nextPage {
+    padding: 6px 12px;
+    background: #2a2438;
+    color: #cfc4e0;
+    border: 1px solid rgba(180, 190, 220, 0.25);
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: Georgia, serif;
+}
+#prevPage:hover, #nextPage.hover {
+    background: #3a3250; 
+}
+#prevPage:disabled, #nextPage:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
 
 .pc-card {
     display: none;

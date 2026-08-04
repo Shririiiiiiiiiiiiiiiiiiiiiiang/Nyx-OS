@@ -244,7 +244,7 @@ button.addEventListener("click", function () {
         reply = "Secret Buddy (AKA. Shrirang)";
     }
     if(message.toLowerCase() === "version") {
-    reply = "Nyx Version 0.6";
+    reply = "Nyx Version 1.0";
     }
     if(message.toLowerCase() === "ping") {
     reply = "pong";

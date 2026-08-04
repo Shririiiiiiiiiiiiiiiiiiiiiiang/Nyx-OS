@@ -231,6 +231,7 @@ const cols = 4;
 const rows = 3;
 const spacingX = 4;
 const spacingY = 3;
+const notesPerPage = cols * rows;
 const allScrolls = [];
 let notesData = JSON.parse(localStorage.getItem("notes")) || [];
 
@@ -266,11 +267,13 @@ for (let row = 0; row < rows; row++) {
         if(slotNumber < notesData.length) {
             scroll.userData.title = notesData[slotNumber].title;
             scroll.userData.noteContent = notesData[slotNumber].content;
+            scroll.userData.noteIndex = slotNumber;    
         }
         else {
             scroll.userData.title = "Empty"
             scroll.userData.noteContent = "";
             scroll.userData.isEmpty = true;
+            scroll.userData.noteIndex = null
         }
 
         scroll.userData.startPos = scroll.position.clone();
@@ -287,6 +290,10 @@ let libOpen = false;
 notesButton.addEventListener("click", function() {
     scrollLibPage.style.display = "block";
     libOpen = true;
+    searchQuery = "";
+    scrollSearchInput.value = "";
+    currentPage = 0;
+    replaceScrolls();
 });
 closeLibButton.addEventListener("click", function() {
     scrollLibPage.style.display = "none";
@@ -423,27 +430,57 @@ const scrollTitleInput = document.getElementById("scrollTitleInput");
 const scrollWriting = document.getElementById("scrollWriting");
 const scrollSaveBtn = document.getElementById("scrollSave");
 const scrollDeleteBtn = document.getElementById("scrollDelete");
+const scrollSearchInput = document.getElementById("scrollSearch");
+const scrollCountLabel = document.getElementById("scrollCount");
+const prevpage = document.getElementById("prevPage");
+const nextpage = document.getElementById("nextPage");
+let currentPage = 0;
+let searchQuery = "";
+
 scrollContentDiv.addEventListener("click", function(event) {
     event.stopPropagation();
 });
 
+function getfilteredScrolls() {
+    const allNotes = JSON.parse(localStorage.getItem("notes")) || [];
+    const indexed = allNotes.map(function(note, index) {
+        return {note: note, index: index};
+    });
+    if(searchQuery.trim() === "") {
+        return indexed;
+    }
+    const q = searchQuery.toLowerCase();
+    return indexed.filter(function(item) {
+        return item.note.title.toLowerCase().includes(q);
+    });
+}
+
 function replaceScrolls() {
-    const updatedNotes = JSON.parse(localStorage.getItem("notes")) || [];
-    for(let i = 0; i < allScrolls.length; i++) {
+    const filtered = getfilteredScrolls();
+    const totalPages = Math.max(1, Math.ceil(filtered.length / notesPerPage));
+    if(currentPage >= totalPages) {
+        currentPage = totalPages - 1;
+    }
+    if(currentPage < 0) {
+        currentPage = 0;
+    }
+    const startIndex = currentPage * notesPerPage;
+
+    for (let i = 0; i < allScrolls.length; i++) {
         const scroll = allScrolls[i];
-        const idx = scroll.userData.slotIndex;
-        if (idx < updatedNotes.length) {
-            scroll.userData.title = updatedNotes[idx].title;
-            scroll.userData.noteContent = updatedNotes[idx].content;
+        const entry = filtered[startIndex + scroll.userData.slotIndex];
+        if(entry) {
+            scroll.userData.title = entry.note.title;
+            scroll.userData.noteContent = entry.note.content;
             scroll.userData.isEmpty = false;
-        }
-        else {
-            scroll.userData.title = "Empty"
-            scroll.userData.noteContent = "";
-            scroll.userData.isEmpty = true;
+            scroll.userData.noteIndex = null;
         }
     }
+    scrollCountLabel.textContent = filtered.length + (filtered.length === 1 ? "scroll" : " scrolls") + " Page " + (currentPage + 1) + "/" + totalPages;
+    prevpage.disabled = currentPage === 0;
+    nextpage.disabled = currentPage >= totalPages - 1;
 }
+
 
 scrollSaveBtn.addEventListener("click", function(event) {
     event.stopPropagation();
@@ -467,15 +504,19 @@ scrollSaveBtn.addEventListener("click", function(event) {
 
 scrollDeleteBtn.addEventListener("click", function(event) {
     event.stopPropagation();
-    if(activeScroll === null || activeScroll.userData.isEmpty) {
-        return;
-    }
-    let notes = JSON.parse(localStorage.getItem("notes")) || [];
-    notes.splice(activeScroll.userData.slotIndex, 1);
-    localStorage.setItem("notes", JSON.stringify(notes));
+    searchQuery = scrollSearchInput.value;
+    currentPage = 0;
     replaceScrolls();
-    activeScroll.userData.isOpen = false;
-    activeScroll = null;
+});
+prevpage.addEventListener("click", function(event) {
+    event.stopPropagation();
+    currentPage--;
+    replaceScrolls();
+});
+nextpage.addEventListener("click", function(event) {
+    event.stopPropagation();
+    currentPage++
+    replaceScrolls();
 });
 
 function showScrollContent(scroll) {
