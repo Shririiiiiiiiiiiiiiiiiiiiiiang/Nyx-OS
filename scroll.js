@@ -269,12 +269,12 @@ for (let row = 0; row < rows; row++) {
         scene.add(scroll);
     }
 }
-const notesButton = getElementById("notes");
+const notesButton = document.getElementById("notes");
 const closeLibButton = document.getElementById("closeLib");
 const scrollLibPage = document.getElementById("scrollLib");
 let libOpen = false;
 notesButton.addEventListener("click", function() {
-    scrollLibDiv.style.display = "block";
+    scrollLibPage.style.display = "block";
     libOpen = true;
 });
 closeLibButton.addEventListener("click", function() {

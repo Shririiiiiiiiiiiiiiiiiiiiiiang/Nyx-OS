@@ -76,8 +76,10 @@
     <input id="userInput" type="text" placeholder="talk to Nyx">
     <button id="sendBtn">Send</button>
     <div id="scrollLabel"></div>
-    <div id="scrollLib" style="display: none;"></div>
-    <script type="module" src="scene.js"></script>
+    <div id="scrollLib" style="display: none;">
+        <button id="closeLib" style="position: fixed; top: 20px; right: 20px; z-index: 2001; padding: 10px 16px; background: #a22; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 18px;">X</buton>
+        </div>
+            <script type="module" src="scene.js"></script>
     <script type="module" src="scroll.js"></script>
     <script src="script.js"></script>
 

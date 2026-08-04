@@ -154,12 +154,7 @@ function renderMissions() {
 searchnotes.addEventListener("input", function() {
     renderNotes();
 });
-notesButton.addEventListener(
-    "click", () => {notesPage.style.display = "block";}
-    );
-closeNotes.addEventListener(
-        "click", () => {notesPage.style.display = "none";}
-    );
+
 tasksButton.addEventListener(
     "click", () => {missionsPage.style.display = "block";}
 );
