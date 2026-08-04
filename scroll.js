@@ -417,9 +417,17 @@ function updateScrolls() {
 const scrollContentDiv = document.getElementById("scrollContent");
 const scrollTitleInput = document.getElementById("scrollTitleInput");
 const scrollWriting = document.getElementById("scrollWriting");
+const scrollSaveBtn = document.getElementById("scrollSave");
 scrollContentDiv.addEventListener("click", function(event) {
     event.stopPropagation();
 });
+
+scrollSaveBtn.addEventListener("click", function() {
+    if(activeScroll === null) {
+        return;
+    }
+    cont new
+} )
 
 function showScrollContent(scroll) {
     if (scrollContentDiv.classList.contains("visible")) {
