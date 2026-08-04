@@ -262,6 +262,7 @@ for (let row = 0; row < rows; row++) {
         scroll.rotation.z += (Math.random() - 0.5) * 0.15;
         scroll.position.z += (Math.random() - 0.5) * 0.3;        
         const slotNumber = allScrolls.length;
+        scroll.userData.slotIndex = slotNumber;
         if(slotNumber < notesData.length) {
             scroll.userData.title = notesData[slotNumber].title;
             scroll.userData.noteContent = notesData[slotNumber].content;
@@ -421,9 +422,28 @@ const scrollContentDiv = document.getElementById("scrollContent");
 const scrollTitleInput = document.getElementById("scrollTitleInput");
 const scrollWriting = document.getElementById("scrollWriting");
 const scrollSaveBtn = document.getElementById("scrollSave");
+const scrollDeleteBtn = document.getElementById("scrollDelete");
 scrollContentDiv.addEventListener("click", function(event) {
     event.stopPropagation();
 });
+
+function replaceScrolls() {
+    const updatedNotes = JSON.parse(localStorage.getItem("notes")) || [];
+    for(let i = 0; i < allScrolls.length; i++) {
+        const scroll = allScrolls[i];
+        const idx = scroll.userData.slotIndex;
+        if (idx < updatedNotes.length) {
+            scroll.userData.title = updatedNotes[idx].title;
+            scroll.userData.noteContent = updatedNotes[idx].content;
+            scroll.userData.isEmpty = false;
+        }
+        else {
+            scroll.userData.title = "Empty"
+            scroll.userData.noteContent = "";
+            scroll.userData.isEmpty = true;
+        }
+    }
+}
 
 scrollSaveBtn.addEventListener("click", function(event) {
     event.stopPropagation();
@@ -444,6 +464,19 @@ scrollSaveBtn.addEventListener("click", function(event) {
     scrollToSave.userData.noteContent = newContent;
     scrollToSave.userData.isEmpty = false;
 } )
+
+scrollDeleteBtn.addEventListener("click", function(event) {
+    event.stopPropagation();
+    if(activeScroll === null || activeScroll.userData.isEmpty) {
+        return;
+    }
+    let notes = JSON.parse(localStorage.getItem("notes")) || [];
+    notes.splice(activeScroll.userData.slotIndex, 1);
+    localStorage.setItem("notes", JSON.stringify(notes));
+    replaceScrolls();
+    activeScroll.userData.isOpen = false;
+    activeScroll = null;
+});
 
 function showScrollContent(scroll) {
     if (scrollContentDiv.classList.contains("visible")) {
