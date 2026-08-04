@@ -326,7 +326,10 @@ function checkHover() {
         scrollLabel.style.display = "none";
     }
 }
-function handleClick() {
+function handleClick(event) {
+    if(scrollContentDiv.contains(event.target)) {
+        return;
+    }
     raycaster.setFromCamera(mouse, camera);
 
     if(activeScroll !== null) {
@@ -406,7 +409,7 @@ function updateScrolls() {
           
         }
     }
-    console.log("activeScroll: ", activeScroll, "progress: ", activeScroll ? activeScroll.userData.openprogress: "na")
+    
       if(activeScroll !== null && activeScroll.userData.openprogress === 1) {
                 showScrollContent(activeScroll);
             }
@@ -422,11 +425,24 @@ scrollContentDiv.addEventListener("click", function(event) {
     event.stopPropagation();
 });
 
-scrollSaveBtn.addEventListener("click", function() {
+scrollSaveBtn.addEventListener("click", function(event) {
+    event.stopPropagation();
     if(activeScroll === null) {
         return;
     }
-    cont new
+    const scrollToSave = activeScroll;
+    const newTitle = scrollTitleInput.value.trim();
+    const newContent = scrollWriting.value.trim();
+
+    if(newTitle === "" || newContent === "") {
+        return;
+    }
+    document.getElementById("noteTitle").value = newTitle;
+    document.getElementById("noteInput").value = newContent;
+    document.getElementById("savethem").click();
+    scrollToSave.userData.title = newTitle;
+    scrollToSave.userData.noteContent = newContent;
+    scrollToSave.userData.isEmpty = false;
 } )
 
 function showScrollContent(scroll) {
