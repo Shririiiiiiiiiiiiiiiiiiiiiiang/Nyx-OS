@@ -1,4 +1,4 @@
-import * as THREE from "three";
+import * as THREE from "https://esm.sh/three@0.169.0";
 
 
 const scrollCanvas = document.createElement("canvas");
@@ -466,7 +466,7 @@ function getfilteredScrolls() {
 
 function replaceScrolls() {
     const filtered = getfilteredScrolls();
-    const totalPages = Math.max(1, Math.ceil(filtered.length / notesPerPage));
+    const totalPages = Math.floor(filtered.length / notesPerPage) + 1;
     if(currentPage >= totalPages) {
         currentPage = totalPages - 1;
     }

@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import * as THREE from "https://esm.sh/three@0.169.0";
 
 const starCanvas = document.createElement("canvas");
 starCanvas.width = 64

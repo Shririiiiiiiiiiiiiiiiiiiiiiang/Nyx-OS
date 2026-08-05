@@ -51,6 +51,30 @@ And also make a cool project
 - help with opening, closing and editing things on device
 - Smarter memory system
 
+# Whats needed to run locally
+- Node.js(https://nodejs.org/)(to run locally its needed..)
+- to check if you aldready have it you canopen terminal and run
+- ```bash
+- node -v
+- npm -v
+- ```
+- if these show version numbers then you have it installed if not then you may install it
+
+# how to run locally
+- clone your repo
+- git clone (your repo link(in this case my link or by forking your link))
+- cd (name(folder/file))
+- ```
+- install dependencies(for three js and ther things)
+- ```bash
+- npm install
+- ```
+- start the server
+- ```bash
+- npm run dev(In vs code put this in terminal not powershell)
+- ```
+- then open the link shown on your screen
+
 # Built for 
 
 Hack Club Horizons

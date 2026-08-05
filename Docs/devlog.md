@@ -149,3 +149,8 @@ fixed some bugs
 
 ## 30th july, 2026
 - started with scroll animation (Used youtube and ai at start)
+
+## 1st aug to 8 aug, 2026
+- fully completed wih scrolls
+- giving final touches for to ship the project
+- redesigned the chat ui to match the theme
