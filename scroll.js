@@ -295,6 +295,7 @@ notesButton.addEventListener("click", function() {
     currentPage = 0;
     replaceScrolls();
 });
+
 closeLibButton.addEventListener("click", function() {
     scrollLibPage.style.display = "none";
     libOpen = false;
@@ -437,6 +438,14 @@ const nextpage = document.getElementById("nextPage");
 let currentPage = 0;
 let searchQuery = "";
 
+scrollSearchInput.addEventListener("input", function() {
+    searchQuery = scrollSearchInput.value;
+    currentPage = 0;
+    replaceScrolls();
+});
+
+
+
 scrollContentDiv.addEventListener("click", function(event) {
     event.stopPropagation();
 });
@@ -473,10 +482,16 @@ function replaceScrolls() {
             scroll.userData.title = entry.note.title;
             scroll.userData.noteContent = entry.note.content;
             scroll.userData.isEmpty = false;
+            scroll.userData.noteIndex = entry.index;
+        }
+        else {
+            scroll.userData.title = "Empty";
+            scroll.userData.noteContent = "";
+            scroll.userData.isEmpty = true;
             scroll.userData.noteIndex = null;
         }
     }
-    scrollCountLabel.textContent = filtered.length + (filtered.length === 1 ? "scroll" : " scrolls") + " Page " + (currentPage + 1) + "/" + totalPages;
+    scrollCountLabel.textContent = filtered.length + (filtered.length === 1 ? " scroll" : " scrolls") + " Page " + (currentPage + 1) + "/" + totalPages;
     prevpage.disabled = currentPage === 0;
     nextpage.disabled = currentPage >= totalPages - 1;
 }
@@ -504,8 +519,14 @@ scrollSaveBtn.addEventListener("click", function(event) {
 
 scrollDeleteBtn.addEventListener("click", function(event) {
     event.stopPropagation();
-    searchQuery = scrollSearchInput.value;
-    currentPage = 0;
+    if(activeScroll === null || activeScroll.userData.noteIndex === null) {
+        return;
+    }
+    const allNotes = JSON.parse(localStorage.getItem("notes")) || [];
+    allNotes.splice(activeScroll.userData.noteIndex, 1);
+    localStorage.setItem("notes", JSON.stringify(allNotes));
+    activeScroll.userData.isOpen = false;
+    activeScroll = null;
     replaceScrolls();
 });
 prevpage.addEventListener("click", function(event) {
