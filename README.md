@@ -1,5 +1,7 @@
 ## Nyx-OS
 
+# Screenshots
+![Nyx OS Main Interface](./Assets/Screenshots/homepageforreadme.png)
 
 # What is Nyx OS
 Nyx OS is a browser-based personal PC/AI assistant built using HTML, CSS and JavaScript
