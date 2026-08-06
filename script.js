@@ -215,24 +215,28 @@ button.addEventListener("click", function () {
     if(message.toLowerCase() === "help") {
         reply = 
     `Available commands
-
-    date
-    time
-    day
-
-    my name is...
-
-    what is my name
-
-    remember ...
-
-    show memories ...
-
-    search memory ... 
-
-    memory count
-    
-    help`;       
+        1.General:- 
+                  -hi
+                  -hello
+                  -who are you 
+                  -creator 
+                  -version 
+                  -ping
+        2.time:- 
+              -date 
+              -time
+              -day
+        3.identity:- 
+                    -my name is (your name) 
+                    -what is my name
+        4.memory:- 
+                 -remember ...,
+                 -show memories 
+                 -search memory (key word from memory)
+                 -delete memory (memory no. {you get it after you run show memories command})
+                 -memory count
+                 -clear all memories
+        5.help`;       
     
     mood = "helper"
     }

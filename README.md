@@ -1,7 +1,3 @@
-### IMPORTANT NOTICE
-Project is on hold for 7 to 8 months due to my exams will be started again as soon as i finish my examss...
-
-
 ## Nyx-OS
 
 
@@ -26,6 +22,8 @@ And also make a cool project
 - Typing animation (Nyx's side)
 - Help command  
 - Status bar
+- scroll libraray to store your notes
+- taskbar (UI incomplete)
 
 # How it works
 - Nyx uses JavaScript to process user commands
@@ -43,6 +41,8 @@ And also make a cool project
 - CSS
 - JavaScript
 - LocalStorage
+- Three.js
+- Vite
 
 # Future plans
 - Better UI (Lot better)
@@ -54,26 +54,27 @@ And also make a cool project
 # Whats needed to run locally
 - Node.js(https://nodejs.org/)(to run locally its needed..)
 - to check if you aldready have it you canopen terminal and run
-- ```bash
-- node -v
-- npm -v
-- ```
+ ```bash
+ node -v
+ npm -v
+ ```
 - if these show version numbers then you have it installed if not then you may install it
 
 # how to run locally
-- clone your repo
-- git clone (your repo link(in this case my link or by forking your link))
-- cd (name(folder/file))
-- ```
-- install dependencies(for three js and ther things)
-- ```bash
-- npm install
-- ```
-- start the server
-- ```bash
-- npm run dev(In vs code put this in terminal not powershell)
-- ```
-- then open the link shown on your screen
+Clone your repo
+```bash
+ git clone https://github.com/Shririiiiiiiiiiiiiiiiiiiiiiang/Nyx-OS
+ cd Nyx-OS
+ ```
+install dependencies(for three js and ther things)
+ ```bash
+ npm install
+ ```
+ start the server
+ ```bash
+ npm run dev             (In vs code put this in terminal not powershell)
+ ```
+ then open the link shown on your screen
 
 # Built for 
 

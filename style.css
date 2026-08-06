@@ -43,7 +43,7 @@ body{
     z-index: 500;
 }
 
-#alltools Button{
+#alltools button{
     padding: 10px 20px;
     border: none;
     border-radius: 10px;
@@ -159,12 +159,7 @@ body{
     transition: 0.3s;
 }
 
-.panelheader{
-    display: flex;
-    justify-content:space-between;
-    align-items: center;
-    margin-bottom: 15px;
-}
+
 .panelheader{
     display: flex;
     justify-content: space-between;

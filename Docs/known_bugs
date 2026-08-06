@@ -1,6 +1,6 @@
 ## current
-- Background mood change animation not smooth
-- Chat UI needs polish
+
+
 
 ## solved
 - Memory search not working
@@ -8,3 +8,7 @@
 - Mood update issue
 - Nyx not replying issue
 - Java syntax errors
+- Background mood change animation not smooth
+- Chat UI needs polish(did it maybe will add more to it)
+
+#### All bugs solved

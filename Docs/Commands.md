@@ -15,3 +15,6 @@ clear all memories
 creator
 version
 ping
+who are you 
+memory count 
+delete memory(the no. in wich the memory will be given out by nyx)
