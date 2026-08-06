@@ -515,6 +515,7 @@ scrollSaveBtn.addEventListener("click", function(event) {
     scrollToSave.userData.title = newTitle;
     scrollToSave.userData.noteContent = newContent;
     scrollToSave.userData.isEmpty = false;
+    replaceScrolls();
 } )
 
 scrollDeleteBtn.addEventListener("click", function(event) {
