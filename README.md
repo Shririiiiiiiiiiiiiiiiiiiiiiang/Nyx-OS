@@ -36,6 +36,7 @@ And also make a cool project
 # AI usage
 - Ai was used in early stages along with youtube videos for to lean JavaScript and CSS as they were completely new for me.
 - In this project AI was used in learning some concepts and some debugging assistance in early stages
+- AI was also used along with youtube when i started with three.js as it was completely new for me so i took some help there
 - The project architecture, features, system, design, code, testing and implementation are all done by me
 
 # Tech Stack
