@@ -160,7 +160,25 @@ tasksButton.addEventListener(
 );
 closeMission.addEventListener(
     "click", () => {missionsPage.style.display = "none";}
-);    
+);
+
+const tools = document.getElementById("tools");
+const toolpage = document.getElementById("toolspage");
+const closetool = document.getElementById("close");
+const toolbutn = document.getElementById("toolbutton");
+const currenttool = document.getElementById("currenttool");
+
+tools.addEventListener("click", function() {
+    toolpage.style.display= "block";
+
+});
+closetool.addEventListener("click" , function() {
+    toolpage.style.display = "none";
+});
+
+
+
+
 let userName = localStorage.getItem("userName") || "";
 
 let notes = JSON.parse(localStorage.getItem("notes")) || [];

@@ -471,5 +471,49 @@ button {
     --glow: #00aaff;
 }
 
+#toolspage {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    max-width: 90%;
+    background: rgba(11, 17, 29, 0.3);
+    border: 1px solid #3f4c66;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 0 25px rgba(97, 145, 218, 0.397);
+    z-index: 1000
 
-    
+}
+
+#toolbutton {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+#toolbutton button{
+    padding: 10px 16px;
+    border: none;
+    border-radius: 10px;
+    background: #1b2333;
+    color: white;
+    cursor: pointer;
+
+
+}
+
+#toolbutton button:hover {
+    background: #1f283b;
+}
+
+#currenttool {
+    margin-top: 20px;
+    background:#111827;
+    border: 1px solid #445577;
+    border-radius:  10px;
+    padding: 15px;
+
+}
