@@ -1,3 +1,5 @@
+
+
 const Connect = document.getElementById("Connect");
     const PCStatus = document.getElementById("PC-Status");
     let connected = false;
@@ -175,6 +177,41 @@ tools.addEventListener("click", function() {
 closetool.addEventListener("click" , function() {
     toolpage.style.display = "none";
 });
+
+const calc = document.getElementById("calc");
+const calculator = document.getElementById("calculator");
+const calcScreen = document.getElementById("calcscreen")
+const calcButns = document.getElementById("calckeys");
+const equalsign  = document.getElementById("equal")
+
+calc.addEventListener("click", function() {
+    calculator.style.display  = "block"
+});
+
+calcButns.addEventListener("click", function(event) {
+    if(!event.target.classList.contains("calckeys")) {
+        return;
+    }
+    const key = event.target.getAttribute("data-key");
+    if(key === "c") {
+        calcScreen.value = "";
+
+    }
+    else {
+        calcScreen.value += key;
+    }
+});
+
+equalsign.addEventListener("click", function() {
+    try {
+        calcScreen.value = eval(calcScreen.value);
+
+    }
+    catch(error) {
+        calcScreen.value = "Error"
+    }
+} )
+
 
 
 
