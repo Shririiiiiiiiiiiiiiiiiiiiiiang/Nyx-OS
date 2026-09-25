@@ -59,7 +59,7 @@ if("webkitSpeechRecognition" in window){
         console.log("got it: ", event);
         const transcript = event.results[0][0].transcript;
         input.value = transcript;
-        button.click();
+    
     };
     recog.onerror = function(event) {
         console.log("speech recog error:", event.error );
@@ -308,7 +308,9 @@ let notes = JSON.parse(localStorage.getItem("notes")) || [];
 let missions = JSON.parse(localStorage.getItem("missions")) || [];
 
 button.addEventListener("click", function () {
-
+    if(listen) {
+        recog.stop();
+    }
     const message = input.value.trim();
     if(message === ""){
         return
