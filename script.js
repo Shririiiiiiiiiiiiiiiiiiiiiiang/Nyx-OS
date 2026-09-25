@@ -307,7 +307,7 @@ let userName = localStorage.getItem("userName") || "";
 let notes = JSON.parse(localStorage.getItem("notes")) || [];
 let missions = JSON.parse(localStorage.getItem("missions")) || [];
 
-button.addEventListener("click", function () {
+button.addEventListener("click", async function () {
     if(listen) {
         recog.stop();
     }
@@ -319,6 +319,25 @@ button.addEventListener("click", function () {
     
 
     chatBox.innerHTML += '<div class="message userMessage">You: ' + message + '</div>';
+
+     const nyxBubble = document.createElement("div");
+    nyxBubble.className = "message nyxMessage";
+    chatBox.appendChild(nyxBubble);
+    chatBox.scrollTop = chatBox.scrollHeight;
+    const moonPhases = ["🌑", "🌒", "🌓", "🌔", "🌕", "🌔", "🌓", "🌒"];
+
+    let moonIndex = 0;
+    nyxBubble.innerHTML = "Nyx: " + moonPhases[moonIndex];
+
+    const moonAnimation = setInterval(function() {
+        moonIndex++;
+
+        if(moonIndex >= moonPhases.length) {
+            moonIndex = 0;
+        }
+
+        nyxBubble.innerHTML = "Nyx: " + moonPhases[moonIndex]; 
+    }, 300);
 
     const nyxReplies = [
 
@@ -344,6 +363,7 @@ button.addEventListener("click", function () {
             Math.random() * nyxReplies.length
         )
     ];
+    let defaultreply = reply;
     let mood = "normal";
    
     if(message.toLowerCase() === "hi"){
@@ -557,7 +577,14 @@ button.addEventListener("click", function () {
         mood = "memory";
     }
 
-   
+   if(reply === defaultreply){
+    try {
+        reply = await window.asknyx(message);
+    }
+    catch(error) {
+        console.log("Error with ai:-", error);
+    }
+   }
 
      document.body.classList.remove(
         "normalMood",
@@ -577,24 +604,7 @@ button.addEventListener("click", function () {
     
     "🌙 Online | 🧠 Memory Active | ✨ Mood: " + mood;
 
-        const nyxBubble = document.createElement("div");
-    nyxBubble.className = "message nyxMessage";
-    chatBox.appendChild(nyxBubble);
-    chatBox.scrollTop = chatBox.scrollHeight;
-    const moonPhases = ["🌑", "🌒", "🌓", "🌔", "🌕", "🌔", "🌓", "🌒"];
-
-    let moonIndex = 0;
-    nyxBubble.innerHTML = "Nyx: " + moonPhases[moonIndex];
-
-    const moonAnimation = setInterval(function() {
-        moonIndex++;
-
-        if(moonIndex >= moonPhases.length) {
-            moonIndex = 0;
-        }
-
-        nyxBubble.innerHTML = "Nyx: " + moonPhases[moonIndex]; 
-    }, 300);
+       
         
 
     setTimeout(function () {
