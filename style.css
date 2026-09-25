@@ -577,3 +577,21 @@ button {
 #close.hover{
     background: #2a3650;
 }
+
+#micBtn {
+    padding: 10px 14px;
+    background: #2a2438;
+    color: #cfc4e0;
+    border: 1px solid rgba(180, 180, 220, 0.25);
+    border-radius:6px;
+    cursor: pointer;
+}
+
+#micBtn:hover {
+    background:#644324 ;
+}
+
+#micBtn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}

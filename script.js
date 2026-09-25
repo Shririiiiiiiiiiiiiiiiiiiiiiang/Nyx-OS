@@ -1,5 +1,6 @@
 
 
+
 const Connect = document.getElementById("Connect");
     const PCStatus = document.getElementById("PC-Status");
     let connected = false;
@@ -39,6 +40,42 @@ const missionList = document.getElementById("missionlist");
 const missionCata = document.getElementById("missionCata")
 const missionDue = document.getElementById("missionDue")
 const missionPriority = document.getElementById("missionPriority")
+const micbtn = document.getElementById("micBtn");
+
+if(!("webkitSpeechRecognition" in window)) {
+    micbtn.disabled = true;
+    micbtn.title = "voice input isnt supported here in this browser pls change the browser use Chrome maybe";
+}
+
+let recog = null;
+let listen = false;
+
+if("webkitSpeechRecognition" in window){
+    recog = new webkitSpeechRecognition();
+    recog.continuous = true;
+    recog.interimResults = false;
+    recog.lang = "en-US";
+    recog.onresult = function(event) {
+        const transcript = event.results[0][0].transcript;
+        input.value = transcript;
+    };
+    recog.onend = function() {
+        listen = false;
+        micbtn.textContent = "start";
+    }
+    micbtn.addEventListener("click", function() {
+        if(listen) {
+            recog.stop();
+        }
+        else{
+            recog.start();
+            listen = true;
+            micbtn.textContent = "pause"
+        }
+    });
+
+}
+
 function renderNotes(){
     
     notesList.innerHTML = "";
