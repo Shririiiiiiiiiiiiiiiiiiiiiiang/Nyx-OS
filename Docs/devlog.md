@@ -154,3 +154,10 @@ fixed some bugs
 - fully completed wih scrolls
 - giving final touches for to ship the project
 - redesigned the chat ui to match the theme
+
+## 17th sept, 2026
+- made a simple tool-calculator
+- started work with tools
+
+## 25th sept, 2026
+- making a stop watch

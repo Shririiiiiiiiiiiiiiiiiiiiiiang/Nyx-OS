@@ -185,7 +185,13 @@ const calcButns = document.getElementById("calckeys");
 const equalsign  = document.getElementById("equal")
 
 calc.addEventListener("click", function() {
-    calculator.style.display  = "block"
+    if(calculator.style.display  === "block") {
+        calculator.style.display = "none";
+
+    }
+    else{
+        calculator.style.display = "block";
+    }
 });
 
 calcButns.addEventListener("click", function(event) {
@@ -212,6 +218,43 @@ equalsign.addEventListener("click", function() {
     }
 } )
 
+
+const stpwtch = document.getElementById("stpwtch")
+const watchpanel = document.getElementById("watchpanel");
+const watchscreen = document.getElementById("Watchscreen");
+const startstop = document.getElementById("Startstop")
+const reset = document.getElementById("reset");
+
+let seconds = 0;
+let timer = null;
+
+stpwtch.addEventListener("click", function() {
+    watchpanel.style.display = watchpanel.style.display === "block" ? "none" : "block";
+
+});
+
+startstop.addEventListener("click", function() {
+    if(timer){
+        clearInterval(timer);
+        timer = null;
+    }
+    else {
+        timer = setInterval(function() {
+            seconds++
+            const h = Math.floor(seconds/3600);
+            const m = Math.floor((seconds % 3600) / 60);
+            const s = seconds % 60;
+            watchscreen.textContent = (h<10?"0"+h:h) + ":" + (m<10?"0"+m:m) + ":" + (s<10?"0"+s:s);
+
+        }, 1000); 
+    }
+});
+reset.addEventListener("click", function() {
+    clearInterval(timer);
+    timer=null;
+    seconds = 0;
+    watchscreen.textContent = "00:00:00";
+});
 
 
 
