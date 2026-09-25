@@ -161,3 +161,4 @@ fixed some bugs
 
 ## 25th sept, 2026
 - making a stop watch
+- made a mic now a person can say hi msg and it will ge written

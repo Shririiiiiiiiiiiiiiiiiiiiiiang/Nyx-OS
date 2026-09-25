@@ -56,14 +56,20 @@ if("webkitSpeechRecognition" in window){
     recog.interimResults = false;
     recog.lang = "en-US";
     recog.onresult = function(event) {
+        console.log("got it: ", event);
         const transcript = event.results[0][0].transcript;
         input.value = transcript;
+        button.click();
     };
+    recog.onerror = function(event) {
+        console.log("speech recog error:", event.error );
+    }
     recog.onend = function() {
         listen = false;
         micbtn.textContent = "start";
     }
     micbtn.addEventListener("click", function() {
+        console.log("mic clicked listen is; ", listen);
         if(listen) {
             recog.stop();
         }
