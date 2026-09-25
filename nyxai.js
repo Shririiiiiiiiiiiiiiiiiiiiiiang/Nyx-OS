@@ -2,7 +2,7 @@ import {CreateMLCEngine} from "@mlc-ai/web-llm";
 let engine = null;
 
 async function loadEngine() {
-    engine = await CreateMLCEngine("SmolLM2-360M-Instruct-q4f16_1-MLC", {
+    engine = await CreateMLCEngine("Qwen2.5-1.5B-Instruct-q4f16_1-MLC", {
         initProgressCallback: function(progress) {
             console.log("loadingggg:", progress.text);
         }
@@ -16,7 +16,10 @@ async function asknyx(userMessage) {
     const response = await engine.chat.completions.create({
         messages: [
             {role: "user", content: userMessage}
-    ]
+    ],
+    temperature: 0.3,
+    max_tokens: 200,
+    top_p: 0.9
     });
     return response.choices[0].message.content;
 }
