@@ -316,6 +316,9 @@ button.addEventListener("click", async function () {
         return
     }
 
+    button.disabled = true;
+    input.disabled = true;
+
     
 
     chatBox.innerHTML += '<div class="message userMessage">You: ' + message + '</div>';
@@ -610,6 +613,9 @@ button.addEventListener("click", async function () {
     setTimeout(function () {
 
         clearInterval(moonAnimation);
+
+        button.disabled = false;
+        input.disabled = false;
 
         let i = 0;
 
