@@ -1,4 +1,4 @@
-import {CreateMLCEngine} from "https://esm.sh/@mlc-ai/web-llm?bundle";
+import {CreateMLCEngine} from "https://cdn.jsdelivr.net/npm/@mlc-ai/web-llm/+esm";
 let engine = null;
 window.nyxAIReady = false;
 
