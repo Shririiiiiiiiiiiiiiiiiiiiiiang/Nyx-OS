@@ -1,5 +1,7 @@
 ## Nyx-OS
 
+# On first time opening the AI will take time to Load Please wait for it to load ans till then you can see the hardcoded replies or read the instructions file, To see how much the Ai has processed You can open Dev tools(F12).
+
 # Screenshots
 ![Nyx OS Main Interface](./Assets/Screenshots/homepageforreadme.png)
 
