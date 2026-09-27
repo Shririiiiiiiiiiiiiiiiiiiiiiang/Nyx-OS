@@ -605,7 +605,7 @@ button.addEventListener("click", async function () {
     console.log("Status line test: 🌙 🧠 ✨");
     statusBar.innerHTML =
     
-    "🌙 Online | 🧠 Memory Active | ✨ Mood: " + mood;
+    '🌙 Online |  <span id="statustext">' +  (window.nyxAIReady ? "🧠 Memory Active" : "Memory Inactive") +'</span> | ✨ Mood: ' + mood;
 
        
         

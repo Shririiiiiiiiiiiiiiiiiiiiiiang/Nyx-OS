@@ -24,6 +24,7 @@ async function loadEngine() {
     if(!navigator.gpu) {
         console.log("webgpu not supported for this thing please use chrome maybe");
         showAiworksyn("The browser currently running doesnt let the Ai upload or be in use Please use chrome as it will mostly workk");
+        aistatus(false);
         return;
     }
     try {
@@ -34,11 +35,12 @@ async function loadEngine() {
     });
     window.nyxAIReady = true;
     console.log("The Nyx AI is hererererere");
+    aistatus(true);
     }
     catch (error) {
         console.log("Ai didnt loadddd", error);
         showAiworksyn("Ai isnt loading try again or use basic replies hardcoded oness")
-
+        aistatus(false);
     }
 }    
 
@@ -47,7 +49,7 @@ loadEngine();
 async function asknyx(userMessage) {
     const response = await engine.chat.completions.create({
         messages: [
-            {role: "system", content: "You are Nyx, A helpful Ai assitant and helper. You are Not made by Anthropic or Claude You are made by Shrirang- He has built you, you are not him you Are an Ai he is an human. Answer Naturally and sound Ancient for the theme"},
+            {role: "system", content: "You are Nyx, A helpful Ai assitant and helper. You are Not made by Anthropic or Claude You are made by Shrirang- He has built you, you are not him you Are an Ai he is an human. Answer in a Natural and type of ancient tone and sound Ancient for the theme"},
             {role: "user", content: userMessage}
     ],
     temperature: 0.3,
@@ -55,6 +57,11 @@ async function asknyx(userMessage) {
     top_p: 0.9
     });
     return response.choices[0].message.content;
+}
+
+function aistatus(isReady) {
+    const statustxt = document.getElementById("statustext");
+    statustxt.textContent= isReady ? "Memory Active" : "Memory Inactive";
 }
 
 window.asknyx = asknyx
