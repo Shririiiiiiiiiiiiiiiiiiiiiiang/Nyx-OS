@@ -79,6 +79,24 @@ install dependencies(for three js and ther things)
  ```
  then open the link shown on your screen
 
+ # how to install Ai locally
+ Install the Ai package
+ ```bash
+ npm install @mlc-ai/web-llm
+ ```
+
+ # Requirements to Run this Ai
+ - Needs a WebGpu caable browser Like Chrome/Edge
+ - When loading it first time it will take time. Please click f12(Dev tools) There you will see the Ai download happening and if any problem is there console.log will tell you that too
+ - First download will need internet then it can be Ran offline
+
+ # For using Speech Option
+ - You need to click on "Speak" Then it will start listening
+ - once finished either press "send" or "pause" pressing send will auto pause it 
+ - To record again press "start"
+
+
 # Built for 
 
-Hack Club Horizons
+- Hack Club Horizons (Previous)
+- Hack Club Pixl
