@@ -1,706 +1,706 @@
 
 
 
-const Connect = document.getElementById("Connect");
-    const PCStatus = document.getElementById("PC-Status");
-    let connected = false;
+    const Connect = document.getElementById("Connect");
+        const PCStatus = document.getElementById("PC-Status");
+        let connected = false;
 
-    Connect.addEventListener("click",
-        () => { connected = !connected;
-            if(connected) {
-                PCStatus.textContent = "Status: Connected!!!!!"
-                Connect.textContent = "Disconnected";
+        Connect.addEventListener("click",
+            () => { connected = !connected;
+                if(connected) {
+                    PCStatus.textContent = "Status: Connected!!!!!"
+                    Connect.textContent = "Disconnected";
 
+                }
+                else {
+                    PCStatus.textContent = "Status: not connected";
+                    Connect.textContent = "connect"
+                }
+
+        })
+    const input = document.getElementById("userInput");
+    const button = document.getElementById("sendBtn");
+    const chatBox = document.getElementById("chatBox");
+
+    const saveButton = document.getElementById("savethem");
+    const noteInput = document.getElementById("noteInput")
+    const noteTitle = document.getElementById("noteTitle");
+    const notesList = document.getElementById("noteslist");
+    const notesButton = document.getElementById("notes");
+    const notesPage = document.getElementById("notespage");
+    const closeNotes = document.getElementById("closenotes");
+    const searchnotes = document.getElementById("searchnotes");
+    const notehead = document.getElementById("notehead");
+    const tasksButton = document.getElementById("tasks");
+    const missionsPage = document.getElementById("missionpage");
+    const closeMission = document.getElementById("closemission");
+    const saveTask = document.getElementById("savetask");
+    const missionInput = document.getElementById("missioninput");
+    const missionList = document.getElementById("missionlist");
+    const missionCata = document.getElementById("missionCata")
+    const missionDue = document.getElementById("missionDue")
+    const missionPriority = document.getElementById("missionPriority")
+    const micbtn = document.getElementById("micBtn");
+
+    if(!("webkitSpeechRecognition" in window)) {
+        micbtn.disabled = true;
+        micbtn.title = "voice input isnt supported here in this browser pls change the browser use Chrome maybe";
+    }
+
+    let recog = null;
+    let listen = false;
+
+    if("webkitSpeechRecognition" in window){
+        recog = new webkitSpeechRecognition();
+        recog.continuous = true;
+        recog.interimResults = false;
+        recog.lang = "en-US";
+        recog.onresult = function(event) {
+            console.log("got it: ", event);
+            const transcript = event.results[0][0].transcript;
+            input.value = transcript;
+        
+        };
+        recog.onerror = function(event) {
+            console.log("speech recog error:", event.error );
+        }
+        recog.onend = function() {
+            listen = false;
+            micbtn.textContent = "start";
+        }
+        micbtn.addEventListener("click", function() {
+            console.log("mic clicked listen is; ", listen);
+            if(listen) {
+                recog.stop();
             }
-            else {
-                PCStatus.textContent = "Status: not connected";
-                Connect.textContent = "connect"
+            else{
+                recog.start();
+                listen = true;
+                micbtn.textContent = "pause"
             }
+        });
 
-    })
-const input = document.getElementById("userInput");
-const button = document.getElementById("sendBtn");
-const chatBox = document.getElementById("chatBox");
+    }
 
-const saveButton = document.getElementById("savethem");
-const noteInput = document.getElementById("noteInput")
-const noteTitle = document.getElementById("noteTitle");
-const notesList = document.getElementById("noteslist");
-const notesButton = document.getElementById("notes");
-const notesPage = document.getElementById("notespage");
-const closeNotes = document.getElementById("closenotes");
-const searchnotes = document.getElementById("searchnotes");
-const notehead = document.getElementById("notehead");
-const tasksButton = document.getElementById("tasks");
-const missionsPage = document.getElementById("missionpage");
-const closeMission = document.getElementById("closemission");
-const saveTask = document.getElementById("savetask");
-const missionInput = document.getElementById("missioninput");
-const missionList = document.getElementById("missionlist");
-const missionCata = document.getElementById("missionCata")
-const missionDue = document.getElementById("missionDue")
-const missionPriority = document.getElementById("missionPriority")
-const micbtn = document.getElementById("micBtn");
+    function renderNotes(){
+        
+        notesList.innerHTML = "";
+        notehead.textContent = "Notes (" + notes.length + ")";
+        const searchTerm = searchnotes.value.toLowerCase();
+        
+        notes.forEach(function(note, index){
+            if(!note.title.toLowerCase().includes(searchTerm)
+            ){return;
+        }
+            const noteCard = document.createElement("div");
+            noteCard.className = "noteCard";
+            noteCard.textContent = note.title;
+            
+            const deletebutton = document.createElement("button");
+            deletebutton.textContent = "delete";
+            deletebutton.className = "deleteNote";
+            
+            noteCard.addEventListener("click", function() {
+                noteTitle.value = note.title;
+                noteInput.value = note.content;       
+            
+            });
 
-if(!("webkitSpeechRecognition" in window)) {
-    micbtn.disabled = true;
-    micbtn.title = "voice input isnt supported here in this browser pls change the browser use Chrome maybe";
-}
+            deletebutton.addEventListener("click", function(event){
+                event.stopPropagation();
+                notes.splice(index, 1)
+                localStorage.setItem(
+                    "notes", JSON.stringify(notes)
+                );
+                renderNotes();
+            });
+            noteCard.appendChild(deletebutton);
+            notesList.appendChild(noteCard);
 
-let recog = null;
-let listen = false;
+        });
+    }
 
-if("webkitSpeechRecognition" in window){
-    recog = new webkitSpeechRecognition();
-    recog.continuous = true;
-    recog.interimResults = false;
-    recog.lang = "en-US";
-    recog.onresult = function(event) {
-        console.log("got it: ", event);
-        const transcript = event.results[0][0].transcript;
-        input.value = transcript;
+
+    function renderMissions() {
+        missionList.innerHTML = "";
+        const completedCount = missions.filter(
+            mission => mission.completed
+        ).length;
+        document.getElementById("missionProgress").textContent = "Completed: " + completedCount + "/" + missions.length;
+        
+        
+        
+        const percent = missions.length === 0 ? 0 : (completedCount / missions.length) * 100;
+        document.getElementById("progressFill").style.width = percent + "%";
+        document.getElementById("missionhead").textContent = "Missions (" + missions.length + ")";
     
+    const priorityOrder = {
+        critical: 1, high: 2, medium: 3, low: 4
     };
-    recog.onerror = function(event) {
-        console.log("speech recog error:", event.error );
+    
+    missions.sort((a,b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
+    
+    
+    
+        missions.forEach(function(mission,index){
+            const card = document.createElement("div");
+            card.className = "noteCard";
+            card.classList.add(
+                mission.priority.toLowerCase() + "Mission"
+            );
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.checked = mission.completed;
+            checkbox.addEventListener("change", function(){
+                mission.completed = checkbox.checked;
+                localStorage.setItem("missions", JSON.stringify(missions));
+                renderMissions();
+            });
+            card.appendChild(checkbox);
+            const missionText = document.createElement("span");
+
+            let dueStatus = "";
+            if(mission.dueDate) {
+                const today = new Date().toISOString().split("T")[0];
+                if(mission.dueDate < today) {
+                    dueStatus = "OVERDUE!!!!!!!";
+                }
+            }
+
+            missionText.innerHTML = mission.text +
+            "<br>Catagory: " + mission.category +
+            "<br>Due date: " + mission.dueDate + 
+            "<br>Priority: " + mission.priority +
+            "<br>" + dueStatus;
+            if(mission.completed) {
+                missionText.style.textDecoration = "line-through";
+                missionText.style.opacity = "0.6";
+            }
+            card.appendChild(missionText);
+            const deletebutton = document.createElement("button");
+            deletebutton.textContent = "delete"
+            deletebutton.className = "deleteNote";
+            deletebutton.addEventListener("click",function(event) {
+                event.stopPropagation();
+                missions.splice(index, 1);
+                localStorage.setItem(
+                    "missions", JSON.stringify(missions)
+                );
+                renderMissions();   
+                });
+                card.appendChild(deletebutton);
+                missionList.appendChild(card);
+        });
+        console.log("complete", completedCount);
+        console.log("total ", missions.length);
+        console.log("percent ", percent);
     }
-    recog.onend = function() {
-        listen = false;
-        micbtn.textContent = "start";
-    }
-    micbtn.addEventListener("click", function() {
-        console.log("mic clicked listen is; ", listen);
+
+    searchnotes.addEventListener("input", function() {
+        renderNotes();
+    });
+
+    tasksButton.addEventListener(
+        "click", () => {missionsPage.style.display = "block";}
+    );
+    closeMission.addEventListener(
+        "click", () => {missionsPage.style.display = "none";}
+    );
+
+    const tools = document.getElementById("tools");
+    const toolpage = document.getElementById("toolspage");
+    const closetool = document.getElementById("close");
+    const toolbutn = document.getElementById("toolbutton");
+    const currenttool = document.getElementById("currenttool");
+
+    tools.addEventListener("click", function() {
+        toolpage.style.display= "block";
+
+    });
+    closetool.addEventListener("click" , function() {
+        toolpage.style.display = "none";
+    });
+
+    const calc = document.getElementById("calc");
+    const calculator = document.getElementById("calculator");
+    const calcScreen = document.getElementById("calcscreen")
+    const calcButns = document.getElementById("calckeys");
+    const equalsign  = document.getElementById("equal")
+
+    calc.addEventListener("click", function() {
+        if(calculator.style.display  === "block") {
+            calculator.style.display = "none";
+
+        }
+        else{
+            calculator.style.display = "block";
+        }
+    });
+
+    calcButns.addEventListener("click", function(event) {
+        if(!event.target.classList.contains("calckeys")) {
+            return;
+        }
+        const key = event.target.getAttribute("data-key");
+        if(key === "c") {
+            calcScreen.value = "";
+
+        }
+        else {
+            calcScreen.value += key;
+        }
+    });
+
+    equalsign.addEventListener("click", function() {
+        try {
+            calcScreen.value = eval(calcScreen.value);
+
+        }
+        catch(error) {
+            calcScreen.value = "Error"
+        }
+    } )
+
+
+    const stpwtch = document.getElementById("stpwtch")
+    const watchpanel = document.getElementById("watchpanel");
+    const watchscreen = document.getElementById("Watchscreen");
+    const startstop = document.getElementById("Startstop")
+    const reset = document.getElementById("reset");
+
+    let seconds = 0;
+    let timer = null;
+
+    stpwtch.addEventListener("click", function() {
+        watchpanel.style.display = watchpanel.style.display === "block" ? "none" : "block";
+
+    });
+
+    startstop.addEventListener("click", function() {
+        if(timer){
+            clearInterval(timer);
+            timer = null;
+        }
+        else {
+            timer = setInterval(function() {
+                seconds++
+                const h = Math.floor(seconds/3600);
+                const m = Math.floor((seconds % 3600) / 60);
+                const s = seconds % 60;
+                watchscreen.textContent = (h<10?"0"+h:h) + ":" + (m<10?"0"+m:m) + ":" + (s<10?"0"+s:s);
+
+            }, 1000); 
+        }
+    });
+    reset.addEventListener("click", function() {
+        clearInterval(timer);
+        timer=null;
+        seconds = 0;
+        watchscreen.textContent = "00:00:00";
+    });
+
+
+
+
+    let userName = localStorage.getItem("userName") || "";
+
+    let notes = JSON.parse(localStorage.getItem("notes")) || [];
+    let missions = JSON.parse(localStorage.getItem("missions")) || [];
+
+    button.addEventListener("click", async function () {
         if(listen) {
             recog.stop();
         }
-        else{
-            recog.start();
-            listen = true;
-            micbtn.textContent = "pause"
+        const message = input.value.trim();
+        if(message === ""){
+            return
         }
-    });
 
-}
+        button.disabled = true;
+        input.disabled = true;
 
-function renderNotes(){
-    
-    notesList.innerHTML = "";
-    notehead.textContent = "Notes (" + notes.length + ")";
-    const searchTerm = searchnotes.value.toLowerCase();
-    
-    notes.forEach(function(note, index){
-        if(!note.title.toLowerCase().includes(searchTerm)
-        ){return;
-    }
-        const noteCard = document.createElement("div");
-        noteCard.className = "noteCard";
-        noteCard.textContent = note.title;
         
-        const deletebutton = document.createElement("button");
-        deletebutton.textContent = "Close";
-        deletebutton.className = "deleteNote";
+
+        chatBox.innerHTML += '<div class="message userMessage">You: ' + message + '</div>';
+
+        const nyxBubble = document.createElement("div");
+        nyxBubble.className = "message nyxMessage";
+        chatBox.appendChild(nyxBubble);
+        chatBox.scrollTop = chatBox.scrollHeight;
+        const moonPhases = ["🌑", "🌒", "🌓", "🌔", "🌕", "🌔", "🌓", "🌒"];
+
+        let moonIndex = 0;
+        nyxBubble.innerHTML = "Nyx: " + moonPhases[moonIndex];
+
+        const moonAnimation = setInterval(function() {
+            moonIndex++;
+
+            if(moonIndex >= moonPhases.length) {
+                moonIndex = 0;
+            }
+
+            nyxBubble.innerHTML = "Nyx: " + moonPhases[moonIndex]; 
+        }, 300);
+
+        const nyxReplies = [
+
+            "I am still learning",
+
+            "interesting....",
+
+            "Let me think about that",
+
+            "I am still evolving",
+
+            "circuits are still wiring up",
+
+            "processing...failed successfullyyyyyy",
+
+            "Nyx doesnt know the answer yet",
+        ];
+
         
-        noteCard.addEventListener("click", function() {
-            noteTitle.value = note.title;
-            noteInput.value = note.content;       
+        let reply = 
+        nyxReplies[
+            Math.floor(
+                Math.random() * nyxReplies.length
+            )
+        ];
+        let defaultreply = reply;
+        let mood = "normal";
+    
+        if(message.toLowerCase() === "hi"){
+            reply = "Hello, I am Nyx";
+            mood = "friendly";
+        }  
+        if(message.toLowerCase() === "who are you") {
+            reply = "I am your AI Assistant.";
+            mood = "friendly";
+
+        }
+        if(message.toLowerCase() === "help") {
+            reply = 
+        `Available commands
+            1.General:- 
+                    -hi
+                    -hello
+                    -who are you 
+                    -creator 
+                    -version 
+                    -ping
+            2.time:- 
+                -date 
+                -time
+                -day
+            3.identity:- 
+                        -my name is (your name) 
+                        -what is my name
+            4.memory:- 
+                    -remember ...,
+                    -show memories 
+                    -search memory (key word from memory)
+                    -delete memory (memory no. {you get it after you run show memories command})
+                    -memory count
+                    -clear all memories
+            5.help`;       
         
-        });
+        mood = "helper"
+        }
+        if(message.toLowerCase() === "hello") {
+            reply = "Hello There.";
+            mood = "friendly";
+        }
+        if(message.toLowerCase() === "creator") {
+            reply = "Secret Buddy (AKA. Shrirang)";
+        }
+        if(message.toLowerCase() === "version") {
+        reply = "Nyx Version 1.0";
+        }
+        if(message.toLowerCase() === "ping") {
+        reply = "pong";
+        mood = "friendly";
+        }
 
-        deletebutton.addEventListener("click", function(event){
-            event.stopPropagation();
-            notes.splice(index, 1)
-            localStorage.setItem(
-                "notes", JSON.stringify(notes)
-            );
-            renderNotes();
-        });
-        noteCard.appendChild(deletebutton);
-        notesList.appendChild(noteCard);
+        if(message.toLowerCase().startsWith("my name is")) {
+            userName = message.substring(10).trim();
+            localStorage.setItem("userName", userName)
+            reply = "Nice to meet you, " + userName;
+        }
 
-    });
-}
+        if(message.toLowerCase() === "what is my name") {
 
+            if(userName === ""){
 
-function renderMissions() {
-    missionList.innerHTML = "";
-    const completedCount = missions.filter(
-        mission => mission.completed
-    ).length;
-    document.getElementById("missionProgress").textContent = "Completed: " + completedCount + "/" + missions.length;
-    
-    
-    
-    const percent = missions.length === 0 ? 0 : (completedCount / missions.length) * 100;
-    document.getElementById("progressFill").style.width = percent + "%";
-    document.getElementById("missionhead").textContent = "Missions (" + missions.length + ")";
-   
-   const priorityOrder = {
-    critical: 1, high: 2, medium: 3, low: 4
-   };
-   
-   missions.sort((a,b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
-   
-   
-   
-    missions.forEach(function(mission,index){
-        const card = document.createElement("div");
-        card.className = "noteCard";
-        card.classList.add(
-            mission.priority.toLowerCase() + "Mission"
-        );
-        const checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.checked = mission.completed;
-        checkbox.addEventListener("change", function(){
-            mission.completed = checkbox.checked;
-            localStorage.setItem("missions", JSON.stringify(missions));
-            renderMissions();
-        });
-        card.appendChild(checkbox);
-        const missionText = document.createElement("span");
+                reply = "I don't know your name yet"
+            }
+            else{
 
-        let dueStatus = "";
-        if(mission.dueDate) {
-            const today = new Date().toISOString().split("T")[0];
-            if(mission.dueDate < today) {
-                dueStatus = "OVERDUE!!!!!!!";
+                reply = "Your name is "  +  userName
             }
         }
+        
+            if(message.toLowerCase() === "time") {
 
-        missionText.innerHTML = mission.text +
-        "<br>Catagory: " + mission.category +
-        "<br>Due date: " + mission.dueDate + 
-        "<br>Priority: " + mission.priority +
-        "<br>" + dueStatus;
-        if(mission.completed) {
-            missionText.style.textDecoration = "line-through";
-            missionText.style.opacity = "0.6";
+            const now = new Date();
+
+            reply = now.toLocaleTimeString();
+
+            mood = "system";
         }
-        card.appendChild(missionText);
-        const deletebutton = document.createElement("button");
-        deletebutton.textContent = "Close"
-        deletebutton.className = "deleteNote";
-        deletebutton.addEventListener("click",function(event) {
-            event.stopPropagation();
-            missions.splice(index, 1);
-            localStorage.setItem(
-                "missions", JSON.stringify(missions)
-            );
-            renderMissions();   
+
+        if(message.toLowerCase() ===  "date") {
+
+            const now = new Date();
+
+            reply = now.toDateString();
+
+            mood = "system";
+        }
+        if(message.toLowerCase() === "day") {
+            
+            const now = new Date();
+
+            reply = now.toLocaleDateString('en-US',{
+                weekday: 'long'
             });
-            card.appendChild(deletebutton);
-            missionList.appendChild(card);
-    });
-    console.log("complete", completedCount);
-    console.log("total ", missions.length);
-    console.log("percent ", percent);
-}
 
-searchnotes.addEventListener("input", function() {
+            mood = "system";
+        }
+    
+        if(message.toLowerCase().startsWith("remember")) {
+            let memoryText = message.substring(8).trim();
+
+            let memories =
+                JSON.parse(localStorage.getItem("memories")) || [];
+
+                if (memoryText === "") {
+                    reply = "Tell me what to remember";
+                }
+                else if (memories.includes(memoryText)){
+                    reply = "I already know that";                
+                }
+                else {
+                    memories.push(memoryText);
+                
+
+                localStorage.setItem(
+                    "memories",
+                    JSON.stringify(memories)
+                );
+
+                reply = "Okay, I will remember that.";
+            }
+
+                mood = "memory";
+
+        }
+
+        if (message.toLowerCase() === "memory count") {
+            let memories = 
+            JSON.parse(localStorage.getItem("memories")) || [];
+
+            reply = "I currently remember " + memories.length + " things. " ;
+            mood = "memory";
+        }
+
+        if(message.toLowerCase().includes("show memories")) {
+
+            let memories =
+                JSON.parse(localStorage.getItem("memories")) || [];
+
+                if(memories.length === 0) {
+                    reply = "i dont remember anything yet";
+                }
+                else {
+                    reply = memories
+                        .map(function(memory, index){
+                            return(index + 1) + ". " + memory;
+                        })
+                        .join("\n")
+                    } 
+                
+                mood = "memory";
+        }
+
+        if(message.toLowerCase().startsWith("delete memory")) {
+
+            const memoryNumber = 
+            parseInt(message.substring(14));
+
+            let memories = 
+            JSON.parse(localStorage.getItem("memories")) || [];
+
+            if(isNaN(memoryNumber)) {
+                reply = "Tell me which memory to delete";
+            }
+            else if (memoryNumber < 1 || memoryNumber > memories.length) {
+                    reply = "That memory number doesnt exist";
+            }
+            else{
+                const deletedMemory = 
+                memories.splice(memoryNumber - 1, 1);
+
+                localStorage.setItem(
+                    "memories",
+                    JSON.stringify(memories)
+                );
+
+                reply = "Deleted memory " + memoryNumber + " : " + deletedMemory[0];
+                mood = "memory";
+            }
+        }
+        if(message.toLowerCase().startsWith("search memory")) {
+            const keyword = message.substring(14).toLowerCase().trim();
+
+            let memories = 
+            JSON.parse(localStorage.getItem("memories")) || [];
+
+            const results = memories.filter(function(memory){
+
+                return memory.toLowerCase().includes(keyword);
+
+            });
+
+            if(results.length == 0){
+                reply = "no memories found";
+
+            }
+            else{
+
+                reply = results.join("\n");
+
+            }
+
+            mood = "memory";
+        }
+
+        if(message.toLowerCase() === "clear all memories") {
+            localStorage.removeItem("memories");
+            reply = "All memories cleared.";
+            mood = "memory";
+        }
+
+    if(reply === defaultreply){
+        try {
+            reply = await window.asknyx(message);
+        }
+        catch(error) {
+            console.log("Error with ai:-", error);
+        }
+    }
+
+        document.body.classList.remove(
+            "normalMood",
+            "memoryMood",
+            "helperMood",
+            "friendlyMood",
+            "systemMood"
+
+        );
+        document.body.classList.add(
+            mood + "Mood"
+        );
+        console.log(document.body.className);
+        console.log("Nyx mood:", mood);
+
+        
+            
+
+        setTimeout(function () {
+
+            clearInterval(moonAnimation);
+
+            button.disabled = false;
+            input.disabled = false;
+
+            let i = 0;
+
+            const typingEffect = setInterval(function (){
+        
+
+        
+
+            nyxBubble.innerHTML = 
+                "Nyx: " + reply.substring(0, i).replace(/\n/g,"<br>");
+
+            i++;
+            
+            if(i > reply.length) {
+        clearInterval(typingEffect);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+        }, 50);
+        }, 1500);
+        input.value = "";
+
+    });
+
+    input.addEventListener("keydown", function (event) {
+
+        if (event.key === "Enter") {
+
+            event.preventDefault();
+
+            button.click();
+
+        }
+
+    });
+
+    saveTask.addEventListener("click", function(){
+        const task = missionInput.value.trim();
+        if(task == "") {
+            return;
+        }
+        missions.push({
+            text: task,
+            category: missionCata.value,
+            dueDate: missionDue.value,
+            priority: missionPriority.value,
+            completed: false
+        });
+        localStorage.setItem(
+            "missions", JSON.stringify(missions)
+        );
+        renderMissions();
+        missionInput.value = "";
+        missionCata.value = "";
+        missionDue.value = "";
+        missionPriority.value = "low";
+    })
+
+    saveButton.addEventListener("click", function(){
+        const title = noteTitle.value.trim();
+        const content = noteInput.value.trim();
+        if(title === "" || content === "") {
+            return;
+        }
+        const existingNote = notes.find(
+            note => note.title === title
+        );
+        if(existingNote){
+            existingNote.content = content;
+
+        }
+        else{
+            notes.push({
+                title: title,
+                content: content
+            });
+        }
+        localStorage.setItem(
+            "notes", JSON.stringify(notes)
+        );
+
+
+
+        renderNotes();
+        
+        noteTitle.value = "";
+        noteInput.value = "";
+    }
+    );
+
     renderNotes();
-});
-
-tasksButton.addEventListener(
-    "click", () => {missionsPage.style.display = "block";}
-);
-closeMission.addEventListener(
-    "click", () => {missionsPage.style.display = "none";}
-);
-
-const tools = document.getElementById("tools");
-const toolpage = document.getElementById("toolspage");
-const closetool = document.getElementById("close");
-const toolbutn = document.getElementById("toolbutton");
-const currenttool = document.getElementById("currenttool");
-
-tools.addEventListener("click", function() {
-    toolpage.style.display= "block";
-
-});
-closetool.addEventListener("click" , function() {
-    toolpage.style.display = "none";
-});
-
-const calc = document.getElementById("calc");
-const calculator = document.getElementById("calculator");
-const calcScreen = document.getElementById("calcscreen")
-const calcButns = document.getElementById("calckeys");
-const equalsign  = document.getElementById("equal")
-
-calc.addEventListener("click", function() {
-    if(calculator.style.display  === "block") {
-        calculator.style.display = "none";
-
-    }
-    else{
-        calculator.style.display = "block";
-    }
-});
-
-calcButns.addEventListener("click", function(event) {
-    if(!event.target.classList.contains("calckeys")) {
-        return;
-    }
-    const key = event.target.getAttribute("data-key");
-    if(key === "c") {
-        calcScreen.value = "";
-
-    }
-    else {
-        calcScreen.value += key;
-    }
-});
-
-equalsign.addEventListener("click", function() {
-    try {
-        calcScreen.value = eval(calcScreen.value);
-
-    }
-    catch(error) {
-        calcScreen.value = "Error"
-    }
-} )
-
-
-const stpwtch = document.getElementById("stpwtch")
-const watchpanel = document.getElementById("watchpanel");
-const watchscreen = document.getElementById("Watchscreen");
-const startstop = document.getElementById("Startstop")
-const reset = document.getElementById("reset");
-
-let seconds = 0;
-let timer = null;
-
-stpwtch.addEventListener("click", function() {
-    watchpanel.style.display = watchpanel.style.display === "block" ? "none" : "block";
-
-});
-
-startstop.addEventListener("click", function() {
-    if(timer){
-        clearInterval(timer);
-        timer = null;
-    }
-    else {
-        timer = setInterval(function() {
-            seconds++
-            const h = Math.floor(seconds/3600);
-            const m = Math.floor((seconds % 3600) / 60);
-            const s = seconds % 60;
-            watchscreen.textContent = (h<10?"0"+h:h) + ":" + (m<10?"0"+m:m) + ":" + (s<10?"0"+s:s);
-
-        }, 1000); 
-    }
-});
-reset.addEventListener("click", function() {
-    clearInterval(timer);
-    timer=null;
-    seconds = 0;
-    watchscreen.textContent = "00:00:00";
-});
-
-
-
-
-let userName = localStorage.getItem("userName") || "";
-
-let notes = JSON.parse(localStorage.getItem("notes")) || [];
-let missions = JSON.parse(localStorage.getItem("missions")) || [];
-
-button.addEventListener("click", async function () {
-    if(listen) {
-        recog.stop();
-    }
-    const message = input.value.trim();
-    if(message === ""){
-        return
-    }
-
-    button.disabled = true;
-    input.disabled = true;
-
-    
-
-    chatBox.innerHTML += '<div class="message userMessage">You: ' + message + '</div>';
-
-     const nyxBubble = document.createElement("div");
-    nyxBubble.className = "message nyxMessage";
-    chatBox.appendChild(nyxBubble);
-    chatBox.scrollTop = chatBox.scrollHeight;
-    const moonPhases = ["🌑", "🌒", "🌓", "🌔", "🌕", "🌔", "🌓", "🌒"];
-
-    let moonIndex = 0;
-    nyxBubble.innerHTML = "Nyx: " + moonPhases[moonIndex];
-
-    const moonAnimation = setInterval(function() {
-        moonIndex++;
-
-        if(moonIndex >= moonPhases.length) {
-            moonIndex = 0;
-        }
-
-        nyxBubble.innerHTML = "Nyx: " + moonPhases[moonIndex]; 
-    }, 300);
-
-    const nyxReplies = [
-
-        "I am still learning",
-
-        "interesting....",
-
-        "Let me think about that",
-
-        "I am still evolving",
-
-        "circuits are still wiring up",
-
-        "processing...failed successfullyyyyyy",
-
-        "Nyx doesnt know the answer yet",
-    ];
-
-    
-    let reply = 
-    nyxReplies[
-        Math.floor(
-            Math.random() * nyxReplies.length
-        )
-    ];
-    let defaultreply = reply;
-    let mood = "normal";
-   
-    if(message.toLowerCase() === "hi"){
-        reply = "Hello, I am Nyx";
-        mood = "friendly";
-    }  
-    if(message.toLowerCase() === "who are you") {
-        reply = "I am your AI Assistant.";
-        mood = "friendly";
-
-    }
-    if(message.toLowerCase() === "help") {
-        reply = 
-    `Available commands
-        1.General:- 
-                  -hi
-                  -hello
-                  -who are you 
-                  -creator 
-                  -version 
-                  -ping
-        2.time:- 
-              -date 
-              -time
-              -day
-        3.identity:- 
-                    -my name is (your name) 
-                    -what is my name
-        4.memory:- 
-                 -remember ...,
-                 -show memories 
-                 -search memory (key word from memory)
-                 -delete memory (memory no. {you get it after you run show memories command})
-                 -memory count
-                 -clear all memories
-        5.help`;       
-    
-    mood = "helper"
-    }
-    if(message.toLowerCase() === "hello") {
-        reply = "Hello There.";
-         mood = "friendly";
-    }
-    if(message.toLowerCase() === "creator") {
-        reply = "Secret Buddy (AKA. Shrirang)";
-    }
-    if(message.toLowerCase() === "version") {
-    reply = "Nyx Version 1.0";
-    }
-    if(message.toLowerCase() === "ping") {
-    reply = "pong";
-     mood = "friendly";
-    }
-
-    if(message.toLowerCase().startsWith("my name is")) {
-        userName = message.substring(10).trim();
-        localStorage.setItem("userName", userName)
-        reply = "Nice to meet you, " + userName;
-    }
-
-    if(message.toLowerCase() === "what is my name") {
-
-        if(userName === ""){
-
-            reply = "I don't know your name yet"
-        }
-        else{
-
-            reply = "Your name is "  +  userName
-        }
-    }
-    
-        if(message.toLowerCase() === "time") {
-
-        const now = new Date();
-
-        reply = now.toLocaleTimeString();
-
-        mood = "system";
-    }
-
-    if(message.toLowerCase() ===  "date") {
-
-        const now = new Date();
-
-        reply = now.toDateString();
-
-        mood = "system";
-    }
-    if(message.toLowerCase() === "day") {
-        
-        const now = new Date();
-
-        reply = now.toLocaleDateString('en-US',{
-            weekday: 'long'
-        });
-
-        mood = "system";
-    }
-   
-    if(message.toLowerCase().startsWith("remember")) {
-        let memoryText = message.substring(8).trim();
-
-        let memories =
-            JSON.parse(localStorage.getItem("memories")) || [];
-
-            if (memoryText === "") {
-                reply = "Tell me what to remember";
-            }
-            else if (memories.includes(memoryText)){
-                reply = "I already know that";                
-            }
-            else {
-                memories.push(memoryText);
-            
-
-            localStorage.setItem(
-                "memories",
-                JSON.stringify(memories)
-            );
-
-            reply = "Okay, I will remember that.";
-        }
-
-            mood = "memory";
-
-    }
-
-    if (message.toLowerCase() === "memory count") {
-        let memories = 
-        JSON.parse(localStorage.getItem("memories")) || [];
-
-        reply = "I currently remember " + memories.length + " things. " ;
-        mood = "memory";
-    }
-
-    if(message.toLowerCase().includes("show memories")) {
-
-        let memories =
-            JSON.parse(localStorage.getItem("memories")) || [];
-
-            if(memories.length === 0) {
-                reply = "i dont remember anything yet";
-            }
-            else {
-                reply = memories
-                    .map(function(memory, index){
-                        return(index + 1) + ". " + memory;
-                    })
-                    .join("\n")
-                } 
-            
-            mood = "memory";
-    }
-
-    if(message.toLowerCase().startsWith("delete memory")) {
-
-        const memoryNumber = 
-        parseInt(message.substring(14));
-
-        let memories = 
-        JSON.parse(localStorage.getItem("memories")) || [];
-
-        if(isNaN(memoryNumber)) {
-            reply = "Tell me which memory to delete";
-        }
-        else if (memoryNumber < 1 || memoryNumber > memories.length) {
-                reply = "That memory number doesnt exist";
-        }
-        else{
-            const deletedMemory = 
-            memories.splice(memoryNumber - 1, 1);
-
-            localStorage.setItem(
-                "memories",
-                JSON.stringify(memories)
-            );
-
-            reply = "Deleted memory " + memoryNumber + " : " + deletedMemory[0];
-            mood = "memory";
-        }
-    }
-    if(message.toLowerCase().startsWith("search memory")) {
-        const keyword = message.substring(14).toLowerCase().trim();
-
-        let memories = 
-        JSON.parse(localStorage.getItem("memories")) || [];
-
-        const results = memories.filter(function(memory){
-
-            return memory.toLowerCase().includes(keyword);
-
-        });
-
-        if(results.length == 0){
-            reply = "no memories found";
-
-        }
-        else{
-
-            reply = results.join("\n");
-
-        }
-
-        mood = "memory";
-    }
-
-    if(message.toLowerCase() === "clear all memories") {
-        localStorage.removeItem("memories");
-        reply = "All memories cleared.";
-        mood = "memory";
-    }
-
-   if(reply === defaultreply){
-    try {
-        reply = await window.asknyx(message);
-    }
-    catch(error) {
-        console.log("Error with ai:-", error);
-    }
-   }
-
-     document.body.classList.remove(
-        "normalMood",
-        "memoryMood",
-        "helperMood",
-        "friendlyMood",
-        "systemMood"
-
-    );
-    document.body.classList.add(
-        mood + "Mood"
-    );
-    console.log(document.body.className);
-    console.log("Nyx mood:", mood);
-
-       
-        
-
-    setTimeout(function () {
-
-        clearInterval(moonAnimation);
-
-        button.disabled = false;
-        input.disabled = false;
-
-        let i = 0;
-
-        const typingEffect = setInterval(function (){
-    
-
-    
-
-        nyxBubble.innerHTML = 
-            "Nyx: " + reply.substring(0, i).replace(/\n/g,"<br>");
-
-        i++;
-        
-        if(i > reply.length) {
-    clearInterval(typingEffect);
-    chatBox.scrollTop = chatBox.scrollHeight;
-}
-    }, 50);
-    }, 1500);
-    input.value = "";
-
-});
-
-input.addEventListener("keydown", function (event) {
-
-    if (event.key === "Enter") {
-
-        event.preventDefault();
-
-        button.click();
-
-    }
-
-});
-
-saveTask.addEventListener("click", function(){
-    const task = missionInput.value.trim();
-    if(task == "") {
-        return;
-    }
-    missions.push({
-        text: task,
-        category: missionCata.value,
-        dueDate: missionDue.value,
-        priority: missionPriority.value,
-        completed: false
-    });
-    localStorage.setItem(
-        "missions", JSON.stringify(missions)
-    );
     renderMissions();
-    missionInput.value = "";
-    missionCata.value = "";
-    missionDue.value = "";
-    missionPriority.value = "low";
-})
-
-saveButton.addEventListener("click", function(){
-    const title = noteTitle.value.trim();
-    const content = noteInput.value.trim();
-    if(title === "" || content === "") {
-        return;
-    }
-    const existingNote = notes.find(
-        note => note.title === title
-    );
-    if(existingNote){
-        existingNote.content = content;
-
-    }
-    else{
-        notes.push({
-            title: title,
-            content: content
-        });
-    }
-    localStorage.setItem(
-        "notes", JSON.stringify(notes)
-    );
-
-
-
-    renderNotes();
-    
-    noteTitle.value = "";
-    noteInput.value = "";
-}
-);
-
-renderNotes();
-renderMissions();
 
