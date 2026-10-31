@@ -21,7 +21,7 @@ const Connect = document.getElementById("Connect");
 const input = document.getElementById("userInput");
 const button = document.getElementById("sendBtn");
 const chatBox = document.getElementById("chatBox");
-const statusBar = document.getElementById("statusBar");
+
 const saveButton = document.getElementById("savethem");
 const noteInput = document.getElementById("noteInput")
 const noteTitle = document.getElementById("noteTitle");
@@ -97,7 +97,7 @@ function renderNotes(){
         noteCard.textContent = note.title;
         
         const deletebutton = document.createElement("button");
-        deletebutton.textContent = "❌";
+        deletebutton.textContent = "Close";
         deletebutton.className = "deleteNote";
         
         noteCard.addEventListener("click", function() {
@@ -178,7 +178,7 @@ function renderMissions() {
         }
         card.appendChild(missionText);
         const deletebutton = document.createElement("button");
-        deletebutton.textContent = "❌"
+        deletebutton.textContent = "Close"
         deletebutton.className = "deleteNote";
         deletebutton.addEventListener("click",function(event) {
             event.stopPropagation();
@@ -602,10 +602,6 @@ button.addEventListener("click", async function () {
     );
     console.log(document.body.className);
     console.log("Nyx mood:", mood);
-    console.log("Status line test: 🌙 🧠 ✨");
-    statusBar.innerHTML =
-    
-    '🌙 Online |  <span id="statustext">' +  (window.nyxAIReady ? "🧠 Memory Active" : "Memory Inactive") +'</span> | ✨ Mood: ' + mood;
 
        
         
