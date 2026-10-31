@@ -330,7 +330,7 @@
         const moonPhases = ["🌑", "🌒", "🌓", "🌔", "🌕", "🌔", "🌓", "🌒"];
 
         let moonIndex = 0;
-        nyxBubble.innerHTML = "Nyx: " + moonPhases[moonIndex];
+        nyxBubble.innerHTML = "Νύξ: " + moonPhases[moonIndex];
 
         const moonAnimation = setInterval(function() {
             moonIndex++;
@@ -339,7 +339,7 @@
                 moonIndex = 0;
             }
 
-            nyxBubble.innerHTML = "Nyx: " + moonPhases[moonIndex]; 
+            nyxBubble.innerHTML = "Νύξ: " + moonPhases[moonIndex]; 
         }, 300);
 
         const nyxReplies = [
@@ -621,7 +621,7 @@
         
 
             nyxBubble.innerHTML = 
-                "Nyx: " + reply.substring(0, i).replace(/\n/g,"<br>");
+                "Νύξ: " + reply.substring(0, i).replace(/\n/g,"<br>");
 
             i++;
             
