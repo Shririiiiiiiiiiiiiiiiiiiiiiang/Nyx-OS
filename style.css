@@ -614,6 +614,6 @@ button {
 }
 
 
-buttons, input, textarea, select {
+button, input, textarea, select {
     font-family: inherit;
 }
