@@ -15,10 +15,10 @@
 
 
 body{
-    --glow: #7a00ff;
+    
     min-height: 100vh;
     margin: 0;
-    color: white;
+    color: var(--bronze);
     font-family: 'Cardo', serif;
     text-align: center;
     padding: 35px;
@@ -55,15 +55,15 @@ body{
 
 #alltools button{
     padding: 10px 20px;
-    border: none;
-    border-radius: 10px;
-    background: #1b2333;
-    color: white;
+    border: 1px solid var(--bronze);
+    background: var(--panel);
+    color: var(--text);
     cursor: pointer;
     transition: 0.3s;
 }
 #alltools button:hover{
-    background:#2a3650;
+    background:var(--bronze);
+    color: var(--bg);
 }
 #notespage{
     position:fixed;
@@ -257,6 +257,11 @@ background:radial-gradient(ellipse at 25% 50%, rgba(200, 200, 255, 0.25), transp
 #titleContainer p{
     position: relative;
     z-index: 2;
+}
+
+#titleContainer p{
+    color: var(--bronze);
+    letter-spacing: 0.1em;
 }
 
 #titleContainer{
@@ -624,4 +629,19 @@ button {
 
 button, input, textarea, select {
     font-family: inherit;
+}
+
+#instructlink {
+    display: block;
+    margin-top: 13px;
+    color: var(--bronze);
+    border-bottom: 1px solid var(--bronze);
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#instructlink:hover {
+    color: var(--text);
+    border-bottom-color: var(--text); 
 }
