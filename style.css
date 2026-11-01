@@ -77,6 +77,8 @@ body{
     border-radius: 2px;
     padding: 20px;
     z-index: 1000;
+    max-height: 85vh;
+    overflow-y: auto;
 }
 
 #progressBar{
@@ -101,11 +103,11 @@ body{
     left: 50%;
     transform: translate(-50%, -50%);
     width: 48vw;
-    max-height: 42vh;
+    max-height: 30vh;
     background: transparent;
     color: #2b1d10;
-    padding: 4vh 2vw;
-    border-radius: 6px;
+    padding: 2vh 2vw;
+    border-radius: 2px;
     font-family: 'Cardo', serif;
     z-index: 2002;
     flex-direction: column;
@@ -140,24 +142,40 @@ body{
     text-align: left;
     scrollbar-width: none;
 }
-#scrollSave {
+#scrollSave, #scrollDelete {
     margin-top: 14px;
     align-self: center;
-    padding: 8px 18px;
-    background: #5a3d22;
-    color: #f0e6d2;
-    border: none;
-    border-radius: 6px;
+    padding: 6px 18px;
+    background: var(--panel);
+    color: var(--text);
+    border: 1px solid var(--bronze);
+    border-radius: 2px;
     cursor: pointer;
+    font-family: 'Cardo', serif;
 }
+
+#scrollSave:hover {
+    background: var(--bronze);
+    color: var(--text);
+}
+
+
+
+#scrollDelete:hover {
+    background: var(--brick);
+    color: var(--text);
+}
+
+
 #scrollLabel {
     position: fixed;
     z-index : 2001;
     pointer-events: none;
-    background: rgba(20, 15, 10, 0.85);
-    color: #f0e6d2;
+    background: var(--panel);
+    color: var(--text);
     padding: 6px 12px;
-    border-radius: 6px;
+    border: 1px solid var(--bronze);
+    border-radius: 2px;
     font-family: 'cardo', serif;
     font-size: 14px;
     display: none;
@@ -195,6 +213,8 @@ body{
 
 #noteslist{
     margin-top: 20px;
+    max-height: 250px;
+    overflow-y: auto;
 }
 #noteTitle{
     width:100%;
@@ -215,6 +235,11 @@ body{
     border-radius: 2px;
     cursor: pointer;
     color: var(--text);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
     
 }
 
@@ -339,7 +364,7 @@ input {
 }
 
 .deleteNote{
-    float: right;
+    
     background: transparent;
     color: var(--brick);
     border:1px solid var(--brick);
@@ -432,7 +457,7 @@ button {
 }
 
 .lowMission{
-    border-left: 5px solid var(--text); opacity: 0.8;
+    border-left: 5px solid var(--text);
 
 }
 .mediumMission{
@@ -488,6 +513,8 @@ button {
     border-radius: 2px;
     padding: 20px;
     z-index: 1000;
+    max-height: 85vh;
+    overflow-y: auto ;
 
 }
 
@@ -500,17 +527,18 @@ button {
 
 #toolbutton button{
     padding: 10px 16px;
-    border: none;
-    border-radius: 10px;
-    background: #1b2333;
-    color: white;
+    border-radius: 2px;
+    background: transparent;
+    border: 1px solid var(--bronze);
+    color: var(--text);
     cursor: pointer;
 
 
 }
 
 #toolbutton button:hover {
-    background: #1f283b;
+    background: var(--bronze);
+    color: var(--bg);
 }
 
 #currenttool {
@@ -523,23 +551,23 @@ button {
 }
 
 #calculator {
-    margin-top: 20p;
-    background: #18253f;
-    border: 1px solid #445577;
-    border-radius: 12px;
+    margin-top: 20px;
+    background: var(--bg);
+    border: 1px solid var(--bronze);
+    border-radius: 2px;
     padding: 16px;
 }
-#clacscreen {
+#calcscreen {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
-    background:#031b49;
-    color: white;
-    border: 1px solid #445577;
-    border-radius: 12px;
+    background: var(--panel);
+    color: var(--text);
+    border: 1px solid var(--bronze);
+    border-radius: 2px;
     text-align:right;
     font-size: 20px;
-    box-sizing: border-box;
+    
 }
 
 #calckeys {
@@ -551,10 +579,10 @@ button {
 
 .calckeys {
     padding: 12px;
-    border: none;
-    border-radius: 10px;
-    background: #1b2333;
-    color: white;
+    border: 1px solid var(--bronze);
+    border-radius: 2px;
+    background: transparent;
+    color: var(--text);
     cursor: pointer;
     font-size: 16px;
 }
@@ -562,10 +590,10 @@ button {
 #equal {
     grid-column: span 4;
     padding: 10px;
-    border: none;
-    border-radius: 10px;
-    background: #1b2333;
-    color: white;
+    border: 1px solid var(--bronze);
+    border-radius: 2px;
+    background: transparent;
+    color: var(--text);
     cursor: pointer;
     font-size: 16px;
 }
@@ -597,10 +625,10 @@ button {
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(36, 11, 77, 0.9);
-    color: #a5add6;
-    border:1px solid rgba(140, 140, 185, 0.151);
-    border-radius: 12px;
+    background: var(--panel);
+    color: var(--text);
+    border:1px solid var(--brick);
+    border-radius: 2px;
     padding: 10px 20px;
     z-index: 10020;
 }
@@ -637,6 +665,8 @@ button, input, textarea, select {
     border-radius: 2px;
     padding: 20px;
     z-index: 1000;
+    max-height: 85vh;
+    overflow-y: auto;
 }
 
 #closeLib {
@@ -658,7 +688,7 @@ button, input, textarea, select {
     color: var(--text);
 }
 
-#closenotes, #closemission, #close, #savethem, #savetask {
+#closenotes, #closemission, #close, #savethem, #savetask, #Startstop, #reset {
     background: transparent;
     color: var(--text);
     border: 1px solid var(--bronze);
@@ -666,11 +696,35 @@ button, input, textarea, select {
     cursor: pointer;
 }
 
-#closenotes:hover, #closemission:hover, #close:hover, #savethem:hover, #savetask:hover {
+#closenotes:hover, #closemission:hover, #close:hover, #savethem:hover, #savetask:hover, #Startstop:hover, #reset:hover {
     background: var(--bronze);
     color: var(--bg);
 }
 
 #missionDue {
     color-scheme: dark;
+}
+
+#missionlist {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+input[type="checkbox"] {
+    accent-color: var(--bronze);
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--bronze) transparent;
+}
+
+.calckeys:hover, #equal:hover {
+    background: var(--bronze);
+    color: var(--bg);
+}
+
+#Watchscreen {
+    font-size: 32px;
+    margin: 15px 0;
 }
