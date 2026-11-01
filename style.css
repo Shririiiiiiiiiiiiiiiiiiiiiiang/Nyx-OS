@@ -18,7 +18,7 @@ body{
     
     min-height: 100vh;
     margin: 0;
-    color: var(--bronze);
+    color: var(--text);
     font-family: 'Cardo', serif;
     text-align: center;
     padding: 35px;
@@ -72,19 +72,19 @@ body{
     transform:translate(-50%, -50%);
     width:650px;
     max-width:90%;
-    background: rgba(10, 15, 25, 0.30);
-    border:1px solid #445577;
-    border-radius: 15px;
+    background: var(--panel);
+    border:1px solid var(--bronze);
+    border-radius: 2px;
     padding: 20px;
-    box-shadow: 0 0 25px rgba(100, 150, 255, 0.25);
     z-index: 1000;
 }
 
 #progressBar{
     width: 100%;
     height: 12px;
-    background: #111827;
-    border-radius: 20px;
+    background: var(--bg);
+    border-radius: 2px;
+    border: 1px solid var(--bronze);
     overflow: hidden;
     margin-bottom: 15px;
 }
@@ -165,7 +165,7 @@ body{
 #progressFill{
     width: 0%;
     height: 100%;
-    background: #00ff88;
+    background: var(--bronze);
     transition: 0.3s;
 }
 
@@ -178,35 +178,21 @@ body{
 }
 .panelheader h1{
     margin: 0;
-    color: white;
+    color: var(--text);
 }
-#closenotes{
-    padding: 8px 12px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
 
-}
 #noteInput{
     width:100%;
     height: 150px;
-    background:#111827;
-    color: white;
-    border: 1px solid #445577;
-    border-radius: 10px;
+    background:var(--bg);
+    color: var(--text);
+    border: 1px solid var(--bronze);
+    border-radius: 2px;
     padding: 10px;
     box-sizing: border-box;
     resize: none;
 }
-#savethem{margin-top: 15px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
 
-
-
-}
 #noteslist{
     margin-top: 20px;
 }
@@ -214,20 +200,21 @@ body{
     width:100%;
     padding: 10px;
     margin-bottom: 10px;
-    background: #111827;
-    color: white;
-    border: 1px solid #445577;
-    border-radius: 10px;
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--bronze);
+    border-radius: 2px;
     box-sizing: border-box;
 }
 
 .noteCard{
-    background:#1b2333;
+    background:transparent;
     padding: 12px;
     margin-top: 10px;
-    border-radius: 10px;
+    border: 1px solid var(--bronze);
+    border-radius: 2px;
     cursor: pointer;
-    color: white;
+    color: var(--text);
     
 }
 
@@ -310,7 +297,7 @@ input {
 }
 .userMessage{
     background: transparent;
-    color: (var(--text));
+    color: var(--text);
     margin-right: 80px;
     max-width: 70%;
     border: none;
@@ -353,16 +340,17 @@ input {
 
 .deleteNote{
     float: right;
-    background: #a22;
-    color: white;
-    border:none;
-    border-radius: 6px;
+    background: transparent;
+    color: var(--brick);
+    border:1px solid var(--brick);
+    border-radius: 2px;
     cursor: pointer;
     padding: 4px 8px;
 }
 
 .deleteNote:hover{
-    background: #d33;
+    background: var(--brick);
+    color: var(--text);
 }
 
 button {
@@ -370,15 +358,15 @@ button {
 
 }
 
-#searchnotes{
+#searchnotes, #missioninput, #missionCata, #missionDue, #missionPriority{
     width: 100%;
     padding: 10px;
     margin-top: 15px;
     margin-bottom: 15px;
-    background: #111827;
-    color: white;
-    border: 1px solid #445577;
-    border-radius: 10px;
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--bronze);
+    border-radius: 2px;
 }
 #statusBar{
     margin: 15px;
@@ -400,38 +388,39 @@ button {
     display: flex;
     align-items: center;
     gap: 12px;
-    background: rgba(15, 12, 20, 0.75);
-    border: 1px solid rgba(180, 190, 220, 0.25);
-    border-radius: 10px;
+    background: var(--panel);
+    border: 1px solid var(--bronze);
+    border-radius: 2px;
     padding: 8px 14px;
     font-family: 'Cardo', serif;
     
 }
 #scrollSearch {
     padding: 6px 10px;
-    background: #14111c;
-    color: #d8dcf0;
-    border: 1px solid rgba(180, 190, 220, 0.25);
-    border-radius: 6px;
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--bronze);
+    border-radius: 2px;
     font-family: 'Cardo', serif;
     outline: none;
 }
 #scrollCount {
-    color: #b8bcd8;
+    color: var(--text);
     font-size: 14px;
     white-space: nowrap;
 }
 #prevPage, #nextPage {
     padding: 6px 12px;
-    background: #2a2438;
-    color: #cfc4e0;
-    border: 1px solid rgba(180, 190, 220, 0.25);
-    border-radius: 6px;
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--bronze);
+    border-radius: 2px;
     cursor: pointer;
     font-family: 'Cardo', serif;
 }
-#prevPage:hover, #nextPage.hover {
-    background: #3a3250; 
+#prevPage:hover:not(:disabled), #nextPage:hover:not(:disabled) {
+    background: var(--bronze);
+    color: var(--bg); 
 }
 #prevPage:disabled, #nextPage:disabled {
     opacity: 0.35;
@@ -443,19 +432,19 @@ button {
 }
 
 .lowMission{
-    border-left: 5px solid #888;
+    border-left: 5px solid var(--text); opacity: 0.8;
 
 }
 .mediumMission{
-    border-left: 5px solid #3399ff;
+    border-left: 5px solid var(--bronze);
     
 }
 .highMission{
-    border-left: 5px solid #ffa500;
+    border-left: 5px solid #926c38;
     
 }
 .criticalMission{
-    border-left: 5px solid #ff0000;
+    border-left: 5px solid var(--brick);
     
 }
 
@@ -492,14 +481,13 @@ button {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 700px;
+    width: 650px;
     max-width: 90%;
-    background: rgba(11, 17, 29, 0.3);
-    border: 1px solid #3f4c66;
-    border-radius: 15px;
+    background: var(--panel);
+    border: 1px solid var(--bronze);
+    border-radius: 2px;
     padding: 20px;
-    box-shadow: 0 0 25px rgba(97, 145, 218, 0.397);
-    z-index: 1000
+    z-index: 1000;
 
 }
 
@@ -582,17 +570,8 @@ button {
     font-size: 16px;
 }
 
-#close {
-    padding: 8px 14px;
-    background: #1b2333;
-    color: white;
-    border: 1px solid #445577;
-    border-radius: 3px;
-    cursor: pointer;
-}
-#close.hover{
-    background: #2a3650;
-}
+
+
 
 #micBtn {
     padding: 10px 14px;
@@ -644,4 +623,54 @@ button, input, textarea, select {
 #instructlink:hover {
     color: var(--text);
     border-bottom-color: var(--text); 
+}
+
+#missionpage {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 650px;
+    max-width: 90%;
+    background: var(--panel);
+    border: 1px solid var(--bronze);
+    border-radius: 2px;
+    padding: 20px;
+    z-index: 1000;
+}
+
+#closeLib {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 2001;
+    padding: 10px 16px;
+    background: transparent;
+    color: var(--brick);
+    border: 1px solid var(--brick);
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+#closeLib:hover {
+    background: var(--brick);
+    color: var(--text);
+}
+
+#closenotes, #closemission, #close, #savethem, #savetask {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--bronze);
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+#closenotes:hover, #closemission:hover, #close:hover, #savethem:hover, #savetask:hover {
+    background: var(--bronze);
+    color: var(--bg);
+}
+
+#missionDue {
+    color-scheme: dark;
 }
