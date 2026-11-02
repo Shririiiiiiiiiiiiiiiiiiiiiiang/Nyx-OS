@@ -17,7 +17,7 @@ const ctx = moonCanvas.getContext("2d");
 
 
 const glowRadiant = ctx.createRadialGradient(256, 256, 150, 256, 256, 240);
-glowRadiant.addColorStop(0, "rgba(230, 255, 210, 0.35)");
+glowRadiant.addColorStop(0, "rgba(230, 225, 210, 0.35)");
 glowRadiant.addColorStop(1, "rgba(230, 225, 210, 0)");
 ctx.fillStyle = glowRadiant;
 ctx.beginPath();
@@ -141,7 +141,7 @@ starGeometry.setAttribute(
 const starMaterial = new THREE.PointsMaterial({
     map: starTexture,
     transparent: true,
-    color: 0xffffff,
+    color: 0xdfe8ff,
     size: 0.3
 
 });
@@ -163,7 +163,7 @@ for (let i = 0; i < 100; i++) {
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute("position", new THREE.Float32BufferAttribute([x, y, z], 3));
     const material = new THREE.PointsMaterial({
-        map: starTexture, color: 0xffffff, size: 0.8 + Math.random() * 0.7, transparent: true
+        map: starTexture, color: 0xfff4e0, size: 0.8 + Math.random() * 0.7, transparent: true
     });
     const star = new THREE.Points(geometry, material);
     star.userData.twinkleSpeed = 0.002 + Math.random() * 0.005;
