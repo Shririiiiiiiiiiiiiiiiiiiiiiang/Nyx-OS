@@ -53,7 +53,7 @@ const moonTexture = new THREE.CanvasTexture(
 const scene = new THREE.Scene();
 
 const camera = new THREE.PerspectiveCamera(
-    75,
+    45,
     window.innerWidth / window.innerHeight,
     0.1,
     1000
@@ -235,17 +235,22 @@ const mediumStars =
     scene.add(mediumStars);
 
 
-const moonMaterial = new THREE.SpriteMaterial({
-    map: moonTexture,
-    transparent: true
-});
-const moon = new THREE.Sprite(
-    moonMaterial
+const moonmap = new THREE.TextureLoader().load("Assets/moon%20image/moon.jpg");
+moonmap.colorSpace = THREE.SRGBColorSpace;
+
+const moon = new THREE.Mesh(
+    new THREE.SphereGeometry(6, 64,64),
+    new THREE.MeshStandardMaterial({ map: moonmap, roughness: 1})
 );
-moon.position.set( 18, 10, -20);
-moon.scale.set(12, 12, 1);
+
+moon.position.set(12, 7, -30);
+moon.rotation.y = -Math.PI / 2;
 scene.add(moon);
 
+const moonLight = new THREE.DirectionalLight(0xffffff, 3);
+moonLight.position.set(10, 5, 20);
+scene.add(moonLight);
+scene.add(new THREE.AmbientLight(0x223355, 0.4));
 
 
 
